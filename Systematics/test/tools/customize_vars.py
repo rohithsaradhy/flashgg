@@ -1,0 +1,165 @@
+import FWCore.ParameterSet.VarParsing as VarParsing
+from flashgg.MetaData.JobConfig import customize
+
+customize.options.register('tthTagsOnly',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'tthTagsOnly'
+                           )
+customize.options.register('doubleHTagsOnly',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doubleHTagsOnly'
+                           )
+customize.options.register('addVBFDoubleHTag',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'addVBFDoubleHTag'
+                           )
+customize.options.register('addVBFDoubleHVariables',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'addVBFDoubleHVariables'
+                           )
+customize.options.register('doubleHTagsUseMjj',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doubleHTagsUseMjj'
+                           )
+customize.options.register('doubleHTagDumpMinVariables',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doubleHTagDumpMinVariables'
+                           )
+customize.options.register('ForceGenDiphotonProduction',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'ForceGenDiphotonProduction'
+                           )
+customize.options.register('dumpGenWeight',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'dumpGenWeight'
+                           )
+customize.options.register('doubleHReweight',
+                           -1,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.int,
+                           'doubleHReweight'
+                           )
+customize.options.register('doDoubleHTag',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doDoubleHTag'
+                           )
+customize.options.register('doDoubleHttHKiller',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doDoubleHttHKiller'
+                           )
+customize.options.register('ttHKillerSaveInputVariables',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'ttHKillerSaveInputVariables'
+                           )
+customize.options.register('doDoubleHGenAnalysis',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doDoubleHGenAnalysis'
+                           )
+customize.options.register('doBJetRegression',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doBJetRegression'
+                           )
+customize.options.register('doHTXS',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doHTXS'
+                           )
+customize.options.register('doStageOne',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doStageOne'
+                           )
+customize.options.register('acceptance',
+                           'NONE',
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.string,
+                           'acceptance'
+                           )
+customize.options.register('doSystematics',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doSystematics'
+                           )
+customize.options.register('doGranularJEC',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doGranularJEC'
+                           )
+customize.options.register('doPdfWeights',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doPdfWeights'
+                           )
+customize.options.register('ignoreNegR9',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'ignoreNegR9'
+                           )
+customize.options.register('dumpTrees',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'dumpTrees'
+                           )
+customize.options.register('dumpWorkspace',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'dumpWorkspace'
+                           )
+customize.options.register('verboseTagDump',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'verboseTagDump'
+                           )
+customize.options.register('verboseSystDump',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'verboseSystDump'
+                           )
+customize.options.register('analysisType',
+                           'mainAnalysis',
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.string,
+                           'analysisType'
+                           )
+customize.options.register('applyNNLOPSweight',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'applyNNLOPSweight'
+                           )

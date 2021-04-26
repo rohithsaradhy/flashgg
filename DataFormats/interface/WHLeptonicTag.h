@@ -26,6 +26,16 @@ namespace flashgg {
         //const std::vector<edm::Ptr<flashgg::Met> > met() const { return MET_;}
         const edm::Ptr<flashgg::Met> met() const { return MET_;}
 
+
+
+        //Creating a variable methods to add WHmva and PtV
+        const float WHmva() const { return WH_mva;};
+        void set_WHmva(const float &val) {WH_mva=val;};
+        const float WHptV() const { return WH_ptV;};
+        void set_WHptV(const float &val) {WH_ptV=val;};
+
+
+
         void setJets( std::vector<edm::Ptr<Jet> > Jets ) { Jets_ = Jets; }
         void setMuons( std::vector<edm::Ptr<Muon> >Muons ) {Muons_ = Muons;}
         //void setMET( std::vector<edm::Ptr<flashgg::Met> > MET ) {MET_ = MET;}
@@ -40,6 +50,12 @@ namespace flashgg {
         std::vector<edm::Ptr<Jet> > Jets_;
         //std::vector<edm::Ptr<flashgg::Met> > MET_;
         edm::Ptr<flashgg::Met> MET_;
+
+
+        //Creating a variables to add WHmva and PtV
+        float WH_mva = -999;
+        float WH_ptV = -999;
+
     };
 }
 

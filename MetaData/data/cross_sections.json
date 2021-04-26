@@ -378,5 +378,13 @@
     "ZZ_TuneCUETP8M1_13TeV-pythia8"                                        : { "xs" : 10.16  },
     "WW_TuneCP5_13TeV-pythia8"                                             : { "xs" : 75.8   },
     "WZ_TuneCP5_13TeV-pythia8"                                             : { "xs" : 27.6   },
-    "ZZ_TuneCP5_13TeV-pythia8"                                             : { "xs" : 12.14  }
+    "ZZ_TuneCP5_13TeV-pythia8"                                             : { "xs" : 12.14  },
+
+    "WHiggs0L1ToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1},
+    "WHiggs0L1f05ph0ToGG_M125_13TeV_JHUGenV7011_pythia8"                  :{"xs" : 1},
+    "WHiggs0MToGG_M125_13TeV_JHUGenV7011_pythia8"                         :{"xs" : 1},
+    "WHiggs0Mf05ph0ToGG_M125_13TeV_JHUGenV7011_pythia8"                   :{"xs" : 1},
+    "WHiggs0PHToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1},
+    "WHiggs0PHf05ph0ToGG_M125_13TeV_JHUGenV7011_pythia8"                  :{"xs" : 1},
+    "WHiggs0PMToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1}
 }

@@ -233,15 +233,16 @@ namespace flashgg {
         int n_GT75 = boundaries_GT75.size();
         int n_0_75 = boundaries_0_75.size();
 
-        if (ptV > 75.) {
-            for( n = 0 ; n < n_GT75 ; n++ ) {
-                if( ( double )mva > boundaries_GT75[n_GT75 - n - 1] ) { return n; }
-            }
-        } else if (ptV > 0.) {
-            for( n = n_GT75 ; n < n_0_75 + n_GT75; n++ ) {
-                if( ( double )mva > boundaries_0_75[n_0_75 + n_GT75 - n - 1] ) { return n; }
-            }
+        for( n = 0 ; n < n_GT75 ; n++ ) {
+            if( ( double )mva > boundaries_GT75[n_GT75 - n - 1] ) { return n; }
         }
+        // if (ptV > 75.) {
+
+        // } else if (ptV > 0.) {
+        //     for( n = n_GT75 ; n < n_0_75 + n_GT75; n++ ) {
+        //         if( ( double )mva > boundaries_0_75[n_0_75 + n_GT75 - n - 1] ) { return n; }
+        //     }
+        // }
 
         return -1; // Does not pass, object will not be produced
     }
@@ -492,6 +493,9 @@ namespace flashgg {
                 whleptonictags_obj.setDiPhotonIndex( diphoIndex );
                 whleptonictags_obj.setSystLabel( systLabel_ );
                 whleptonictags_obj.setMET( theMET );
+                whleptonictags_obj.set_WHmva(whmva);
+                whleptonictags_obj.set_WHptV(ptV);
+
                 whleptonictags->push_back( whleptonictags_obj );
                 if( ! evt.isRealData() ) {
                     VHTagTruth truth_obj;
