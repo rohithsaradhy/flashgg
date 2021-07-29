@@ -1,5 +1,4 @@
 #!/bin/bash
-cmsenv
-export X509_USER_PROXY=~/myproxy
+source set_environment.sh
 voms-proxy-init -voms cms --valid 168:00
 echo $X509_USER_PROXY

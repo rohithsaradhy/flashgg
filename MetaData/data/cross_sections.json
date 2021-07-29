@@ -386,5 +386,8 @@
     "WHiggs0Mf05ph0ToGG_M125_13TeV_JHUGenV7011_pythia8"                   :{"xs" : 1},
     "WHiggs0PHToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1},
     "WHiggs0PHf05ph0ToGG_M125_13TeV_JHUGenV7011_pythia8"                  :{"xs" : 1},
-    "WHiggs0PMToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1}
+    "WHiggs0PMToGG_M125_13TeV_JHUGenV7011_pythia8"                        :{"xs" : 1},
+
+
+    "WGToLNuG_TuneCP5_13TeV-madgraphMLM-pythia8"                          :{"xs" : 1}
 }
