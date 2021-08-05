@@ -32,7 +32,7 @@ leptons_variables = [ "mu1_pt         :=  ? muons.size()>0 ? muons[0].pt() : -10
                       "mu1_eta        :=  ? muons.size()>0 ? muons[0].eta() : -100 ",
                       "mu1_energy     :=  ? muons.size()>0 ? muons[0].energy() : -100 ",
                       "mu2_pt         :=  ? muons.size()>1 ? muons[1].pt() : -100 ",
-                      "mu2_ph1        :=  ? muons.size()>1 ? muons[1].phi() : -100 ",
+                      "mu2_phi        :=  ? muons.size()>1 ? muons[1].phi() : -100 ",
                       "mu2_eta        :=  ? muons.size()>1 ? muons[1].eta() : -100 ",
                       "mu2_energy     :=  ? muons.size()>1 ? muons[1].energy() : -100 ",
                       "ele1_pt        :=  ? electrons.size()>0 ? electrons[0].pt() : -100 ",
