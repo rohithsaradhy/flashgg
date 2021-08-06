@@ -1,8 +1,9 @@
 nEvents=-1
-outdir=2021_08_01_output_data
+outdir=2021_05_28_Output_data
 dumper=WH_anom_dumper.py
-queue=tomorrow
-json=json/data.json
+queue=workday
+# json=json/data_jobs.json
+json=json/legacy_runII_v2_2018_final.json
 
 
 fggRunJobs.py --load $json \

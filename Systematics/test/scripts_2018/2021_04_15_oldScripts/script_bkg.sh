@@ -1,8 +1,8 @@
 nEvents=-1
-outdir=2021_08_01_output_data
+outdir=2021_04_15_Output_bkg
 dumper=WH_anom_dumper.py
-queue=tomorrow
-json=json/data.json
+queue=workday
+json=json/bkg_jobs.json
 
 
 fggRunJobs.py --load $json \

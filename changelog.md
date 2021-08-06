@@ -3,29 +3,32 @@
 
 
 ## Notes 
-Cleaned up the Systematics/test directory
---json moved to scripts_2018/json
---scripst moved to scripts_2018
-
-Added ZHLeptonic and VHMet Tag
-
+created check_json.py which checks whether the json files are correct...
+restructured the folders in .Systematics/test/
 
 ## Changes made:
 
 
 
+## Files Created
+./Systematics/test/scripts_2017/json/check_json.py
+-- file for double checking the JSON files...
+./Systematics/test/scripts_2017/json/all_samples.txt
+-- file dump of fggManageSamples
+
+
 ## Files Edited
-./Systematics/test/WH_anom_dumper.py
-- Added ZHLeptonic Tag & VHMet
+./MetaData/data/cross_sections.json 
+-- created entires for ZH Anom Files
 
 
-## Created JSON files for MC, Data and Anom
+## Edited JSON files for MC, Data and Anom
 
 
 
 
 
-## Created scripts for job submissions
+## Edited scripts for job submissions
 
 
 
@@ -34,4 +37,4 @@ Added ZHLeptonic and VHMet Tag
 
 # Git Files
 
-./changelog.md ./Systematics/test/WH_anom_dumper.py ./Systematics/test/scripts_2018
+./changelog.md ./Systematics/test/WH_anom_dumper.py ./Systematics/test/scripts_2018/* ./Systematics/test/scripts_2017/* ./MetaData/data/cross_sections.json
