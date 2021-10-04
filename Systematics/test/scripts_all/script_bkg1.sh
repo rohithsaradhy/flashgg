@@ -1,9 +1,9 @@
 nEvents=-1
-outdir=sig
+outdir=bkg1
 dumper=../WH_anom_dumper.py
-queue=tomorrow
-json=json/sig.json
-
+queue=workday
+# queue=microcentury
+json=json/bkg1.json
 
 # fggRunJobs.py --load $json \
 #               -d $outdir \
@@ -13,9 +13,11 @@ json=json/sig.json
 #               -x cmsRun $dumper maxEvents=$nEvents #copyInputMicroAOD=True
 
 
+
+
 fggRunJobs.py --load $json \
               -d $outdir \
-              -n 10 \
+              -n 100 \
               -q $queue \
               --no-copy-proxy -D -P \
               -x cmsRun $dumper maxEvents=$nEvents copyInputMicroAOD=True

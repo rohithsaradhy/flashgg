@@ -769,7 +769,7 @@ for tag in tagList:
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
 
-      if tagName == "WHLeptonicTag":
+      if tagName == "WHLeptonicTag" or tagName == "ZHLeptonicTag" or tagName == "VHMetTag":
            currentVariables += WH_anomalous_dumper_variables # if tagname is WHLeptonic, dumps the additional variables...
       cfgTools.addCategory(process.tagsDumper,
                            systlabel,
