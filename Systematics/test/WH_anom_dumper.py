@@ -485,7 +485,8 @@ else:
 tagList=[["ZHLeptonicTag",2],["WHLeptonicTag",1],["VHMetTag",2]] #One Category
 
 
-process.flashggWHLeptonicTag.Boundaries_GT75 = cms.vdouble(-1) #Loose cuts on WHBDT mva... #Rohith
+process.flashggWHLeptonicTag.Boundaries_GT75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
+process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT mva... #Rohith
 
 
 
@@ -494,8 +495,7 @@ process.tagsDumper.classifierCfg.remap=cms.untracked.VPSet()
 import flashgg.Taggers.dumperConfigTools as cfgTools
 
 # get the variable list
-custom_vars = ['wh_mva :=  WHmva()',
-               'wh_ptV :=  WHptV()'
+custom_vars = ['vh_mva :=  VHmva()'
                 ]
 
 
@@ -769,7 +769,7 @@ for tag in tagList:
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
 
-      if tagName == "WHLeptonicTag" or tagName == "ZHLeptonicTag" or tagName == "VHMetTag":
+      if tagName == "WHLeptonicTag" or tagName == "ZHLeptonicTag":# or tagName == "VHMetTag":
            currentVariables += WH_anomalous_dumper_variables # if tagname is WHLeptonic, dumps the additional variables...
       cfgTools.addCategory(process.tagsDumper,
                            systlabel,

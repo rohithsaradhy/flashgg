@@ -29,10 +29,8 @@ namespace flashgg {
 
 
         //Creating a variable methods to add WHmva and PtV
-        const float WHmva() const { return WH_mva;};
-        void set_WHmva(const float &val) {WH_mva=val;};
-        const float WHptV() const { return WH_ptV;};
-        void set_WHptV(const float &val) {WH_ptV=val;};
+        const float VHmva() const { return VH_mva;};
+        void set_VHmva(const float &val) {VH_mva=val;};
 
 
 
@@ -53,8 +51,8 @@ namespace flashgg {
 
 
         //Creating a variables to add WHmva and PtV
-        float WH_mva = -999;
-        float WH_ptV = -999;
+        float VH_mva = -999;
+
 
     };
 }

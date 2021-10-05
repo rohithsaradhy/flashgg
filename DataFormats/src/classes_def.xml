@@ -122,7 +122,8 @@
 <class name="std::vector<flashgg::VHMetTag>"/>
 <class name="edm::Wrapper<std::vector<flashgg::VHMetTag> >"/>
 
-<class name="flashgg::WHLeptonicTag" ClassVersion="13">
+<class name="flashgg::WHLeptonicTag" ClassVersion="14">
+ <version ClassVersion="14" checksum="2850414041"/>
  <version ClassVersion="13" checksum="2048958826"/>
  <version ClassVersion="12" checksum="4039463012"/>
   <version ClassVersion="11" checksum="1465473074"/>
@@ -131,7 +132,8 @@
 <class name="std::vector<flashgg::WHLeptonicTag>"/>
 <class name="edm::Wrapper<std::vector<flashgg::WHLeptonicTag> >"/>
 
-<class name="flashgg::ZHLeptonicTag" ClassVersion="12">
+<class name="flashgg::ZHLeptonicTag" ClassVersion="13">
+ <version ClassVersion="13" checksum="4099451636"/>
  <version ClassVersion="12" checksum="183316933"/>
   <version ClassVersion="11" checksum="1904294291"/>
   <version ClassVersion="10" checksum="1465473074"/>

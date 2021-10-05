@@ -493,8 +493,7 @@ namespace flashgg {
                 whleptonictags_obj.setDiPhotonIndex( diphoIndex );
                 whleptonictags_obj.setSystLabel( systLabel_ );
                 whleptonictags_obj.setMET( theMET );
-                whleptonictags_obj.set_WHmva(whmva);
-                whleptonictags_obj.set_WHptV(ptV);
+                whleptonictags_obj.set_VHmva(whmva);
 
                 whleptonictags->push_back( whleptonictags_obj );
                 if( ! evt.isRealData() ) {

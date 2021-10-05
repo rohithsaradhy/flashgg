@@ -1,24 +1,21 @@
 ## Changes not yet commited... Keeping track of files and changes
 ### Clean up this file after every commit
 
-## STATUS
-Broken 
 
 ## Notes 
-Updated to create data in /eos/user/r/rsaradhy/vh_anomalous/2021_08_20
-updated to include variables for VHMet and ZHLeptonic
+Updated to include ZH MVA variabls, and removed VHMet
+
+## STATUS
+OK
+
 
 ## Changes made:
-all the scripts were edited to have the correct path for WH_Dumper.py
 
 
 
 
 ## Files Created
-./Systematics/test/scripts_all/json/* 
-./Systematics/test/scripts_all/script_*.sh
 
- -Created test jobs
 
 
 
@@ -27,18 +24,25 @@ all the scripts were edited to have the correct path for WH_Dumper.py
 ## Files Edited
 
 ./Systematics/test/WH_anom_dumper.py 
--Added variables for VHMetTag and ZHLeptonic
+- Added variables for ZHLeptonic and removed VHMet
+- WHmva changed to VHmva
+- Relaxed 
 
-./Systematics/test/scripts_2018/script_*.sh
-- removed no-use-tarball 
-- changed -n from 100 to 10
+./DataFormats/interface/ZHLeptonicTag.h
+- Added VHmva variable and relevant stuff
+
+./Taggers/plugins/ZHLeptonicTagProducer.cc
+- Added VHmva, and relaxed the ZH MVA cut. 
 
 
+./DataFormats/interface/WHLeptonicTag.h
+- Added VHmva variable and relevant stuff
 
-./Taggers/python/flashggTagSorter_cfi.py
-- switched off all tags except for WHLep, ZHLep, and VHMet
+./Taggers/plugins/WHLeptonicTagProducer.cc
+- Added VHmva, and changed WHmva
 
-
+./DataFormats/src/classes_def.xml
+-updated the classes file
 
 
 
@@ -56,5 +60,9 @@ all the scripts were edited to have the correct path for WH_Dumper.py
 
 
 # Git Files
-./changelog.md ./Systematics/test/WH_anom_dumper.py ./Systematics/test/scripts_all/json/* ./Systematics/test/scripts_all/script_*.sh ./Systematics/test/scripts_2018/script_*.sh ./Taggers/python/flashggTagSorter_cfi.py
+./changelog.md  ./Systematics/test/WH_anom_dumper.py ./DataFormats/interface/ZHLeptonicTag.h ./Taggers/plugins/ZHLeptonicTagProducer.cc ./DataFormats/interface/WHLeptonicTag.h ./Taggers/plugins/WHLeptonicTagProducer.cc ./DataFormats/src/classes_def.xml
+
+
+
+
 

@@ -482,6 +482,9 @@ namespace flashgg {
                 ZHLeptonicTags_obj.setMuons( tagMuons );
                 ZHLeptonicTags_obj.setElectrons( tagElectrons );
                 ZHLeptonicTags_obj.setJets( tagJets );
+                ZHLeptonicTags_obj.set_VHmva( zhmva );
+
+
                 //including SFs for muons or electrons
                 if(isDiMuon){
                     ZHLeptonicTags_obj.includeWeights( *tagMuons.at(0) );
