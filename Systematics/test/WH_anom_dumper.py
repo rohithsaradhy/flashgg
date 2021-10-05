@@ -482,7 +482,7 @@ else:
         ]
 
 
-tagList=[["ZHLeptonicTag",2],["WHLeptonicTag",1],["VHMetTag",2]] #One Category
+tagList=[["ZHLeptonicTag",1],["WHLeptonicTag",1]] #One Category ,["VHMetTag",2]
 
 
 process.flashggWHLeptonicTag.Boundaries_GT75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
