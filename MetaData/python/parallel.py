@@ -22,6 +22,7 @@ class BatchRegistry:
     proxy  = None
     autoprint  = True
     domains_map = {
+        "uscms.org"        : "htcondor",
         "cern.ch"          : "htcondor",
         "psi.ch"           : "sge",
         "hep.ph.ic.ac.uk"  : "sge",

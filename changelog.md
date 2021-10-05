@@ -3,13 +3,14 @@
 
 
 ## Notes 
-Cleaned up categories and removed VHMet
-
+Added uscms.org to python parallels file
 ## STATUS
 OK
 
 
 ## Changes made:
+./MetaData/python/parallel.py
+- Added  --> "uscms.org"        : "htcondor"
 
 
 
@@ -42,7 +43,7 @@ OK
 
 
 # Git Files
-./changelog.md  ./Systematics/test/WH_anom_dumper.py 
+./changelog.md  ./MetaData/python/parallel.py
 
 
 
