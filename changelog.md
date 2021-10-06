@@ -3,29 +3,29 @@
 
 
 ## Notes 
-Added uscms.org to python parallels file
+Created 2017UL scripts folder, updated check_json file, and removed ambiguous json file names
 ## STATUS
 OK
 
 
 ## Changes made:
-./MetaData/python/parallel.py
-- Added  --> "uscms.org"        : "htcondor"
 
 
 
 
 ## Files Created
-
+./Systematics/test/scripts_2017UL
 
 
 
 
 
 ## Files Edited
+./Systematics/test/scripts_2017/json
+./Systematics/test/scripts_2018/json
+./Systematics/test/scripts_2018/script*
+./Systematics/test/scripts_2016/json
 
-./Systematics/test/WH_anom_dumper.py 
-- Cleaned up categories and removed VHMet
 
 
 
@@ -33,17 +33,13 @@ OK
 
 
 
-
-
 ## Edited scripts for job submissions
-
-
 
 ## To Do
 
 
 # Git Files
-./changelog.md  ./MetaData/python/parallel.py
+./changelog.md  ./Systematics/test/scripts_2017/json ./Systematics/test/scripts_2018/json ./Systematics/test/scripts_2018/script* ./Systematics/test/scripts_2016/json
 
 
 
