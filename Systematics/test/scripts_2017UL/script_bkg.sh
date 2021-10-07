@@ -10,4 +10,4 @@ fggRunJobs.py --load $json \
               -n 100 \
               -q $queue \
               --no-copy-proxy -D -P \
-              -x cmsRun $dumper maxEvents=$nEvents #copyInputMicroAOD=True
+              -x cmsRun $dumper maxEvents=$nEvents copyInputMicroAOD=True

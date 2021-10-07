@@ -1,5 +1,5 @@
 nEvents=-1
-outdir=2021_08_01_output_bkg
+outdir=bkg
 dumper=../WH_anom_dumper.py
 queue=tomorrow
 json=json/bkg.json

@@ -1,6 +1,6 @@
 nEvents=-1
-outdir=2021_08_01_output_wh_anom
-dumper=WH_anom_dumper.py
+outdir=wh_anom
+dumper=../WH_anom_dumper.py
 queue=tomorrow
 json=json/wh_anom.json
 
