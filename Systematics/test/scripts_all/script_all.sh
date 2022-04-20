@@ -1,8 +1,9 @@
-nEvents=100
+nEvents=-1
 outdir=all
 dumper=../WH_anom_dumper.py
 # queue=tomorrow
-queue=microcentury
+# queue=microcentury
+queue=nextweek
 json=json/all.json
 
 # fggRunJobs.py --load $json \

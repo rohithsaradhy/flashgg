@@ -482,7 +482,12 @@ else:
         ]
 
 
-tagList=[["ZHLeptonicTag",1],["WHLeptonicTag",1]] #One Category ,["VHMetTag",2]
+tagList=[        
+        ["NoTag",0],
+        # ["UntaggedTag",4],
+        # ["ZHLeptonicTag",2],
+        ["WHLeptonicTag",7]
+        ] #One Category ,["VHMetTag",2]
 
 
 process.flashggWHLeptonicTag.Boundaries_GT75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
@@ -498,6 +503,77 @@ import flashgg.Taggers.dumperConfigTools as cfgTools
 custom_vars = ['vh_mva :=  VHmva()'
                 ]
 
+
+WH_Anom_Vars = [
+    'WHiggs0MToGG_MVA := WHiggs0MToGG_mva()',
+    'WHiggs0Mf05ph0ToGG_MVA := WHiggs0Mf05ph0ToGG_mva()',
+    'WHiggs0PHToGG_MVA := WHiggs0PHToGG_mva()',
+    'WHiggs0PHf05ph0ToGG_MVA := WHiggs0PHf05ph0ToGG_mva()',
+    'WHiggs0L1ToGG_MVA := WHiggs0L1ToGG_mva()',
+    'WHiggs0L1f05ph0ToGG_MVA := WHiggs0L1f05ph0ToGG_mva()'
+]
+ZH_Anom_Vars = [
+    'ZHiggs0MToGG_MVA := ZHiggs0MToGG_mva()',
+    'ZHiggs0PHToGG_MVA := ZHiggs0PHToGG_mva()',
+    'ZHiggs0PHf05ph0ToGG_MVA := ZHiggs0PHf05ph0ToGG_mva()',
+    'ZHiggs0L1f05ph0ToGG_MVA := ZHiggs0L1f05ph0ToGG_mva()',
+    'ZHiggs0L1ZgToGG_MVA := ZHiggs0L1ZgToGG_mva()',
+    'ZHiggs0L1Zgf05ph0ToGG_MVA := ZHiggs0L1Zgf05ph0ToGG_mva()'
+]
+
+Anom_vars = [
+'Anom_mva_pho1_eta := Anom_MVA_pho1_eta()',
+'Anom_mva_pho1_phi := Anom_MVA_pho1_phi()',
+'Anom_mva_pho1_idmva := Anom_MVA_pho1_idmva()',
+'Anom_mva_pho1_full5x5_r9 := Anom_MVA_pho1_full5x5_r9()',
+'Anom_mva_pho1_ptOverMgg := Anom_MVA_pho1_ptOverMgg()',
+'Anom_mva_pho2_eta := Anom_MVA_pho2_eta()',
+'Anom_mva_pho2_phi := Anom_MVA_pho2_phi()',
+'Anom_mva_pho2_idmva := Anom_MVA_pho2_idmva()',
+'Anom_mva_pho2_full5x5_r9 := Anom_MVA_pho2_full5x5_r9()',
+'Anom_mva_pho2_ptOverMgg := Anom_MVA_pho2_ptOverMgg()',
+'Anom_mva_mu1_pt := Anom_MVA_mu1_pt()',
+'Anom_mva_mu1_eta := Anom_MVA_mu1_eta()',
+'Anom_mva_mu1_phi := Anom_MVA_mu1_phi()',
+'Anom_mva_mu1_energy := Anom_MVA_mu1_energy()',
+'Anom_mva_mu2_pt := Anom_MVA_mu2_pt()',
+'Anom_mva_mu2_eta := Anom_MVA_mu2_eta()',
+'Anom_mva_mu2_phi := Anom_MVA_mu2_phi()',
+'Anom_mva_mu2_energy := Anom_MVA_mu2_energy()',
+'Anom_mva_ele1_pt := Anom_MVA_ele1_pt()',
+'Anom_mva_ele1_eta := Anom_MVA_ele1_eta()',
+'Anom_mva_ele1_phi := Anom_MVA_ele1_phi()',
+'Anom_mva_ele1_energy := Anom_MVA_ele1_energy()',
+'Anom_mva_ele2_pt := Anom_MVA_ele2_pt()',
+'Anom_mva_ele2_eta := Anom_MVA_ele2_eta()',
+'Anom_mva_ele2_phi := Anom_MVA_ele2_phi()',
+'Anom_mva_ele2_energy := Anom_MVA_ele2_energy()',
+'Anom_mva_jet1_pt := Anom_MVA_jet1_pt()',
+'Anom_mva_jet1_phi := Anom_MVA_jet1_phi()',
+'Anom_mva_jet1_eta := Anom_MVA_jet1_eta()',
+'Anom_mva_jet1_energy := Anom_MVA_jet1_energy()',
+'Anom_mva_jet2_pt := Anom_MVA_jet2_pt()',
+'Anom_mva_jet2_phi := Anom_MVA_jet2_phi()',
+'Anom_mva_jet2_eta := Anom_MVA_jet2_eta()',
+'Anom_mva_jet2_energy := Anom_MVA_jet2_energy()',
+'Anom_mva_cosPhiGG := Anom_MVA_cosPhiGG()',
+'Anom_mva_cosPhiG1_Mu1 := Anom_MVA_cosPhiG1_Mu1()',
+'Anom_mva_cosPhiG1_Ele1 := Anom_MVA_cosPhiG1_Ele1()',
+'Anom_mva_cosPhiG2_Mu1 := Anom_MVA_cosPhiG2_Mu1()',
+'Anom_mva_cosPhiG2_Ele1 := Anom_MVA_cosPhiG2_Ele1()',
+'Anom_mva_dR_Pho1Ele1_wh := Anom_MVA_dR_Pho1Ele1_wh()',
+'Anom_mva_dR_Pho2Ele1_wh := Anom_MVA_dR_Pho2Ele1_wh()',
+'Anom_mva_dR_Pho1Mu1_wh := Anom_MVA_dR_Pho1Mu1_wh()',
+'Anom_mva_dR_Pho2Mu1_wh := Anom_MVA_dR_Pho2Mu1_wh()',
+'Anom_mva_dR_Pho1Jet1_wh := Anom_MVA_dR_Pho1Jet1_wh()',
+'Anom_mva_dR_Pho1Jet2_wh := Anom_MVA_dR_Pho1Jet2_wh()',
+'Anom_mva_dR_Pho2Jet1_wh := Anom_MVA_dR_Pho2Jet1_wh()',
+'Anom_mva_dR_Pho2Jet2_wh := Anom_MVA_dR_Pho2Jet2_wh()',
+'Anom_mva_dR_Mu1Jet1_wh := Anom_MVA_dR_Mu1Jet1_wh()',
+'Anom_mva_dR_Mu1Jet2_wh := Anom_MVA_dR_Mu1Jet2_wh()',
+'Anom_mva_dR_Ele1Jet1_wh := Anom_MVA_dR_Ele1Jet1_wh()',
+'Anom_mva_dR_Ele1Jet2_wh := Anom_MVA_dR_Ele1Jet2_wh()',
+]
 
 diphoton_variables = ["mass            := diPhoton.mass",
                       "diphoton_pt     := diPhoton.pt",
@@ -719,7 +795,7 @@ dR_variables_ZHLeptonic = ["dR_Pho1Jet1_loose :=  ? jets.size() > 0 ? deltaR(jet
 
 
 
-WH_anomalous_dumper_variables = diphoton_variables + leptons_variables + dR_variables_WHLeptonic +jets_variables + custom_vars
+WH_anomalous_dumper_variables = diphoton_variables + leptons_variables + dR_variables_WHLeptonic +jets_variables + custom_vars + Anom_vars
 
 
 
@@ -769,8 +845,10 @@ for tag in tagList:
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
 
-      if tagName == "WHLeptonicTag" or tagName == "ZHLeptonicTag":# or tagName == "VHMetTag":
-           currentVariables += WH_anomalous_dumper_variables # if tagname is WHLeptonic, dumps the additional variables...
+      if tagName == "WHLeptonicTag":#or tagName == "ZHLeptonicTag":# or tagName == "VHMetTag":
+           currentVariables += WH_anomalous_dumper_variables+WH_Anom_Vars # if tagname is WHLeptonic, dumps the additional variables...
+      elif tagName == "ZHLeptonicTag":
+           currentVariables += WH_anomalous_dumper_variables+ZH_Anom_Vars
       cfgTools.addCategory(process.tagsDumper,
                            systlabel,
                            classname=tagName,

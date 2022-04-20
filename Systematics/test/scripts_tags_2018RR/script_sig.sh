@@ -5,14 +5,6 @@ queue=tomorrow
 json=json/sig.json
 
 
-# fggRunJobs.py --load $json \
-#               -d $outdir \
-#               -n 100 \
-#               -q $queue \
-#               --no-use-tarball --no-copy-proxy -D -P \
-#               -x cmsRun $dumper maxEvents=$nEvents #copyInputMicroAOD=True
-
-
 fggRunJobs.py --load $json \
               -d $outdir \
               -n 100 \

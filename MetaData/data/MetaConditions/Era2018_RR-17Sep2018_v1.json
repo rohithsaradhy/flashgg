@@ -124,6 +124,35 @@
         "jetID" : "Tight2018"
     },
 
+
+    "flashggWHLeptonicTag": 
+    {
+        "weightFile_1":"flashgg/Taggers/data/VH_Anomalous/WHiggs0MToGG_model.xml",
+        "weightFile_2":"flashgg/Taggers/data/VH_Anomalous/WHiggs0Mf05ph0ToGG_model.xml",
+        "weightFile_3":"flashgg/Taggers/data/VH_Anomalous/WHiggs0PHToGG_model.xml",
+        "weightFile_4":"flashgg/Taggers/data/VH_Anomalous/WHiggs0PHf05ph0ToGG_model.xml",
+        "weightFile_5":"flashgg/Taggers/data/VH_Anomalous/WHiggs0L1ToGG_model.xml",
+        "weightFile_6":"flashgg/Taggers/data/VH_Anomalous/WHiggs0L1f05ph0ToGG_model.xml",
+
+
+        
+        "jetID" : "Tight2018"
+    
+    },
+
+
+    "flashggZHLeptonicTag":
+    {
+        "weightFile_1":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0MToGG_model.xml",
+        "weightFile_2":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0PHToGG_model.xml",
+        "weightFile_3":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0PHf05ph0ToGG_model.xml",
+        "weightFile_4":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1f05ph0ToGG_model.xml",
+        "weightFile_5":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1ZgToGG_model.xml",
+        "weightFile_6":"flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1Zgf05ph0ToGG_model.xml",
+
+        "jetID" : "Tight2018"
+    },
+
     "stageOneCombinedTag" :
     {  
         "rawDiphoBounds" : [
