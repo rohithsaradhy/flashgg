@@ -313,6 +313,7 @@ if options.createCrabConfig:
             ("RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1", "Autumn18"),
             ("RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3", "Summer16"),
             ("RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15", "Fall18"),
+            ("RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP", "UL16_preVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic", "UL16_postVFP"),
             ("RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1", "UL18"),
             ("RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2", "UL17")
