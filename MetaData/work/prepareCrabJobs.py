@@ -316,7 +316,9 @@ if options.createCrabConfig:
             ("RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP", "UL16_preVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic", "UL16_postVFP"),
             ("RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1", "UL18"),
-            ("RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2", "UL17")
+            ("RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2", "UL17"),
+            ("RunIISummer19UL17MiniAODv2-106X_mc2017_realistic_v9-v1", "UL17"),
+            ("RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1","UL18")
         ]
 
         for orig, replacement in replacements:
