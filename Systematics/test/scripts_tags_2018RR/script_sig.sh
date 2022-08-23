@@ -1,9 +1,10 @@
 nEvents=-1
 outdir=sig
 dumper=../WH_anom_dumper.py
-queue=tomorrow
+queue=workday
+# queue=tomorrow
 json=json/sig.json
-eos_dir=/eos/user/r/rsaradhy/vh_anomalous/2022_04_20/raw
+eos_dir=/eos/user/r/rsaradhy/vh_anomalous/2022_04_20/raw/$outdir/
 
 
 fggRunJobs.py --load $json \
@@ -11,5 +12,6 @@ fggRunJobs.py --load $json \
               --stage-to $eos_dir \
               -n 100 \
               -q $queue \
-              \ #--no-copy-proxy -D -P \
-              -x cmsRun $dumper maxEvents=$nEvents #copyInputMicroAOD=True
+              --no-copy-proxy \
+              --make-light-tarball \
+              -x cmsRun $dumper maxEvents=$nEvents copyInputMicroAOD=True
