@@ -309,7 +309,7 @@ useEGMTools(process)
 
 # Only run systematics for signal events
 # convention: ggh vbf wzh (wh zh) tth
-signal_processes = ["ggh_","vbf_","wzh_","wh_","zh_","bbh_","thq_","thw_","tth_","ggzh_","HHTo2B2G","GluGluHToGG","VBFHToGG","VHToGG","ttHToGG","Acceptance","hh","vbfhh","qqh","ggh","tth","vh"]
+signal_processes = ["ggh_","vbf_","wzh_","wh_","zh_","bbh_","thq_","thw_","tth_","ggzh_","HHTo2B2G","GluGluHToGG","VBFHToGG","VHToGG","ttHToGG","Acceptance","hh","vbfhh","qqh","ggh","tth","vh","WHiggs0MToGG","WHiggs0MToGG_","WHiggs0PMToGG","WHiggs0PMToGG_"]
 is_signal = reduce(lambda y,z: y or z, map(lambda x: customize.processId.count(x), signal_processes))
 
 applyL1Prefiring = customizeForL1Prefiring(process, customize.metaConditions, customize.processId)
@@ -486,7 +486,7 @@ tagList=[
         ["NoTag",0],
         # ["UntaggedTag",4],
         # ["ZHLeptonicTag",2],
-        ["WHLeptonicTag",7]
+        ["WHLeptonicTag",4]
         ] #One Category ,["VHMetTag",2]
 
 

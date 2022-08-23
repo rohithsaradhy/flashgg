@@ -15,10 +15,7 @@
 
         "TTGammaGamma_ZeroJets"  : ["/TTGG_0Jets_TuneCP5_13TeV_amcatnlo_madspin_pythia8"],
         "TGammaJets"  : ["/TGJets_TuneCP5_13TeV_amcatnlo_madspin_pythia8"],
-
-        "WGammaToLNuGamma"  : ["/WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8"],
-        "DYToLL"  : ["/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8"],
-        "TTJet"  : ["/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8"]
+        "WGammaToLNuGamma"  : ["/WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8"]
 
      },
 
