@@ -1055,16 +1055,43 @@ namespace flashgg {
             int catnum = chooseCategory( whmva, ptV );
             float anom_mva = WHiggs0MToGG_MVA;
 
-            int anom_catnum = 0;
-                 if(( whmva >= 0.42105 )&( whmva < 1.00000 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  0;} //Cat 0 
-            else if(( whmva >= 0.42105 )&( whmva < 1.00000 )&( anom_mva >= -0.47368 )&( anom_mva < 0.89474 )) {anom_catnum =  1;} //Cat 1
-            else if(( whmva >= 0.35526 )&( whmva < 0.42105 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  2;} //Cat 2
-            else if(( whmva >= 0.35526 )&( whmva < 0.42105 )&( anom_mva >= -0.36842 )&( anom_mva < 0.89474 )) {anom_catnum =  3;} //Cat 3
-            else if(( whmva >= 0.22368 )&( whmva < 0.35526 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  4;} //Cat 4
-            else if(( whmva >= 0.22368 )&( whmva < 0.35526 )&( anom_mva >= -0.47368 )&( anom_mva < 0.89474 )) {anom_catnum =  5;} //Cat 5
-            else {anom_catnum =  6;} //Cat 6
+            // int anom_catnum = 0;
+            //      if(( whmva >= 0.42105 )&( whmva < 1.00000 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  0;} //Cat 0 
+            // else if(( whmva >= 0.42105 )&( whmva < 1.00000 )&( anom_mva >= -0.47368 )&( anom_mva < 0.89474 )) {anom_catnum =  1;} //Cat 1
+            // else if(( whmva >= 0.35526 )&( whmva < 0.42105 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  2;} //Cat 2
+            // else if(( whmva >= 0.35526 )&( whmva < 0.42105 )&( anom_mva >= -0.36842 )&( anom_mva < 0.89474 )) {anom_catnum =  3;} //Cat 3
+            // else if(( whmva >= 0.22368 )&( whmva < 0.35526 )&( anom_mva >=  0.89474 )&( anom_mva < 1.00000 )) {anom_catnum =  4;} //Cat 4
+            // else if(( whmva >= 0.22368 )&( whmva < 0.35526 )&( anom_mva >= -0.47368 )&( anom_mva < 0.89474 )) {anom_catnum =  5;} //Cat 5
+            // else {anom_catnum =  6;} //Cat 6
 
-            //
+            // //Stuff kept here:/eos/user/r/rsaradhy/vh_anomalous/2022_06_04/raw/sig_all_mass
+            // int anom_catnum = 0; //[0.35526316 0.22368421 0.09210526]
+            //      if(( whmva >= 0.35526316 )&( whmva < 1.00000 )) {anom_catnum =  0;} //Cat 0 
+            // else if(( whmva >= 0.22368421 )&( whmva < 0.35526316 )) {anom_catnum =  1;} //Cat 1
+            // else if(( whmva >= 0.09210526 )&( whmva < 0.22368421 )) {anom_catnum =  2;} //Cat 2
+            // else {anom_catnum =  3;} //Cat 6
+
+
+            //STXS Cuts Only
+            int anom_catnum = 0;
+                    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  0;} //Cat 0
+            else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  1;} //Cat 2
+            else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ) &    ( anom_mva >= -0.05263 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  2;} //Cat 4
+            else    anom_catnum =  3; //Cat 5 scram b -j 4
+
+
+            //AC & STXS Cuts
+            // int anom_catnum = 0;
+            //         if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  0;} //Cat 0
+            // else    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  1;} //Cat 1
+            // else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  2;} //Cat 2
+            // else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  3;} //Cat 3
+            // else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ) &    ( anom_mva >= -0.05263 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  4;} //Cat 4
+            // else    anom_catnum =  5; //Cat 5scram b -j 4
+
+
+
+
 
             if( catnum != -1 ) {
                 whleptonictags_obj.setCategoryNumber( catnum );
