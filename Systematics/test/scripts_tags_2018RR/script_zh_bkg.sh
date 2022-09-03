@@ -1,7 +1,7 @@
 nEvents=-1
 outdir=zh_bkg
 dumper=../ZH_anom_dumper.py
-queue=workday
+queue=tomorrow
 # queue=tomorrow
 # queue=microcentury
 json=json/zh_bkg.json
@@ -13,7 +13,7 @@ mkdir -p $eos_dir
 fggRunJobs.py --load $json \
               -d $outdir \
               --stage-to $eos_dir \
-              -n 100 \
+              -n 50 \
               -q $queue \
               --no-copy-proxy \
               --make-light-tarball \

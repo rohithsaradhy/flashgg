@@ -3,7 +3,7 @@ outdir=wh_data
 dumper=../WH_anom_dumper.py
 queue=testmatch
 json=json/wh_data.json
-date_name='2022_08_23_STXS_Cuts'
+date_name='2022_09_03_STXS_ONLY'
 eos_dir=/eos/user/r/rsaradhy/vh_anomalous/$date_name/raw/$outdir/
 mkdir -p $eos_dir
 fggRunJobs.py --load $json \

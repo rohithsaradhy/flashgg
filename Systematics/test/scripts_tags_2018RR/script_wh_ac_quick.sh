@@ -6,7 +6,7 @@ queue=workday
 # queue=tomorrow
 # queue=nextweek
 json=json/wh_ac_quick.json
-date_name='2022_08_23_STXS_Cuts'
+date_name='2022_09_03_STXS_ONLY'
 eos_dir=/eos/user/r/rsaradhy/vh_anomalous/$date_name/raw/$outdir/
 mkdir -p $eos_dir
 

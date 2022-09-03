@@ -1,7 +1,7 @@
 {
     "processes" : {
-        "WHiggs0MToGG"         : [ "/WHiggs0MToGG_M125_13TeV_JHUGenV7011_pythia8"],
-        "WHiggs0PMToGG"        : [ "/WHiggs0PMToGG_M125_13TeV_JHUGenV7011_pythia8"]
+        "WHiggs0MToGG_125"         : [ "/WHiggs0MToGG_M125_13TeV_JHUGenV7011_pythia8"],
+        "WHiggs0PMToGG_125"        : [ "/WHiggs0PMToGG_M125_13TeV_JHUGenV7011_pythia8"]
      },
 
 

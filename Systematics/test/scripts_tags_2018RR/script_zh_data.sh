@@ -9,7 +9,7 @@ mkdir -p $eos_dir
 fggRunJobs.py --load $json \
               -d $outdir \
               --stage-to $eos_dir \
-              -n 100 \
+              -n 50 \
               -q $queue \
               --no-copy-proxy \
               --make-light-tarball \

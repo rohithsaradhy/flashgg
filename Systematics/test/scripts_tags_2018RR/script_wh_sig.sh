@@ -4,7 +4,7 @@ dumper=../WH_anom_dumper.py
 queue=workday
 # queue=tomorrow
 json=json/wh_sig.json
-date_name='2022_08_23_STXS_Cuts'
+date_name='2022_09_03_STXS_ONLY'
 eos_dir=/eos/user/r/rsaradhy/vh_anomalous/$date_name/raw/$outdir/
 mkdir -p $eos_dir
 
