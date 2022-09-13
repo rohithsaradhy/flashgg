@@ -1073,21 +1073,21 @@ namespace flashgg {
 
 
             //STXS Cuts Only
-            int anom_catnum = 0;
-                    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ))    {anom_catnum =  0;} //Cat 0
-            else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ))    {anom_catnum =  1;} //Cat 2
-            else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ))    {anom_catnum =  2;} //Cat 4
-            else    anom_catnum =  3; //Cat 5 scram b -j 4
+            // int anom_catnum = 0;
+            //         if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ))    {anom_catnum =  0;} //Cat 0
+            // else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ))    {anom_catnum =  1;} //Cat 2
+            // else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ))    {anom_catnum =  2;} //Cat 4
+            // else    anom_catnum =  3; //Cat 5 scram b -j 4
 
 
             //AC & STXS Cuts
-            // int anom_catnum = 0;
-            //         if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  0;} //Cat 0
-            // else    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  1;} //Cat 1
-            // else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  2;} //Cat 2
-            // else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  3;} //Cat 3
-            // else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ) &    ( anom_mva >= -0.05263 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  4;} //Cat 4
-            // else    anom_catnum =  5; //Cat 5scram b -j 4
+            int anom_catnum = 0;
+                    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  0;} //Cat 0
+            else    if  ( ( whmva >= 0.15789 ) &    ( whmva < 1.00000 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  1;} //Cat 1
+            else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.15789 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  2;} //Cat 2
+            else    if  ( ( whmva >= 0.02632 ) &    ( whmva < 0.15789 ) &    ( anom_mva >= -0.89474 )    &   ( anom_mva < -0.15789  ))    {anom_catnum =  3;} //Cat 3
+            else    if  ( ( whmva >= -0.10526) &    ( whmva < 0.02632 ) &    ( anom_mva >= -0.05263 )    &   ( anom_mva < 1.00000   ))    {anom_catnum =  4;} //Cat 4
+            else    anom_catnum =  5; //Cat 5
 
 
 
