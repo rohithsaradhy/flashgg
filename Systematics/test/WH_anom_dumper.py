@@ -483,7 +483,7 @@ else:
 
 
 tagList=[        
-        ["NoTag",0],
+        ["NOTAG",0],
         # ["UntaggedTag",4],
         # ["ZHLeptonicTag",2],
         ["WHLeptonicTag",4]
