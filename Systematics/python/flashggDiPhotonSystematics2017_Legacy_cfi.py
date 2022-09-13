@@ -293,7 +293,7 @@ sigmaEOverEShiftBins = cms.PSet(
                      )
     )
 
-
+# Diphoton vertex ID SF (You-Ying's slides page 5 in https://indico.cern.ch/event/943907/contributions/3993729/attachments/2093949/3519141/Hgg_31082020.pdf)
 RVBins = cms.PSet(
     variables = cms.vstring("pt"),
     bins = cms.VPSet(
@@ -608,7 +608,7 @@ MvaShift = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonMvaTransform"),
           Label = cms.string("MvaShift"),
           NSigmas = cms.vint32(-1,1),
           OverallRange = cms.string("1"),
-          CorrectionFile = cms.FileInPath("flashgg/Systematics/data/SystematicsIDMVA_LegRunII_v1_2017.root"),
+          CorrectionFile = cms.FileInPath("flashgg/Systematics/data/SystematicsIDMVA_LegRunII_v1_UL2017.root"),
           BinList = mvaShiftBins,
           Debug = cms.untracked.bool(False),
           ApplyCentralValue = cms.bool(False)

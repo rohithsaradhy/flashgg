@@ -25,8 +25,7 @@ class MetaConditionsReader(collections.MutableMapping):
                         "MC" : {"type": "string"},
                     }
                 },
-                "flashggMETsFunction": {"type": "string"},
-	            	"DeepJet": {"type": "string"},
+                "DeepJet": {"type": "string"},
             },
             "additionalProperties" : True
         }
