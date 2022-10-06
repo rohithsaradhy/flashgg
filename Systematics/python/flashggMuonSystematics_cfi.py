@@ -89,7 +89,7 @@ class MuonSF_JSONReader :
                                 )
                             )
 
-                        if not file_name.count("2016") : 
+                        if not file_name.count("2014") : 
                             self.binInfo.bins.append( 
                                 cms.PSet(
                                     lowBounds = cms.vdouble( -1*eta_to , pt_from ) ,
@@ -99,7 +99,7 @@ class MuonSF_JSONReader :
                                 ) 
                             )
     
-                        if not file_name.count("2016") :
+                        if not file_name.count("2014") :
                             pt_bins[ pt_from ] = [ self.binInfo.bins[-1], self.binInfo.bins[-2] ]
                         else :
                             pt_bins[ pt_from ] =  self.binInfo.bins[-1]
@@ -123,7 +123,7 @@ class MuonSF_JSONReader :
                             uncertainties = cms.vdouble( 0.00 , 0.00 )
                             )
                         )
-                    if not file_name.count("2016") :
+                    if not file_name.count("2014") :
                         self.binInfo.bins.append( 
                             cms.PSet(
                                 lowBounds = cms.vdouble( -1*eta_to , 0.00 ) ,
@@ -140,7 +140,7 @@ class MuonSF_JSONReader :
                             uncertainties = cms.vdouble( 2*minErr , 2*minErr )
                             )
                         )
-                    if not file_name.count("2016") :
+                    if not file_name.count("2014") :
                         self.binInfo.bins.append( 
                             cms.PSet(
                                 lowBounds = cms.vdouble( -1*eta_to , extendPt ) ,
@@ -158,7 +158,7 @@ class MuonSF_JSONReader :
                             uncertainties = cms.vdouble( 0.00 , 0.00 )
                             )
                         )
-                    if not file_name.count("2016") :
+                    if not file_name.count("2014") :
                         self.binInfo.bins.append( 
                             cms.PSet(
                                 lowBounds = cms.vdouble( -1*eta_to , 0.00 ) ,
@@ -168,7 +168,7 @@ class MuonSF_JSONReader :
                                 )
                              )
 
-                if not file_name.count("2016") : 
+                if not file_name.count("2014") : 
                     pt_bins[ sorted(pt_bins.keys())[-1] ][0].upBounds[1] = float( 'inf' )
                     pt_bins[ sorted(pt_bins.keys())[-1] ][1].upBounds[1] = float( 'inf' )                
                 else:
@@ -208,7 +208,7 @@ def SetupMuonScaleFactors( process , id_file_name, id_lowpt_file_name, iso_file_
         extendPtValID = minAnaPt 
 
     MUON_ID_ScaleFactors = {}
-    for mu_id in ["Tight", "Medium" , "Loose"]:#, "HighPt"] :
+    for mu_id in ["Tight", "Medium" , "Loose", "HighPt"] :
         MUON_ID_ScaleFactors[mu_id] = MuonSF_JSONReader( id_file_name ,  "NUM_%sID_DEN_%s"%(mu_id,id_ref_tracks) , id_lowpt_file_name, "NUM_%sID_DEN_%s"%(mu_id,id_lowpt_ref_tracks), extendPtValID )
     MUON_ISO_ScaleFactors = {}
     for iso in ["LooseRelIso_DEN_LooseID", "LooseRelIso_DEN_MediumID", "TightRelIso_DEN_MediumID", "LooseRelIso_DEN_TightIDandIPCut", "TightRelIso_DEN_TightIDandIPCut", "LooseRelTkIso_DEN_HighPtIDandIPCut"] :
