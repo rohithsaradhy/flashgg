@@ -1,0 +1,12 @@
+{
+    "cmdLine"  : "metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2016_legacyPreVFP_v1.json campaign=RunIISummer20UL16preVFP useAAA=True lumiMask=/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "processes": {
+        "Data"    : [
+            "/DoubleEG/..Run2016B..",  
+            "/DoubleEG/..Run2016C..",
+            "/DoubleEG/..Run2016D..",
+            "/DoubleEG/..Run2016E..",
+            "/DoubleEG/..Run2016F.."
+        ]
+    }
+}
