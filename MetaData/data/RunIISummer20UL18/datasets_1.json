@@ -13329,7 +13329,11 @@
             {
                 "name": "/store/group/phys_higgs/cmshgg/emanuele/flashgg/RunIISummer20UL18/legacyRunII/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18-legacyRunII-v0-RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/220702_193827/0000/myMicroAODOutputFile_602.root", 
                 "nevents": 24318
-=======
+            }
+        ], 
+        "parent_n_units": null, 
+        "vetted": true
+    },
     "/EGamma/phys_higgs-RunIISummer20UL18-legacyRunII-v0-Run2018C-UL2018_MiniAODv2-v1-a7c88d6f8b657df10cc9b059890284c0/USER": {
         "dset_type": "data", 
         "files": [

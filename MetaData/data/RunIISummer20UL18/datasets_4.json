@@ -4881,7 +4881,11 @@
             {
                 "name": "/store/group/phys_higgs/cmshgg/emanuele/flashgg/RunIISummer20UL18_prod2/legacyRunII/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18_prod2-legacyRunII-v0-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/220715_161948/0000/myMicroAODOutputFile_834.root", 
                 "nevents": 24153
-=======
+            }
+        ], 
+        "parent_n_units": null, 
+        "vetted": true
+    },
     "/EGamma/phys_higgs-RunIISummer20UL18-legacyRunII-v0-Run2018B-UL2018_MiniAODv2-v1-a7c88d6f8b657df10cc9b059890284c0/USER": {
         "dset_type": "data", 
         "files": [

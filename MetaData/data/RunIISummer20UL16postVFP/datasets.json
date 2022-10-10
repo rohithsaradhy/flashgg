@@ -3328,7 +3328,11 @@
             {
                 "name": "/store/group/phys_higgs/cmshgg/emanuele/flashgg/RunIISummer20UL18_prod2/legacyRunII/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18_prod2-legacyRunII-v0-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1/220715_161238/0000/myMicroAODOutputFile_240.root", 
                 "nevents": 25000
-=======
+            }
+        ], 
+        "parent_n_units": null, 
+        "vetted": true
+    },
     "/GluGluHToGG_M90_TuneCP5_13TeV-amcatnloFXFX-pythia8/phys_higgs-RunIISummer20UL16postVFP-legacyRunII-v0-RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2-ac9c9b59f08ec925c0816433afdfd7c8/USER": {
         "dset_type": "mc", 
         "files": [
