@@ -100,7 +100,7 @@
         "tth_ALT_0Mf05" : [
             "/ttHiggs0Mf05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
         ],
-        "tth_ALT_0PM"
+        "tth_ALT_0PM" : [
             "/ttHiggs0PMToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
         ]
     }
