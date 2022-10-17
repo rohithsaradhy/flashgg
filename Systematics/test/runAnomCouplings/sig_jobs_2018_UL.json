@@ -92,7 +92,8 @@
         ],
         "tth" : [
             "/ttHJetToGG_M120_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
-            "/ttHJetToGG_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8"
+            "/ttHJetToGG_M125_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8",
+            "/ttHJetToGG_M130_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8"
         ],
         "tth_ALT_0M" : [
             "/ttHiggs0MToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
