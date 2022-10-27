@@ -42,10 +42,14 @@ def writeSubFiles(treedir,outdir,options):
     # Write details depending on mode
     subdirs = glob.glob("%s/*"%treedir)
     for idx,idir in enumerate(subdirs):
-        _f.write("if [ $1 -eq %g ]; then\n"%idx)
-        _f.write("cd %s \n"%idir)
-        _f.write("hadd_all.py \n")
-        _f.write("fi\n")
+      cmd = "hadd_all.py"
+      if "data" in idir: cmd += " --doBigData "
+      fnames = glob.glob("%s/*.root"%idir)
+      if len(fnames) and 'EGamma' in fnames[0]: cmd += " --doEGamma "
+      _f.write("if [ $1 -eq %g ]; then\n"%idx)
+      _f.write("cd %s \n"%idir)
+      _f.write("%s \n"%cmd)
+      _f.write("fi\n")
 
     # Close .sh file
     _f.close()
