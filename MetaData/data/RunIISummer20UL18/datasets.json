@@ -1790,6 +1790,98 @@
         "parent_n_units": null, 
         "vetted": true
     }, 
+    "/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM": {
+        "dset_type": "mc", 
+        "files": [
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/BE8C0888-AF6B-384D-A48A-BA71F0BBA184.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/A76677F9-695F-2244-99F6-716702AB9280.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/60068F02-A4F6-8541-A2E4-AB7EFB0D75E8.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/1E375119-BDA7-E44A-9874-2D4A3BF727CC.root", 
+                "nevents": 68000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/10A908FC-E649-C842-B68E-7A51A2E08757.root", 
+                "nevents": 68000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/5C4CA32D-7057-974A-AEB2-A99E0E5202B6.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/F8B1D22D-F465-8140-8F54-FB83D9AD77D4.root", 
+                "nevents": 82000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/0E487BC5-FAA4-CC4A-B3A1-9881DBB829E0.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/28F0ED11-D2B4-CC41-BCDA-11C8B05CEAA8.root", 
+                "nevents": 84000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/ED9CC380-C808-0F4B-95C9-3F79312F6664.root", 
+                "nevents": 52000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/E1969323-BDF9-834A-9CD0-4A777606F6C7.root", 
+                "nevents": 44000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/A91DF8FD-825D-9E47-ACCB-0CCA5F9919F7.root", 
+                "nevents": 56000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/985EB2D2-12DF-5045-BBD1-950461565FDC.root", 
+                "nevents": 54000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/9A258B2A-F337-C047-8F73-4CF20CD22B04.root", 
+                "nevents": 52000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/C8167A81-8334-E246-87EB-03857253ECB0.root", 
+                "nevents": 14000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/5A056684-AC89-FB4A-877D-F96A94E65197.root", 
+                "nevents": 4000
+            }, 
+            {
+                "bad": true, 
+                "name": "/store/mc/RunIISummer20UL18MiniAODv2/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/40000/187B53A9-4956-6C4A-AAAA-90B1EC157DD0.root", 
+                "nevents": 2000
+            }
+        ], 
+        "parent_n_units": null, 
+        "vetted": true
+    }, 
     "/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8/phys_higgs-RunIISummer20UL18-legacyRunII-v0-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2-bcc9183289b17c406da7c1353c627e63/USER": {
         "dset_type": "mc", 
         "files": [
