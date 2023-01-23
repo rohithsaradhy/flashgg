@@ -12,5 +12,8 @@ flashggStageOneCombinedTag = cms.EDProducer("FlashggStageOneCombinedTagProducer"
                                inputTagJets = UnpackedJetCollectionVInputTag,
                                rawDiphoBounds = cms.vdouble(),
                                rawDijetBounds = cms.vdouble(),
-                               rawVhHadBounds = cms.vdouble()
+                               rawVhHadBounds = cms.vdouble(),
+                               rawVbfpBSMBounds = cms.vdouble(),
+                               rawVbfpBKGBounds = cms.vdouble(),
+                               rawVbfpD0MBounds = cms.vdouble(),                                            
                                )
