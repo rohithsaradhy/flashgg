@@ -387,7 +387,8 @@
                 "nevents": 25000
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }, 
     "/WW_TuneCP5_13TeV-pythia8/phys_higgs-RunIISummer20UL16preVFP-legacyRunII-v0-RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1-534b84db68f7e3f7ed9b9ef9f0ca37dc/USER": {
         "dset_type": "mc", 
@@ -2949,7 +2950,8 @@
                 "nevents": 25000
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }, 
     "/ZZ_TuneCP5_13TeV-pythia8/phys_higgs-RunIISummer20UL16preVFP-legacyRunII-v0-RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2-534b84db68f7e3f7ed9b9ef9f0ca37dc/USER": {
         "dset_type": "mc", 
@@ -3531,6 +3533,7 @@
                 "nevents": 25000
             }
         ], 
-        "parent_n_units": 3526000
+        "parent_n_units": 3526000, 
+        "vetted": true
     }
 }

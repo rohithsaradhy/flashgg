@@ -202,7 +202,10 @@
         "rawVhHadBounds" : [
                              0.835,
                              0.534
-                           ]
+                           ],
+        "rawVbfpBSMBounds" : [ 0.97 ],
+        "rawVbfpBKGBounds" : [ 0.05 ],
+        "rawVbfpD0MBounds" : [ 0.6 ]
     },
 
     "MUON_ID" : "Medium",

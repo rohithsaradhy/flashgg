@@ -1647,7 +1647,8 @@
                 "nevents": 25014
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }, 
     "/VBFHToGG_M125_TuneCP5Up_13TeV-amcatnlo-pythia8/phys_higgs-RunIISummer20UL16postVFP-legacyRunII-v0-RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1-b3dcf2148bf9ac8608254cbbfd602fb5/USER": {
         "dset_type": "mc", 
@@ -1949,7 +1950,8 @@
                 "nevents": 25000
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }, 
     "/WZ_TuneCP5_13TeV-pythia8/phys_higgs-RunIISummer20UL16postVFP-legacyRunII-v0-RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1-d611002a012201ae9e089a2961e36e8b/USER": {
         "dset_type": "mc", 
@@ -3227,7 +3229,8 @@
                 "nevents": 25000
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }, 
     "/ttHJetToGG_M125_TuneCP5Up_13TeV-amcatnloFXFX-madspin-pythia8/phys_higgs-RunIISummer20UL16postVFP-legacyRunII-v0-RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1-b82b7aa226bfd21c747ef80059802ac2/USER": {
         "dset_type": "mc", 
@@ -3309,6 +3312,7 @@
                 "nevents": 8920
             }
         ], 
-        "parent_n_units": null
+        "parent_n_units": null, 
+        "vetted": true
     }
 }
