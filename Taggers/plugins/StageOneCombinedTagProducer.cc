@@ -34,12 +34,13 @@ namespace flashgg {
     private:
         void produce( Event &, const EventSetup & ) override;
         int chooseCategory( float );
+        int chooseVBFCategory( float pbsm, float pbkg, float d0m );
         int computeStage1Kinematics( const StageOneCombinedTag );
         float setEffectivePtH( const GluGluHMVAResult, float );
         int setEffectiveNj( const GluGluHMVAResult, int );
 
         bool useMultiClass_;
-        std::vector<double> rawDiphoBounds_, rawDijetBounds_, rawGghBounds_, rawVhHadBounds_;
+        std::vector<double> rawDiphoBounds_, rawDijetBounds_, rawGghBounds_, rawVhHadBounds_, rawVbfpBSMBounds_, rawVbfpBKGBounds_, rawVbfpD0MBounds_;
         std::map<std::string, float> diphoBounds_, dijetBounds_, gghBounds_, vhHadBounds_;
         void constructBounds();
 
@@ -78,6 +79,14 @@ namespace flashgg {
         rawDijetBounds_ = iConfig.getParameter<std::vector<double> > ("rawDijetBounds");
         rawVhHadBounds_ = iConfig.getParameter<std::vector<double> > ("rawVhHadBounds");
         rawGghBounds_   = iConfig.getParameter<std::vector<double> > ("rawGghBounds");
+        rawVbfpBSMBounds_   = iConfig.getParameter<std::vector<double> > ("rawVbfpBSMBounds");
+        rawVbfpBKGBounds_   = iConfig.getParameter<std::vector<double> > ("rawVbfpBKGBounds");
+        rawVbfpD0MBounds_   = iConfig.getParameter<std::vector<double> > ("rawVbfpD0MBounds");
+        // we are counting on ascending order - update this to give an error message or exception
+        assert( is_sorted( rawVbfpBSMBounds_.begin(), rawVbfpBSMBounds_.end() ) );
+        assert( is_sorted( rawVbfpBKGBounds_.begin(), rawVbfpBKGBounds_.end() ) );
+        assert( is_sorted( rawVbfpD0MBounds_.begin(), rawVbfpD0MBounds_.end() ) );
+
         constructBounds();
 
         produces<vector<DiPhotonTagBase> >();
@@ -174,13 +183,39 @@ namespace flashgg {
         evt.put( std::move( stage1tags ) );
     }
 
+    int StageOneCombinedTagProducer::chooseVBFCategory( float pbsm, float pbkg, float d0m ) {
+        // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
+        if (pbsm<-100 || pbkg<-100 || d0m<-100) return -1;
+
+        int n,m,o;
+        for( n = 0 ; n < (int)rawVbfpBSMBounds_.size() ; n++ ) {
+            if( (double)pbsm > rawVbfpBSMBounds_[rawVbfpBSMBounds_.size() - n - 1] ) break;
+        }
+        for( m = 0 ; m < (int)rawVbfpBKGBounds_.size() ; m++ ) {
+            if( (double)pbkg > rawVbfpBKGBounds_[rawVbfpBKGBounds_.size() - m - 1] ) break;
+        }
+        for( o = 0 ; o < (int)rawVbfpD0MBounds_.size() ; o++ ) {
+            if( (double)d0m > rawVbfpD0MBounds_[rawVbfpD0MBounds_.size() - o - 1] ) break;
+        }
+
+        int CAT = (int)((rawVbfpD0MBounds_.size()+1) * (rawVbfpBSMBounds_.size()+1) * m +
+                        (rawVbfpBSMBounds_.size()+1) * o +
+                        n);
+
+        // std::cout << "pbkg = " << pbkg << "\td0m = " << d0m << "\tpbsm = " << pbsm
+        //           << "m = " << m << "\to = " << o << "\tn = " << n 
+        //           << " CAT = " << CAT << std::endl;
+
+        return CAT;
+    }
+
     int StageOneCombinedTagProducer::computeStage1Kinematics( const StageOneCombinedTag tag_obj ) 
     {
         int chosenTag_ = DiPhotonTagBase::stage1recoTag::LOGICERROR;
         float ptH = tag_obj.diPhoton()->pt();
         unsigned int nJ = 0;
         float mjj = 0.;
-        float ptHjj = 0.;
+        //float ptHjj = 0.; // used in the STXS analysis (substituted by VBF AC categorization)
         float mvaScore = tag_obj.diPhotonMVA().transformedMvaValue(); // maps output score from TMVA back to XGBoost original
         float dijetScore = tag_obj.VBFMVA().prob_VBF_value();
         float gghScore = tag_obj.VBFMVA().prob_ggH_value();
@@ -189,6 +224,10 @@ namespace flashgg {
         float subleadMvaScore = tag_obj.diPhotonMVA().subleadmva;
         float leadPToM = tag_obj.diPhotonMVA().leadptom;
         float subleadPToM = tag_obj.diPhotonMVA().subleadptom;
+        float dnn_pbsm = tag_obj.VBFMVA().dnnprob_bsm_value();
+        float dnn_pbkg = tag_obj.VBFMVA().dnnprob_bkg_value();
+        float d0m = tag_obj.VBFMVA().mela_D0minus_value();
+        int vbfcat = chooseVBFCategory(dnn_pbsm, dnn_pbkg, d0m);
         edm::Ptr<flashgg::Jet> j0 = tag_obj.VBFMVA().leadJet_ptr; 
         edm::Ptr<flashgg::Jet> j1 = tag_obj.VBFMVA().subleadJet_ptr;
         
@@ -201,7 +240,7 @@ namespace flashgg {
 
         if ( nJ >= 2 ) {
             mjj = ( j0->p4() + j1->p4() ).mass();
-            ptHjj = ( j0->p4() + j1->p4() + tag_obj.diPhoton()->p4() ).pt();
+            //ptHjj = ( j0->p4() + j1->p4() + tag_obj.diPhoton()->p4() ).pt();
         }
 
         if ( useMultiClass_ && mjj < 350. ) {
@@ -351,64 +390,23 @@ namespace flashgg {
         } else { // 2 jets
             bool reProcess = false;
             if ( mjj > 350. && j0->p4().pt() > 40. && j1->p4().pt() > 30. && leadMvaScore > -0.2 && subleadMvaScore > -0.2 ) { //cuts optimised using data-driven dijet BDT plus new diphoton BDT
-                if ( ptH > 200. ) {
-                    if (dijetScore > dijetBounds_["RECO_VBFTOPO_BSM_Tag0"] && gghScore < gghBounds_["RECO_VBFTOPO_BSM_Tag0"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_BSM_Tag0"]) {
-                        chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_BSM_Tag0;
-                    } else if (dijetScore > dijetBounds_["RECO_VBFTOPO_BSM_Tag1"] && gghScore < gghBounds_["RECO_VBFTOPO_BSM_Tag1"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_BSM_Tag1"]) {
-                        chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_BSM_Tag1;
-                    }
-                    else { 
-                        reProcess = true;
-                    }
+                if ( vbfcat == 1 ) {
+                    chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACGGH_Tag0;
                 }
-                else if ( ptHjj > 0. && ptHjj < 25.) {
-                    if ( mjj > 700. ) {
-                        if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag0"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag0"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag0"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag0;
-                        } else if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag1"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag1"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag1"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3VETO_HIGHMJJ_Tag1;
-                        }
-                        else { 
-                            reProcess = true;
-                        }
-                    }
-                    else if ( mjj > 350. ) {
-                        if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag0"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag0"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag0"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag0;
-                        } else if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag1"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag1"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag1"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag1;
-                        }
-                        else { 
-                            reProcess = true;
-                        }
-                    }
-                    else { 
-                        reProcess = true;
-                    }
-                } else if ( ptHjj > 25. ) {
-                    if ( mjj > 700. ) {
-                        if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag0"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag0"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag0"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3_HIGHMJJ_Tag0;
-                        } else if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag1"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag1"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3_HIGHMJJ_Tag1"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3_HIGHMJJ_Tag1;
-                        }
-                        else { 
-                            reProcess = true;
-                        }
-                    }
-                    else if ( mjj > 350. ) {
-                        if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag0"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag0"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag0"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3_LOWMJJ_Tag0;
-                        } else if (dijetScore > dijetBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag1"] && gghScore < gghBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag1"]  && mvaScore > diphoBounds_["RECO_VBFTOPO_JET3_LOWMJJ_Tag1"]) {
-                            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_JET3_LOWMJJ_Tag1;
-                        }
-                        else { 
-                            reProcess = true;
-                        }
-                    }
-                    else { 
-                        reProcess = true;
-                    }
+                else if ( vbfcat == 3 ) {
+                    chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACGGH_Tag1;
+                }
+                else if ( vbfcat == 5 ) {
+                    chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVBFSM_Tag0;
+                }
+                else if ( vbfcat == 6 ) {
+                    chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVBFBSM_Tag0;
+                }
+                else if ( vbfcat == 7 ) {
+                    chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVBFBSM_Tag1;
+                }
+                else {
+                    reProcess = true;
                 }
             }
             else if ( mjj > 60. && mjj < 120. && j0->p4().pt() > 30. && j1->p4().pt() > 30. && abs(j0->p4().eta()) < 2.4 && abs(j1->p4().eta()) < 2.4 && leadMvaScore > -0.2 && subleadMvaScore > -0.2 ) { //cuts for VH hadronic

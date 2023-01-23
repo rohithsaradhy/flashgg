@@ -30,6 +30,12 @@ elesystlabels = []
 musystlabels = []
 
 from flashgg.MetaData.JobConfig import customize
+customize.options.register('anomalousCouplings',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'anomalousCouplings'
+                           )
 customize.options.register('vbfTagsOnly',
                            False,
                            VarParsing.VarParsing.multiplicity.singleton,
@@ -226,6 +232,7 @@ print "Printing defaults"
 print 'acceptance '+str(customize.acceptance)
 print 'tthTagsOnly '+str(customize.tthTagsOnly)
 print 'vbfTagsOnly '+str(customize.vbfTagsOnly)
+print 'anomalousCouplings '+str(customize.anomalousCouplings)
 # import flashgg customization to check if we have signal or background
 from flashgg.MetaData.JobConfig import customize
 # set default options if needed
@@ -252,6 +259,7 @@ print "Printing options"
 print 'acceptance '+str(customize.acceptance)
 print 'tthTagsOnly '+str(customize.tthTagsOnly)
 print 'vbfTagsOnly '+str(customize.vbfTagsOnly)
+print 'anomalousCouplings '+str(customize.anomalousCouplings)
 
 # process.load("flashgg/Taggers/flashggTagSequence_cfi")
 # process.flashggTagSequence = flashggPrepareTagSequence(customize.metaConditions)
@@ -319,6 +327,13 @@ if customize.vbfTagsOnly:
     minimalVariables = acc.variablesToDump(is_signal)
     systematicVariables = acc.systematicVariables()
 
+if customize.anomalousCouplings:
+    assert (not customize.doHTXS)
+    from flashgg.Systematics.stageOneAcCustomize import StageOneAcCustomize
+    acc = StageOneAcCustomize(process, customize, customize.metaConditions)
+    minimalVariables = acc.variablesToDump(is_signal)
+    systematicVariables = acc.systematicVariables()
+
 process.flashggTHQLeptonicTag.processId = cms.string(str(customize.processId))
 
 print 'here we print the tag sequence after'
@@ -348,6 +363,7 @@ if customize.vbfTagsOnly:
     process.flashggTagSorter.TagPriorityRanges = cms.VPSet(
         cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
     )
+
 
 print "customize.processId:",customize.processId
 # load appropriate scale and smearing bins here
@@ -560,6 +576,8 @@ elif customize.doubleHTagsOnly:
         tag_only_variables["VBFDoubleHTag"] = hhc.vbfHHVariables()    
 elif customize.doStageOne:
     tagList = soc.tagList
+elif customize.anomalousCouplings:
+    tagList = acc.tagList
 elif customize.vbfTagsOnly:
     tagList=[
         ["VBFTag",8]
@@ -568,7 +586,7 @@ else:
     tagList=[
         ["NoTag",0],
         ["UntaggedTag",4],
-        ["VBFTag",3],
+        ["VBFTag",8],
         ["ZHLeptonicTag",2],
         ["WHLeptonicTag",6],
         ["VHMetTag",2],
@@ -578,6 +596,8 @@ else:
         ["THQLeptonicTag",0],
         ["TTHDiLeptonTag",0]
         ]
+print "The list of tags is the following:"
+print tagList
 
 definedSysts=set()
 process.tagsDumper.classifierCfg.remap=cms.untracked.VPSet()
@@ -606,6 +626,8 @@ for tag in tagList:
               currentVariables = ["stage0bin[72,9.5,81.5] := tagTruth().HTXSstage0bin"]
           elif customize.doStageOne:
               currentVariables = copy.deepcopy(soc.noTagVariables())
+          elif customize.anomalousCouplings:
+              currentVariables = copy.deepcopy(acc.noTagVariables())
           else:
               currentVariables = []
       isBinnedOnly = (systlabel !=  "")
@@ -646,7 +668,7 @@ for tag in tagList:
                            nAlphaSWeights=nAlphaSWeights,
                            nScaleWeights=nScaleWeights,
                            splitPdfByStage0Bin=customize.doHTXS,
-                           splitPdfByStage1Bin=customize.doStageOne,
+                           splitPdfByStage1Bin=(customize.doStageOne or customize.anomalousCouplings),
                            dumpGenWeight=customize.dumpGenWeight
                            )
 
@@ -735,16 +757,16 @@ else:
                          process.flashggMetSystematics*
                          process.flashggMuonSystematics*
                          process.flashggElectronSystematics*
-                         (process.flashggUnpackedJets*
-                          process.jetSystematicsSequence)*
-                         (process.flashggTagSequence
-                          +process.systematicsTagSequences)*
+                         (process.flashggUnpackedJets*process.jetSystematicsSequence)*
+                         (process.flashggTagSequence*process.systematicsTagSequences)*
                          process.flashggSystTagMerger*
                          process.penultimateFilter*
                          process.finalFilter*
                          process.tagsDumper)
     if customize.doStageOne: 
         if soc.modifyForttH: soc.modifyWorkflowForttH(systlabels, phosystlabels, metsystlabels, jetsystlabels)
+    if customize.anomalousCouplings: 
+        if acc.modifyForttH: acc.modifyWorkflowForttH(systlabels, phosystlabels, metsystlabels, jetsystlabels)
 
 if customize.doBJetRegression:
 
@@ -857,8 +879,8 @@ if customize.verboseSystDump:
 ############################
 ## Dump the output Python ##
 ############################
-#print process.dumpPython()
-#processDumpFile = open('processDump.py', 'w')
-#print >> processDumpFile, process.dumpPython()
+# print process.dumpPython()
+# processDumpFile = open('processDump.py', 'w')
+# print >> processDumpFile, process.dumpPython()
 # call the customization
 customize(process)

@@ -195,7 +195,10 @@
         "rawVhHadBounds" : [
                              0.842,
                              0.613
-                           ]
+                           ],
+        "rawVbfpBSMBounds" : [ 0.97 ],
+        "rawVbfpBKGBounds" : [ 0.05 ],
+        "rawVbfpD0MBounds" : [ 0.6 ]
     },
 
 

@@ -189,6 +189,16 @@ string DiPhotonTagBase::stage1KinematicLabel() const {
         return string("RECO_VBFLIKEGGH_Tag0");
     case stage1recoTag::RECO_VBFLIKEGGH_Tag1:
         return string("RECO_VBFLIKEGGH_Tag1");
+    case stage1recoTag::RECO_VBFTOPO_ACGGH_Tag0:
+        return string("RECO_VBFTOPO_ACGGH_Tag0");
+    case stage1recoTag::RECO_VBFTOPO_ACGGH_Tag1:
+        return string("RECO_VBFTOPO_ACGGH_Tag1");
+    case stage1recoTag::RECO_VBFTOPO_ACVBFSM_Tag0:
+        return string("RECO_VBFTOPO_ACVBFSM_Tag0");
+    case stage1recoTag::RECO_VBFTOPO_ACVBFBSM_Tag0:
+        return string("RECO_VBFTOPO_ACVBFBSM_Tag0");
+    case stage1recoTag::RECO_VBFTOPO_ACVBFBSM_Tag1:
+        return string("RECO_VBFTOPO_ACVBFBSM_Tag1");
     case stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag0:
         return string("RECO_WH_LEP_PTV_0_75_Tag0");
     case stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag1:

@@ -46,7 +46,8 @@ namespace flashgg {
                              RECO_TTH_HAD_PTH_120_200_Tag0, RECO_TTH_HAD_PTH_120_200_Tag1, RECO_TTH_HAD_PTH_120_200_Tag2, RECO_TTH_HAD_PTH_120_200_Tag3,
                              RECO_TTH_HAD_PTH_200_300_Tag0, RECO_TTH_HAD_PTH_200_300_Tag1, RECO_TTH_HAD_PTH_200_300_Tag2, 
                              RECO_TTH_HAD_PTH_GT300_Tag0, RECO_TTH_HAD_PTH_GT300_Tag1,
-                             RECO_THQ_LEP };
+                             RECO_THQ_LEP,
+                             RECO_VBFTOPO_ACGGH_Tag0, RECO_VBFTOPO_ACGGH_Tag1, RECO_VBFTOPO_ACVBFSM_Tag0, RECO_VBFTOPO_ACVBFBSM_Tag0, RECO_VBFTOPO_ACVBFBSM_Tag1        };
 
         DiPhotonTagBase();
         virtual ~DiPhotonTagBase(); 
