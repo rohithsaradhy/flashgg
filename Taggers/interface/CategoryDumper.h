@@ -614,13 +614,6 @@ bool CategoryDumper<F, O>::isBinnedOnly( )
     weight_ = weight;
     genweight_ = genweight;
     
-    if ( rooVars_.getSize() == 0 || rooVars_pdfWeights_.getSize()==0 || rooVars_.getSize()>1e3 || rooVars_pdfWeights_.getSize()>1e3 ) {
-        std::cout << "size of rooVars_ = " << rooVars_.getSize() << std::endl;
-        std::cout << "size of rooVars_pdfWeights_ = " << rooVars_pdfWeights_.getSize() << std::endl;
-        std::cout << "This is a patological event, no variables inside, skip it." << std::endl;
-        return;
-    }
-
     if( dataset_ && (!binnedOnly_) ) {
         if ( rooVars_.find("weight") ) dynamic_cast<RooRealVar &>( rooVars_["weight"] ).setVal( weight_ );
     }
