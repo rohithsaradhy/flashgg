@@ -41,6 +41,9 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
                                   isGluonFusion = cms.bool(False),
                                   NNLOPSWeightFile = cms.FileInPath("flashgg/Taggers/data/NNLOPS_reweight.root"),
                                   applyNNLOPSweight = cms.bool(False),
+                                  melaWeightsLabels = cms.InputTag("melaGenMatrixElementWeightsJHU:labels"),
+                                  melaWeightsValues = cms.InputTag("melaGenMatrixElementWeightsJHU:values"),
+                                  storeMELAweights = cms.bool(False),
                                   SetHTXSinfo = cms.bool(True),
                                   AddTruthInfo= cms.bool(True)
                                   )
