@@ -185,7 +185,7 @@ customize.options.register('dumpTrees',
                            'dumpTrees'
                            )
 customize.options.register('dumpWorkspace',
-                           True,
+                           False,
                            VarParsing.VarParsing.multiplicity.singleton,
                            VarParsing.VarParsing.varType.bool,
                            'dumpWorkspace'
@@ -524,9 +524,10 @@ if is_signal and customize.melaEFT and (customize.processId.count('vbf_') or cus
     #process.lheInfosSeq += process.genParticleSequence
     #process.lheInfosSeq += process.particleLevelSequence
     from flashgg.Taggers.melaWeights_cff import addMelaWeights_ACJHU
-    addMelaWeights_ACJHU(process,mode)
+    addMelaWeights_ACJHU(process,mode,customize.metaConditions['bRegression']['year'])
     process.lheInfosSeq += process.weightsAC
 
+    
     variables_mela = [
         "h0phWeight[1,-999999.,999999.] := tagTruth().melaWeight(\"h0ph\")",
         "h0ph_f05Weight[1,-999999.,999999.] := tagTruth().melaWeight(\"h0ph_f05\")",
@@ -896,5 +897,6 @@ customize(process)
 #    systematicsInputList.append(tag)
 #    self.createJECESource()
 #    self.createJERESource()
+# 3. comment here the line: printSystematicInfo(process)
 
 
