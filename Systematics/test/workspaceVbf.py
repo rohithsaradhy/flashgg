@@ -526,7 +526,7 @@ if is_signal and customize.melaEFT and (customize.processId.count('vbf_') or cus
     from flashgg.Taggers.melaWeights_cff import addMelaWeights_ACJHU
     addMelaWeights_ACJHU(process,mode,customize.metaConditions['bRegression']['year'])
     process.lheInfosSeq += process.weightsAC
-
+    process.flashggTagSorter.storeMELAweights = True
     
     variables_mela = [
         "h0phWeight[1,-999999.,999999.] := tagTruth().melaWeight(\"h0ph\")",
