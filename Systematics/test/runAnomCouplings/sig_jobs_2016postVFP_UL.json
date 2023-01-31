@@ -3,7 +3,7 @@
     "processes": {
         "ggh_120"   : [
             "/GluGluHToGG_M120_TuneCP5_13TeV-amcatnloFXFX-pythia8"
-        ]
+        ],
 	"ggh_125"   : [
             "/GluGluHToGG_M125_TuneCP5_13TeV-amcatnloFXFX-pythia8"
         ],
