@@ -517,7 +517,7 @@ if is_signal and customize.melaEFT and (customize.processId.count('vbf_') or cus
     elif customize.processId.count('zh_'): 
         mode = "ZH_NLO"
     else: 
-        mdoe = "Decay_gammagamma"
+        mode = "Decay_gammagamma"
     if customize.datasetName().count("JHU"): mode.replace("NLO","LO")
     print "Calculating MELA weights for mode = ", mode
     customize.options.useParentDataset = True
