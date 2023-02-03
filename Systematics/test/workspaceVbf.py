@@ -509,12 +509,12 @@ customizeTagsDumper(process, customize) ## move all the default tags dumper conf
 
 ### MELA WEIGHTS #######
 process.lheInfosSeq = cms.Sequence()
-if is_signal and customize.melaEFT and (customize.processId.count('vbf_') or customize.processId.count('wh_') or customize.processId.count('zh_') or customize.processId.count('ggh_')):
-    if customize.processId.count('vbf_'): 
+if is_signal and customize.melaEFT and (customize.processId.count('vbf_') or customize.processId.count('wh_') or customize.processId.count('zh_') or customize.processId.count('ggh_') or customize.processId.count('tth_')):
+    if customize.processId.count('vbf_'):
         mode = "VBF_NLO"
-    elif customize.processId.count('wh_'): 
+    elif customize.processId.count('wh_'):
         mode = "WH_NLO"
-    elif customize.processId.count('zh_'): 
+    elif customize.processId.count('zh_'):
         mode = "ZH_NLO"
     else: 
         mode = "Decay_gammagamma"
