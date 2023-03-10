@@ -327,10 +327,19 @@ if options.createCrabConfig:
             ("_dipoleRecoilOff-TuneCP5_PSweights",""),
             ("_TuneCP5_PSWeights_narrow_13TeV-madgraph-pythia8","_13TeV"),
             ("-UL2017_MiniAODv2-v2","UL17"),
+            ("RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v3","UL16preVFP"),
+            ("RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v3","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v13-v3","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1","UL16postVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v3","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v4","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v5","UL16postVFP"),
+            ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v6","UL16postVFP"),
             ("RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v1","Summer19UL17"),
             ("RunIISummer19UL17MiniAODv2-106X_mc2017_realistic_v9-v1","Summer19UL17v2"),
-            ("RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1","Summer19UL18v2")
+            ("RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1","Summer19UL18v2"),
+            ("RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v3","Summer20UL17")
         ]
 
         for orig, replacement in replacements:
