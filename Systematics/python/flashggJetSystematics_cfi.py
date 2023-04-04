@@ -275,12 +275,12 @@ class jetSystematicsCustomize:
       self.process.jetCorrectorChain = cms.Sequence(self.process.ak4PFCHSL1FastL2L3CorrectorChain)
       self.process.jetSystematicsSequence = cms.Sequence(self.process.jetCorrectorChain)
       systematicsInputList = cms.VInputTag()
-      for jetInputTag in replaceTagList:
-         module,tag = self.createJetSystematicsForTag(jetInputTag)
-         self.process.jetSystematicsSequence += module
-         systematicsInputList.append(tag)
-         self.createJECESource()
-         self.createJERESource()
+      # for jetInputTag in replaceTagList:
+      #    module,tag = self.createJetSystematicsForTag(jetInputTag)
+      #    self.process.jetSystematicsSequence += module
+      #    systematicsInputList.append(tag)
+      #    self.createJECESource()
+      #    self.createJERESource()
       return systematicsInputList
 
    def createJECESource(self):
