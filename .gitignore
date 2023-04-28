@@ -28,3 +28,19 @@ AutoDict_*
 
 # This is a symlink created by setup.sh
 DataFormats/src/classes_def.xml
+
+
+
+#AC Specific Files to ignore
+Systematics/test/scripts_20*/wh_*/
+Systematics/test/scripts_20*/zh_*/
+
+Systematics/test/scripts_20*/old/
+Systematics/test/scripts_20*/*.cc
+Systematics/test/scripts_20*/json/old*/
+Systematics/test/scripts_2016RRpre/core.141384
+QGL_AK4chs_94X.db
+.vscode/
+MetaData/data/datasets.json
+
+
