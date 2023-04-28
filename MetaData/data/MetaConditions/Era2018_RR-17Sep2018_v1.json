@@ -181,12 +181,12 @@
     "MUON_ID" : "Medium",
     "MUON_ISO" : "LooseRel",
 
-    "MUON_ID_JSON_FileName" : "flashgg/Systematics/data/Muon2018_RunABCD_SF_ID.json",
-    "MUON_ID_JSON_FileName_LowPt" : "flashgg/Systematics/data/Muon2018_RunABCD_SF_ID_lowPt.json",
-    "MUON_ISO_JSON_FileName" : "flashgg/Systematics/data/Muon2018_RunABCD_SF_ISO.json",
+    "MUON_ID_JSON_FileName" : "flashgg/Systematics/data/Muon_UL2018_RunABCD_SF_ID.json",
+    "MUON_ID_JSON_FileName_LowPt" : "flashgg/Systematics/data/Muon_UL2018_RunABCD_SF_ID_lowPt.json",
+    "MUON_ISO_JSON_FileName" : "flashgg/Systematics/data/Muon_UL2018_RunABCD_SF_ISO.json",
 
     "MUON_ID_RefTracks" : "TrackerMuons",
-    "MUON_ID_RefTracks_LowPt" : "genTracks",
+    "MUON_ID_RefTracks_LowPt" : "TrackerMuons",
 
 
     "Ele_ID_SF_FileName" : "flashgg/Systematics/data/combined_eleIDSFs_2018.json",
@@ -327,7 +327,10 @@
 
     "L1Prefiring" :
     {
-        "isRelevant" : false
+        "isECALRelevant" : false,
+        "applyToCentral" : false,
+        "MuonFileName"   : "flashgg/Taggers/data/L1MuonPrefiringParametriations.root",
+        "dataeraMuon"    : "20172018"
     },
 
     "THQLeptonicTag":
