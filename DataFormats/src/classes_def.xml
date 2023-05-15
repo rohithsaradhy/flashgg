@@ -46,6 +46,9 @@
 <class name="flashgg::VHhadMVAResult"/>
 <class name="std::vector<flashgg::VHhadMVAResult>"/>
 <class name="edm::Wrapper<std::vector<flashgg::VHhadMVAResult> >"/>
+<class name="flashgg::VHhadACDNNResult"/>
+<class name="std::vector<flashgg::VHhadACDNNResult>"/>
+<class name="edm::Wrapper<std::vector<flashgg::VHhadACDNNResult> >"/>
 <class name="flashgg::GluGluHMVAResult"/>
 <class name="std::vector<flashgg::GluGluHMVAResult>"/>
 <class name="edm::Wrapper<std::vector<flashgg::GluGluHMVAResult> >"/>
@@ -219,6 +222,9 @@
 </class>
 <class name="std::vector<flashgg::VHHadronicTag>"/>
 <class name="edm::Wrapper<std::vector<flashgg::VHHadronicTag> >"/>
+<class name="flashgg::VHHadronicACTag"/>
+<class name="std::vector<flashgg::VHHadronicACTag>"/>
+<class name="edm::Wrapper<std::vector<flashgg::VHHadronicACTag> >"/>
 <class name="edm::Ptr<flashgg::DiPhotonTagBase>"/>
 <class name="edm::Wrapper<edm::Ptr<flashgg::DiPhotonTagBase> >"/>
 <class name="edm::Ptr<reco::Vertex>"/> 

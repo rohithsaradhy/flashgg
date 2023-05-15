@@ -3,6 +3,7 @@ from flashgg.MicroAOD.flashggJets_cfi import flashggUnpackedJets
 from flashgg.Taggers.flashggDiPhotonMVA_cfi import flashggDiPhotonMVA
 from flashgg.Taggers.flashggVBFMVA_cff import flashggVBFMVA,flashggVBFDiPhoDiJetMVA
 from flashgg.Taggers.flashggVHhadMVA_cff import flashggVHhadMVA
+from flashgg.Taggers.flashggVHhadAC_cff import flashggVHhadACDNN
 from flashgg.Taggers.flashggGluGluHMVA_cff import flashggGluGluHMVA
 from flashgg.Taggers.flashggPrefireDiPhotons_cff import flashggPrefireDiPhotons
 from flashgg.Taggers.flashggTags_cff import *
@@ -39,6 +40,7 @@ def flashggPrepareTagSequence(process, options):
                                       * flashggUnpackedJets
                                       * flashggVBFMVA
                                       * flashggVHhadMVA
+                                      * flashggVHhadACDNN
                                       * flashggGluGluHMVA
                                       * flashggVBFDiPhoDiJetMVA
                                       * ( flashggUntagged
@@ -53,7 +55,8 @@ def flashggPrepareTagSequence(process, options):
                                           + flashggVHMetTag
                                           + flashggWHLeptonicTag
                                           + flashggZHLeptonicTag
-                                          + flashggVHHadronicTag
+                                          # + flashggVHHadronicTag
+                                          + flashggVHHadronicACTag
                                       )
                                       * flashggTagSorter
                                   )

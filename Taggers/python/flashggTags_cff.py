@@ -635,6 +635,31 @@ flashggVHHadronicTag = cms.EDProducer("FlashggVHHadronicTagProducer",
                                       phoIdMVAThreshold = cms.double(-0.9)
 )
 
+flashggVHHadronicACTag = cms.EDProducer("FlashggVHHadronicACTagProducer",
+                                      DiPhotonTag = cms.InputTag('flashggPreselectedDiPhotons'),
+                                      SystLabel=cms.string(""),
+                                      MVAResultTag=cms.InputTag('flashggDiPhotonMVA'),
+                                      VHhadACDNNResult=cms.InputTag('flashggVHhadACDNN'),
+                                      #JetTag = cms.InputTag('flashggSelectedJets'),
+                                      inputTagJets= UnpackedJetCollectionVInputTag,
+                                      GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
+                                      leadPhoOverMassThreshold = cms.double(1./3),
+                                      subleadPhoOverMassThreshold = cms.double(0.25),
+                                      diphoMVAThreshold = cms.double(0.6),
+                                      jetsNumberThreshold = cms.double(2.),
+                                      jetPtThreshold = cms.double(30.),
+                                      jetEtaThreshold= cms.double(2.6),
+                                      dRJetToPhoLThreshold = cms.double(0.4),
+                                      dRJetToPhoSThreshold = cms.double(0.4),
+                                      dijetMassLowThreshold = cms.double(0.),
+                                      dijetMassHighThreshold = cms.double(250.),
+                                      cosThetaStarThreshold = cms.double(-1.),
+                                      maxPhoIdMVAThreshold = cms.double(0.0),
+                                      minPhoIdMVAThreshold = cms.double(0.0),
+                                      Categories_dnnbkg = cms.vdouble(0.067206, 0.067206, 0.406570),
+                                      Categories_dnnbsm = cms.vdouble(0.8     , 0.8     , 0.45    )
+)
+
 # Tag is for jet studies only, not in default sequence
 flashggZPlusJetTag = cms.EDProducer("FlashggZPlusJetTagProducer",
                                     DiPhotonTag    = cms.InputTag('flashggPreselectedDiPhotons'),

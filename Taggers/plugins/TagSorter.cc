@@ -499,6 +499,8 @@ namespace flashgg {
             return string("VHLoose");
         case DiPhotonTagBase::tag_t::kVHHadronic:
             return string("VHHadronic");
+        case DiPhotonTagBase::tag_t::kVHHadronicAC:
+            return string("VHHadronicAC");
         case DiPhotonTagBase::tag_t::kVHEt:
             return string("VHEt");
         case DiPhotonTagBase::tag_t::kZHLeptonic:
