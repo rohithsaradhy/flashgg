@@ -16,8 +16,7 @@ TensorFlowInterface::TensorFlowInterface(const std::string & mvaFileName,
   , mvaInputVariables_(mvaInputVariables)
   , mvaInputVariables_mean_(mvaInputVariables_mean)
   , mvaInputVariables_var_(mvaInputVariables_var)
-  // , isDEBUG_(false)
-  , isDEBUG_(true)
+  , isDEBUG_(false)
 {
   // loading the model
   tensorflow::SessionOptions options;

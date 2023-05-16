@@ -443,18 +443,14 @@ namespace flashgg {
                 }
             }
             else if ( mjj > 0. && mjj < 250. && j0->p4().pt() > 30. && j1->p4().pt() > 30. && abs(j0->p4().eta()) < 2.4 && abs(j1->p4().eta()) < 2.4 && leadMvaScore > 0.0 && subleadMvaScore > 0.0 ) { //cuts for VH hadronic
-                std::cout << "DNNbkg : " << vhhaddnn_bkg << " | DNNbsm : " << vhhaddnn_bsm << " --> Cat. VHhad : " << vhhadcat << std::endl; 
                 if ( vhhadcat == 1 ) {
                     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVHHADSM_Tag0;
-                    std::cout << "Chosen Tag : " << chosenTag_ << std::endl;
                 }
                 else if ( vhhadcat == 2 ) {
                     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVHHADSM_Tag1;
-                    std::cout << "Chosen Tag : " << chosenTag_ << std::endl;
                 }
                 else if ( vhhadcat == 3 ) {
                     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVHHADBSM_Tag0;
-                    std::cout << "Chosen Tag : " << chosenTag_ << std::endl;
                 }
                 else { 
                     reProcess = true;
