@@ -21,8 +21,8 @@ class StageOneAcCustomize():
             ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag2",0],
             ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_120_200_Tag2",0],
             ["RECO_PTH_200_300_Tag0",0], ["RECO_PTH_200_300_Tag1",0],  ["RECO_PTH_300_450_Tag0",0], ["RECO_PTH_300_450_Tag1",0],
-            ["RECO_PTH_450_650_Tag0",0], ["RECO_PTH_GT650_Tag0",0], 
-            ["RECO_VBFTOPO_VHHAD_Tag0",0],  ["RECO_VBFTOPO_VHHAD_Tag1",0],
+            ["RECO_PTH_450_650_Tag0",0], ["RECO_PTH_GT650_Tag0",0],
+            ["RECO_VBFTOPO_ACVHHADSM_Tag0",0], ["RECO_VBFTOPO_ACVHHADSM_Tag1",0], ["RECO_VBFTOPO_ACVHHADBSM_Tag0",0],
             ["RECO_VBFTOPO_ACGGH_Tag0",0], ["RECO_VBFTOPO_ACGGH_Tag1",0],
             ["RECO_VBFTOPO_ACVBFSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag1",0],
             ["RECO_VBFLIKEGGH_Tag0",0], ["RECO_VBFLIKEGGH_Tag1",0], 
@@ -102,9 +102,15 @@ class StageOneAcCustomize():
             "prompt_pho_1 := diPhoton.leadingPhoton.genMatchType()",
             "prompt_pho_2 := diPhoton.subLeadingPhoton.genMatchType()"
         ]
+        
+        VHhad_dnn_probs = [
+            "dnnvh_bkg :=  VHhadACDNN.dnnvh_bkg",
+            "dnnvh_sm  :=  VHhadACDNN.dnnvh_sm ",
+            "dnnvh_bsm :=  VHhadACDNN.dnnvh_bsm",
+        ]
 
-        allNonWSVariables = var.dipho_variables + var.dijet_variables + VBF_mva_probs + matching_photon
-
+        allNonSigVariables = var.dipho_variables + var.dijet_variables + more_jet_vars + VBF_mva_probs + VHhad_dnn_probs + matching_photon
+        #ntup_variables = ws_variables + allNonSigVariables
         ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
 
         if self.customize.dumpWorkspace:
@@ -149,7 +155,8 @@ class StageOneAcCustomize():
         #self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
         #self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
         self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
-        self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        #self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        self.process.flashggTagSequence.remove(self.process.flashggVHHadronicACTag)
         self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
         self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
 
@@ -161,6 +168,8 @@ class StageOneAcCustomize():
         self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBSMBounds"] )
         self.process.flashggStageOneCombinedTag.rawVbfpBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBKGBounds"] )
         self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpD0MBounds"] )
+        self.process.flashggStageOneCombinedTag.rawVhhaddnnBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBKGBounds"] )
+        self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBSMBounds"] )
 
         ## set the pre-firing to be applied
         self.metaConditions["L1Prefiring"]["applyToCentral"] = True
