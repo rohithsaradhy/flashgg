@@ -206,8 +206,8 @@
         "rawVbfpBSMBounds" : [ 0.97 ],
         "rawVbfpBKGBounds" : [ 0.05 ],
         "rawVbfpD0MBounds" : [ 0.6 ],
-	"rawVhhaddnnBKGBounds" : [ 0.067206, 0.067206, 0.406570 ],
-	"rawVhhaddnnBSMBounds" : [ 0.8     , 0.8     , 0.45     ]
+	"rawVhhaddnnBKGBounds" : [ 0.062194, 0.089591, 0.234570, 0.535261 ],
+	"rawVhhaddnnBSMBounds" : [ 0.856   , 0.563   , 0.46    , 0.286    ]
     },
 
     "MUON_ID" : "Medium",

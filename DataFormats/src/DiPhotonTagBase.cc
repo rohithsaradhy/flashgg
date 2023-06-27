@@ -169,6 +169,8 @@ string DiPhotonTagBase::stage1KinematicLabel() const {
         return string("RECO_VBFTOPO_ACVHHADSM_Tag0");
     case stage1recoTag::RECO_VBFTOPO_ACVHHADSM_Tag1:
         return string("RECO_VBFTOPO_ACVHHADSM_Tag1");
+    case stage1recoTag::RECO_VBFTOPO_ACVHHADSM_Tag2:
+        return string("RECO_VBFTOPO_ACVHHADSM_Tag2");
     case stage1recoTag::RECO_VBFTOPO_ACVHHADBSM_Tag0:
         return string("RECO_VBFTOPO_ACVHHADBSM_Tag0");
     case stage1recoTag::RECO_VBFTOPO_JET3VETO_LOWMJJ_Tag0:

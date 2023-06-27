@@ -119,17 +119,19 @@ namespace flashgg {
     }
     
     int VHHadronicACTagProducer::chooseCategory( float dnnvh_bkg, float dnnvh_bsm ) {
-        //0 = Bkg, 1 = SM1, 2 = SM2, 3 = BSM
+        //0 = Bkg, 1 = SM1, 2 = SM2, 3 = SM3, 4 = BSM
         int cat = 0;
 
         if( (double)dnnvh_bkg < 0.0 && (double)dnnvh_bsm < 0.0 ){
             cat = -1;
         } else if( (double)dnnvh_bkg < cat_dnnbkg[0] && (double)dnnvh_bsm > cat_dnnbsm[0] ){ 
-            cat = 3;
+            cat = 4;
         } else if( (double)dnnvh_bkg < cat_dnnbkg[1] && (double)dnnvh_bsm < cat_dnnbsm[1] ){
             cat = 1;
         } else if( (double)dnnvh_bkg > cat_dnnbkg[1] && (double)dnnvh_bkg < cat_dnnbkg[2] && (double)dnnvh_bsm < cat_dnnbsm[2] ){ 
             cat = 2;
+        } else if( (double)dnnvh_bkg > cat_dnnbkg[2] && (double)dnnvh_bkg < cat_dnnbkg[3] && (double)dnnvh_bsm < cat_dnnbsm[3] ){ 
+            cat = 3;
         }
 
         return cat;
