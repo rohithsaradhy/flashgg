@@ -119,19 +119,21 @@ namespace flashgg {
     }
     
     int VHHadronicACTagProducer::chooseCategory( float dnnvh_bkg, float dnnvh_bsm ) {
-        //0 = Bkg, 1 = SM1, 2 = SM2, 3 = SM3, 4 = BSM
+        //0 = Bkg, 1 = SM1, 2 = SM2, 3 = SM3, 4 = BSM1, 5 = BSM2
         int cat = 0;
 
-        if( (double)dnnvh_bkg < 0.0 && (double)dnnvh_bsm < 0.0 ){
+        if( (double)dnnvh_bkg < 0.0 || (double)dnnvh_bsm < 0.0 ){
             cat = -1;
-        } else if( (double)dnnvh_bkg < cat_dnnbkg[0] && (double)dnnvh_bsm > cat_dnnbsm[0] ){ 
-            cat = 4;
-        } else if( (double)dnnvh_bkg < cat_dnnbkg[1] && (double)dnnvh_bsm < cat_dnnbsm[1] ){
+        } else if( (double)dnnvh_bkg < rawVhhaddnnBKGBounds_[0] && (double)dnnvh_bsm < rawVhhaddnnBSMBounds_[0] ){
             cat = 1;
-        } else if( (double)dnnvh_bkg > cat_dnnbkg[1] && (double)dnnvh_bkg < cat_dnnbkg[2] && (double)dnnvh_bsm < cat_dnnbsm[2] ){ 
+        } else if( (double)dnnvh_bkg > rawVhhaddnnBKGBounds_[0] && (double)dnnvh_bkg < rawVhhaddnnBKGBounds_[1] && (double)dnnvh_bsm < rawVhhaddnnBSMBounds_[1] ){ 
             cat = 2;
-        } else if( (double)dnnvh_bkg > cat_dnnbkg[2] && (double)dnnvh_bkg < cat_dnnbkg[3] && (double)dnnvh_bsm < cat_dnnbsm[3] ){ 
+        } else if( (double)dnnvh_bkg > rawVhhaddnnBKGBounds_[1] && (double)dnnvh_bkg < rawVhhaddnnBKGBounds_[2] && (double)dnnvh_bsm < rawVhhaddnnBSMBounds_[2] ){ 
             cat = 3;
+        } else if( (double)dnnvh_bkg < rawVhhaddnnBKGBounds_[3] && (double)dnnvh_bsm > rawVhhaddnnBSMBounds_[3] ){ 
+            cat = 4;
+        } else if( (double)dnnvh_bkg < rawVhhaddnnBKGBounds_[4] && (double)dnnvh_bsm > rawVhhaddnnBSMBounds_[4] && ((double)dnnvh_bkg > rawVhhaddnnBKGBounds_[3] || (double)dnnvh_bsm < rawVhhaddnnBSMBounds_[3]) ){ 
+            cat = 5;
         }
 
         return cat;

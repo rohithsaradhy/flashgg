@@ -656,8 +656,8 @@ flashggVHHadronicACTag = cms.EDProducer("FlashggVHHadronicACTagProducer",
                                         cosThetaStarThreshold = cms.double(-1.),
                                         maxPhoIdMVAThreshold = cms.double(0.0),
                                         minPhoIdMVAThreshold = cms.double(0.0),
-                                        Categories_dnnbkg = cms.vdouble(0.062194, 0.089591, 0.234570, 0.535261),
-                                        Categories_dnnbsm = cms.vdouble(0.856, 0.563, 0.46, 0.286)
+                                        Categories_dnnbkg = cms.vdouble(0.082085, 0.252840, 0.535261, 0.065729, 1.0),
+                                        Categories_dnnbsm = cms.vdouble(0.5625, 0.45, 0.2875, 0.889, 0.747)
 )
 
 # Tag is for jet studies only, not in default sequence
