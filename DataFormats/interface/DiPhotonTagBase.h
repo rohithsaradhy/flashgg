@@ -1,3 +1,4 @@
+
 #ifndef FLASHgg_DiPhotonTagBase_h
 #define FLASHgg_DiPhotonTagBase_h
 
@@ -48,7 +49,7 @@ namespace flashgg {
                              RECO_TTH_HAD_PTH_GT300_Tag0, RECO_TTH_HAD_PTH_GT300_Tag1,
                              RECO_THQ_LEP,
                              RECO_VBFTOPO_ACGGH_Tag0, RECO_VBFTOPO_ACGGH_Tag1, RECO_VBFTOPO_ACVBFSM_Tag0, RECO_VBFTOPO_ACVBFBSM_Tag0, RECO_VBFTOPO_ACVBFBSM_Tag1,
-                             RECO_VBFTOPO_ACVHHADSM_Tag0, RECO_VBFTOPO_ACVHHADSM_Tag1, RECO_VBFTOPO_ACVHHADBSM_Tag0,
+                             RECO_VBFTOPO_ACVHHADSM_Tag0, RECO_VBFTOPO_ACVHHADSM_Tag1, RECO_VBFTOPO_ACVHHADSM_Tag2, RECO_VBFTOPO_ACVHHADBSM_Tag0, RECO_VBFTOPO_ACVHHADBSM_Tag1
         };
 
         DiPhotonTagBase();
