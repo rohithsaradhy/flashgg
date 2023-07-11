@@ -10,10 +10,16 @@ from flashgg.Taggers.flashggTags_cff import *
 from flashgg.Taggers.flashggPreselectedDiPhotons_cfi import flashggPreselectedDiPhotons
 from flashgg.Taggers.flashggTagSorter_cfi import flashggTagSorter
 from flashgg.Taggers.flashggDifferentialPhoIdInputsCorrection_cfi import flashggDifferentialPhoIdInputsCorrection, setup_flashggDifferentialPhoIdInputsCorrection
+from flashgg.MetaData.JobConfig import customize #Loading customize to get access to the options to disable JEC/JER
+
 
 def flashggPrepareTagSequence(process, options):
     setup_flashggDifferentialPhoIdInputsCorrection(process, options)
-    flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons"
+
+    if customize.disableJEC: # (Part of fastDebug) If true, we use flashggDifferentialPhoIdInputsCorrection instead of flashggPrefireDiPhotons 
+        flashggPreselectedDiPhotons.src = "flashggDifferentialPhoIdInputsCorrection"  
+    else:
+        flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons" 
 
     if "flashggDiPhotonMVA" in options:
         flashggDiPhotonMVA.diphotonMVAweightfile = cms.FileInPath(str(options["flashggDiPhotonMVA"]["weightFile"]))

@@ -227,6 +227,22 @@ customize.options.register('melaEFT',
                            'melaEFT'
                            )
 
+############################## VH Lep AC Analysis #####################################
+
+# Ability to disable JEC/JER to speed up debugging when running interactively
+# Usage: disableJEC=True
+# Works by removing the load of JEC/JERs (takes 30mins)
+customize.options.register('disableJEC', 
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'disableJEC'
+                           )
+                           
+############################## END of VH Lep AC   #####################################
+
+
+
 
 print "Printing defaults"
 print 'acceptance '+str(customize.acceptance)
@@ -819,7 +835,8 @@ for mn in mns:
     elif hasattr(module,"DiPhotonTag"):
         print str(module),module.DiPhotonTag
 print
-printSystematicInfo(process)
+if not customize.disableJEC:
+    printSystematicInfo(process)
 
 ### Rerun microAOD sequence on top of microAODs using the parent dataset
 if customize.useParentDataset:
