@@ -61,7 +61,7 @@ class StageOneAcCustomize():
         self.customizeTagSequence()
 
 
-    def variablesToDump(self,is_signal):
+    def variablesToDump(self,is_signal,fullvars=False):
         ws_variables = []
         ws_variables += self.stageOneVariable 
         ws_variables += [
@@ -81,24 +81,27 @@ class StageOneAcCustomize():
         new_variables = [
             "dipho_pt             := diPhoton.pt",
             "dijet_pt             := VBFMVA.dijet_pt",
+            "dijet_n_rec_jets     := GluGluHMVA.n_rec_jets",        
         ]
-        
-        more_jet_vars = [
-            "n_rec_jets               := GluGluHMVA.n_rec_jets",
-            "dijet_leadPhi            := GluGluHMVA.dijet_leadPhi",
-            "dijet_subleadPhi         := GluGluHMVA.dijet_subleadPhi",
-            "dijet_leadPUMVA          := GluGluHMVA.dijet_leadPUMVA",
-            "dijet_subleadPUMVA       := GluGluHMVA.dijet_subleadPUMVA",
-        ]
-        
+                
         VBF_mva_probs = [
-            "vbfMvaResult_prob_bkg := VBFMVA.vbfMvaResult_prob_bkg()",
-            "vbfMvaResult_prob_ggH := VBFMVA.vbfMvaResult_prob_ggH()",
-            "vbfMvaResult_prob_VBF := VBFMVA.vbfMvaResult_prob_VBF()",
-            "vbfDNN_pbkg := VBFMVA.vbfDnnResult_prob_bkg()",
-            "vbfDNN_psm  := VBFMVA.vbfDnnResult_prob_sm()",
-            "vbfDNN_pbsm := VBFMVA.vbfDnnResult_prob_bsm()",
-            "D0minus     := VBFMVA.D0minus()",
+            "dijet_vbfDNN_pbkg := VBFMVA.vbfDnnResult_prob_bkg()",
+            "dijet_vbfDNN_psm  := VBFMVA.vbfDnnResult_prob_sm()",
+
+            "dijet_vbfDNN_pbsm := VBFMVA.vbfDnnResult_prob_bsm()",
+            "dijet_D0minus     := VBFMVA.D0minus()",
+            "dijet_minDRJetPho    :=  VBFMVA.dijet_minDRJetPho",
+            "dijet_centrality_gg  :=  VBFMVA.dijet_centrality_gg",
+            "dijet_centrality_j3  :=  VBFMVA.dijet_centrality_j3",
+            "dijet_centrality_g   :=  VBFMVA.dijet_centrality_g ",
+            "cosThetaStar         :=  VHhadMVA.cosThetaStar",
+        ]
+
+        matching_photon = [
+            "dijet_jet1_match := leadingJet_match",
+            "dijet_jet2_match := subLeadingJet_match",
+            "prompt_pho_1 := diPhoton.leadingPhoton.genMatchType()",
+            "prompt_pho_2 := diPhoton.subLeadingPhoton.genMatchType()"
         ]
         
         VHhad_dnn_probs = [
@@ -107,9 +110,9 @@ class StageOneAcCustomize():
             "dnnvh_bsm :=  VHhadACDNN.dnnvh_bsm",
         ]
 
-        allNonSigVariables = var.dipho_variables + var.dijet_variables + more_jet_vars + VBF_mva_probs + VHhad_dnn_probs
+        allNonSigVariables = var.dipho_variables + var.dijet_variables + more_jet_vars + VBF_mva_probs + VHhad_dnn_probs + matching_photon
         #ntup_variables = ws_variables + allNonSigVariables
-        ntup_variables = ws_variables
+        ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
 
         if self.customize.dumpWorkspace:
             return ws_variables
