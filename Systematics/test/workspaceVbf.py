@@ -762,7 +762,7 @@ else:
                          process.flashggMetSystematics*
                          process.flashggMuonSystematics*
                          process.flashggElectronSystematics*
-                         (process.flashggUnpackedJets)*#*process.jetSystematicsSequence)*
+                         (process.flashggUnpackedJets*process.jetSystematicsSequence)*
                          (process.flashggTagSequence*process.systematicsTagSequences)*
                          process.flashggSystTagMerger*
                          process.penultimateFilter*
@@ -824,7 +824,7 @@ for mn in mns:
     elif hasattr(module,"DiPhotonTag"):
         print str(module),module.DiPhotonTag
 print
-#printSystematicInfo(process)
+printSystematicInfo(process)
 
 ### Rerun microAOD sequence on top of microAODs using the parent dataset
 if customize.useParentDataset:

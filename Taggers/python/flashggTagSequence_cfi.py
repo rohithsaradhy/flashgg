@@ -13,7 +13,7 @@ from flashgg.Taggers.flashggDifferentialPhoIdInputsCorrection_cfi import flashgg
 
 def flashggPrepareTagSequence(process, options):
     setup_flashggDifferentialPhoIdInputsCorrection(process, options)
-    flashggPreselectedDiPhotons.src = "flashggDifferentialPhoIdInputsCorrection" # "flashggPrefireDiPhotons"
+    flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons"
 
     if "flashggDiPhotonMVA" in options:
         flashggDiPhotonMVA.diphotonMVAweightfile = cms.FileInPath(str(options["flashggDiPhotonMVA"]["weightFile"]))
@@ -34,7 +34,7 @@ def flashggPrepareTagSequence(process, options):
     flashggTHQLeptonicTag.MVAThreshold_tHqVsttHBDT = cms.double(options['THQLeptonicTag']['MVAThreshold_VsttH'])
 
     flashggTagSequence = cms.Sequence(flashggDifferentialPhoIdInputsCorrection
-                                      #* flashggPrefireDiPhotons
+                                      * flashggPrefireDiPhotons
                                       * flashggPreselectedDiPhotons
                                       * flashggDiPhotonMVA
                                       * flashggUnpackedJets
