@@ -226,6 +226,12 @@ customize.options.register('melaEFT',
                            VarParsing.VarParsing.varType.bool,
                            'melaEFT'
                            )
+customize.options.register('dumpFullVars',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'dumpFullVars'
+                           )
 
 ############################## VH Lep AC Analysis #####################################
 from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_anom_dumper_vars,zh_anom_dumper_vars,VHMET_vars
@@ -338,16 +344,17 @@ if customize.doStageOne:
     systematicVariables = soc.systematicVariables()
 
 if customize.vbfTagsOnly:
-    from flashgg.Systematics.anomalousCouplingsCustomize import AnomalousCouplingsCustomize
-    acc = AnomalousCouplingsCustomize(process, customize, customize.metaConditions)
-    minimalVariables = acc.variablesToDump(is_signal)
+    assert (not customize.doHTXS)
+    from flashgg.Systematics.stageOneAcCustomize import StageOneAcCustomize
+    acc = StageOneAcCustomize(process, customize, customize.metaConditions)
+    minimalVariables = acc.variablesToDump(is_signal,fullvars=customize.dumpFullVars)
     systematicVariables = acc.systematicVariables()
 
 if customize.anomalousCouplings:
     assert (not customize.doHTXS)
     from flashgg.Systematics.stageOneAcCustomize import StageOneAcCustomize
     acc = StageOneAcCustomize(process, customize, customize.metaConditions)
-    minimalVariables = acc.variablesToDump(is_signal)
+    minimalVariables = acc.variablesToDump(is_signal,fullvars=customize.dumpFullVars)
     systematicVariables = acc.systematicVariables()
 
 process.flashggTHQLeptonicTag.processId = cms.string(str(customize.processId))
@@ -600,9 +607,7 @@ elif customize.doStageOne:
 elif customize.anomalousCouplings:
     tagList = acc.tagList
 elif customize.vbfTagsOnly:
-    tagList=[
-        ["VBFTag",8]
-        ]
+    tagList=[tag for tag in acc.tagList if "VBF" in tag]
 else:
     tagList=[
         ["NoTag",0],
