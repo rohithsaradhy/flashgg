@@ -108,7 +108,7 @@ class StageOneAcCustomize():
             "dnnvh_bsm :=  VHhadACDNN.dnnvh_bsm",
         ]
 
-        allNonSigVariables = var.dipho_variables + var.dijet_variables + more_jet_vars + VBF_mva_probs + VHhad_dnn_probs + matching_photon
+        allNonSigVariables = var.dipho_variables + var.dijet_variables + VBF_mva_probs + VHhad_dnn_probs + matching_photon #+more_jet_vars 
         #ntup_variables = ws_variables + allNonSigVariables
         ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
 
