@@ -32,11 +32,9 @@ class StageOneAcCustomize():
             ["RECO_TTH_HAD_PTH_120_200_Tag0",0], ["RECO_TTH_HAD_PTH_120_200_Tag1",0], ["RECO_TTH_HAD_PTH_120_200_Tag2",0], ["RECO_TTH_HAD_PTH_120_200_Tag3",0],
             ["RECO_TTH_HAD_PTH_200_300_Tag0",0], ["RECO_TTH_HAD_PTH_200_300_Tag1",0], ["RECO_TTH_HAD_PTH_200_300_Tag2",0],
             ["RECO_TTH_HAD_PTH_GT300_Tag0",0], ["RECO_TTH_HAD_PTH_GT300_Tag1",0],
-            ["RECO_WH_LEP_PTV_0_75_Tag0",0], ["RECO_WH_LEP_PTV_0_75_Tag1",0],
-            ["RECO_WH_LEP_PTV_75_150_Tag0",0], ["RECO_WH_LEP_PTV_75_150_Tag1",0],
-            ["RECO_WH_LEP_PTV_GT150_Tag0",0],
+            ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0], ["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
             ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
-            ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],
+            ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],["RECO_VH_MET_Tag3",0],["RECO_VH_MET_Tag4",0],
             ["RECO_TTH_LEP_PTH_0_60_Tag0",0], ["RECO_TTH_LEP_PTH_0_60_Tag1",0], ["RECO_TTH_LEP_PTH_0_60_Tag2",0],
             ["RECO_TTH_LEP_PTH_60_120_Tag0",0], ["RECO_TTH_LEP_PTH_60_120_Tag1",0], ["RECO_TTH_LEP_PTH_60_120_Tag2",0],
             ["RECO_TTH_LEP_PTH_120_200_Tag0",0], ["RECO_TTH_LEP_PTH_120_200_Tag1",0],
@@ -110,7 +108,7 @@ class StageOneAcCustomize():
             "dnnvh_bsm :=  VHhadACDNN.dnnvh_bsm",
         ]
 
-        allNonSigVariables = var.dipho_variables + var.dijet_variables + more_jet_vars + VBF_mva_probs + VHhad_dnn_probs + matching_photon
+        allNonSigVariables = var.dipho_variables + var.dijet_variables + VBF_mva_probs + VHhad_dnn_probs + matching_photon #+more_jet_vars 
         #ntup_variables = ws_variables + allNonSigVariables
         ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
 

@@ -233,6 +233,22 @@ customize.options.register('dumpFullVars',
                            'dumpFullVars'
                            )
 
+############################## VH Lep AC Analysis #####################################
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_anom_dumper_vars,zh_anom_dumper_vars,VHMET_vars
+# Ability to disable JEC/JER to speed up debugging when running interactively
+# Usage: disableJEC=True
+# Works by removing the load of JEC/JERs (takes 30mins)
+customize.options.register('disableJEC', 
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'disableJEC'
+                           )
+
+############################## END of VH Lep AC   #####################################
+
+
+
 
 print "Printing defaults"
 print 'acceptance '+str(customize.acceptance)
@@ -659,6 +675,17 @@ for tag in tagList:
       if systlabel == "":
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
+      
+      if "WH_LEP" in tagName:
+        currentVariables += wh_anom_dumper_vars
+      if "ZH_LEP" in tagName:
+        currentVariables += zh_anom_dumper_vars 
+      if "VH_MET" in tagName:
+        currentVariables += VHMET_vars 
+
+
+    
+
         
       cfgTools.addCategory(process.tagsDumper,
                            systlabel,
@@ -824,7 +851,8 @@ for mn in mns:
     elif hasattr(module,"DiPhotonTag"):
         print str(module),module.DiPhotonTag
 print
-printSystematicInfo(process)
+if not customize.disableJEC:
+    printSystematicInfo(process)
 
 ### Rerun microAOD sequence on top of microAODs using the parent dataset
 if customize.useParentDataset:
