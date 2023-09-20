@@ -9,10 +9,15 @@ from flashgg.Taggers.flashggTags_cff import *
 from flashgg.Taggers.flashggPreselectedDiPhotons_cfi import flashggPreselectedDiPhotons
 from flashgg.Taggers.flashggTagSorter_cfi import flashggTagSorter
 from flashgg.Taggers.flashggDifferentialPhoIdInputsCorrection_cfi import flashggDifferentialPhoIdInputsCorrection, setup_flashggDifferentialPhoIdInputsCorrection
+from flashgg.MetaData.JobConfig import customize #importing parameters...
 
 def flashggPrepareTagSequence(process, options):
     setup_flashggDifferentialPhoIdInputsCorrection(process, options)
-    flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons"
+
+    if customize.disableJEC: 
+        flashggPreselectedDiPhotons.src = "flashggDifferentialPhoIdInputsCorrection"  #Edited by Rohith
+    else:
+        flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons" #Edited by Rohith
 
     if "flashggDiPhotonMVA" in options:
         flashggDiPhotonMVA.diphotonMVAweightfile = cms.FileInPath(str(options["flashggDiPhotonMVA"]["weightFile"]))
