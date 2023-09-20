@@ -503,18 +503,18 @@ flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
                                     MVAResultTag                = cms.InputTag('flashggDiPhotonMVA'),
                                     GenParticleTag              = cms.InputTag( "flashggPrunedGenParticles" ),
                                     ZHMVAweightfile             = cms.FileInPath("flashgg/Taggers/data/TMVA_ZHLeptonicTag_BDT_ULv1.weights.xml"),
-                                    Boundaries                  = cms.vdouble(0.2307, 0.342),
-                                    leadPhoOverMassThreshold    = cms.double(0.),
-                                    subleadPhoOverMassThreshold = cms.double(0.),
-                                    MVAThreshold                = cms.double(-1.0),
-                                    PhoMVAThreshold             = cms.double(-0.9),
-                                    electronPtThreshold         = cms.double(10),
-                                    invMassLepLowThreshold      = cms.double(60.),
-                                    invMassLepHighThreshold     = cms.double(120.),
+                                    Boundaries                  = cms.vdouble(0.2307, 0.342),#
+                                    leadPhoOverMassThreshold    = cms.double(0.),#
+                                    subleadPhoOverMassThreshold = cms.double(0.),#
+                                    MVAThreshold                = cms.double(-1.0),#
+                                    PhoMVAThreshold             = cms.double(-0.9),#
+                                    electronPtThreshold         = cms.double(10),#
+                                    invMassLepLowThreshold      = cms.double(60.),#
+                                    invMassLepHighThreshold     = cms.double(120.),#
                                     electronEtaThresholds       = cms.vdouble(1.4442,1.566,2.5),
-                                    DeltaRTrkElec               = cms.double(0.2),
+                                    DeltaRTrkElec               = cms.double(0.2),#
                                     deltaRPhoElectronThreshold  = cms.double(0.2),
-                                    deltaMassElectronZThreshold = cms.double(-1.),
+                                    deltaMassElectronZThreshold = cms.double(-1),#
                                     muonPtThreshold             = cms.double(10),
                                     muonEtaThreshold            = cms.double(2.4),
                                     deltaRMuonPhoThreshold      = cms.double(0.2),
@@ -525,14 +525,26 @@ flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
                                     deltaRJetLepThreshold       = cms.double(0.4),
 
                                     
-                                    ZHiggs0MToGG_weights          = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0MToGG_model.xml"),  
-                                    ZHiggs0PHToGG_weights         = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0PHToGG_model.xml"),   
-                                    ZHiggs0PHf05ph0ToGG_weights   = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0PHf05ph0ToGG_model.xml"),         
-                                    ZHiggs0L1f05ph0ToGG_weights   = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1f05ph0ToGG_model.xml"),         
-                                    ZHiggs0L1ZgToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1ZgToGG_model.xml"),         
-                                    ZHiggs0L1Zgf05ph0ToGG_weights = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/ZHiggs0L1Zgf05ph0ToGG_model.xml")       
-                                    
 
+                                    # invMassLepLowThreshold      = cms.double(20),
+                                    # invMassLepHighThreshold     = cms.double(200.),  
+                                    # electronEtaThresholds       = cms.vdouble(1.4442,1.566,2.5),
+                                    # DeltaRTrkElec               = cms.double(0.2),
+                                    # deltaRPhoElectronThreshold  = cms.double(0.),
+                                    # deltaMassElectronZThreshold = cms.double(-1.),
+                                    # muonPtThreshold             = cms.double(10),
+                                    # muonEtaThreshold            = cms.double(0),
+                                    # deltaRMuonPhoThreshold      = cms.double(0),
+                                    # muPFIsoSumRelThreshold      = cms.double(0.25),
+                                    # jetPtThreshold              = cms.double(20),
+                                    # jetEtaThreshold             = cms.double(0),
+                                    # deltaRJetPhoThreshold       = cms.double(0.0),
+                                    # deltaRJetLepThreshold       = cms.double(0.0),                                 
+                                    
+                                    ZHiggs0MToGG_weights          = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0MToGG_EraALL_model.xml"),  
+                                    ZHiggs0PHToGG_weights         = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0PHToGG_EraALL_model.xml"),   
+                                    ZHiggs0L1ToGG_weights         = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0L1ToGG_EraALL_model.xml")
+                                    
 )
 
 flashggWHLeptonicTag = cms.EDProducer("FlashggWHLeptonicTagProducer",
@@ -590,7 +602,7 @@ flashggVHLeptonicLooseTag = cms.EDProducer("FlashggVHLeptonicLooseTagProducer",
                                    useVertex0only=cms.bool(False),
                                    GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
                                    rhoTag = cms.InputTag('fixedGridRhoFastjetAll'),
-				   leptonPtThreshold = cms.double(20),
+				                   leptonPtThreshold = cms.double(20),
                                    muonEtaThreshold = cms.double(2.4),
                                    leadPhoOverMassThreshold = cms.double(0.375),
                                    subleadPhoOverMassThreshold = cms.double(0.25),

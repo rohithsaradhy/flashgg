@@ -52,10 +52,10 @@ namespace flashgg {
         void set_VHmva(const float &val) {VH_mva=val;};
 
         const float WHiggs0MToGG_mva()          const { return WHiggs0MToGG_MVA;};
-        const float WHiggs0Mf05ph0ToGG_mva()    const { return WHiggs0Mf05ph0ToGG_MVA;};
         const float WHiggs0PHToGG_mva()         const { return WHiggs0PHToGG_MVA;};
-        const float WHiggs0PHf05ph0ToGG_mva()   const { return WHiggs0PHf05ph0ToGG_MVA;};
         const float WHiggs0L1ToGG_mva()         const { return WHiggs0L1ToGG_MVA;};
+        const float WHiggs0Mf05ph0ToGG_mva()    const { return WHiggs0Mf05ph0ToGG_MVA;};
+        const float WHiggs0PHf05ph0ToGG_mva()   const { return WHiggs0PHf05ph0ToGG_MVA;};
         const float WHiggs0L1f05ph0ToGG_mva()   const { return WHiggs0L1f05ph0ToGG_MVA;};
 
         const float Anom_MVA_pho1_eta()         const {return _Anom_MVA_pho1_eta;};
@@ -113,10 +113,10 @@ namespace flashgg {
 
         //Functions to set the VH mva
         void set_WHiggs0MToGG_MVA(const float &val)           { WHiggs0MToGG_MVA = val;};
-        void set_WHiggs0Mf05ph0ToGG_MVA(const float &val)     { WHiggs0Mf05ph0ToGG_MVA = val;};
         void set_WHiggs0PHToGG_MVA(const float &val)          { WHiggs0PHToGG_MVA = val;};
-        void set_WHiggs0PHf05ph0ToGG_MVA(const float &val)    { WHiggs0PHf05ph0ToGG_MVA = val;};
         void set_WHiggs0L1ToGG_MVA(const float &val)          { WHiggs0L1ToGG_MVA = val;};
+        void set_WHiggs0Mf05ph0ToGG_MVA(const float &val)     { WHiggs0Mf05ph0ToGG_MVA = val;};
+        void set_WHiggs0PHf05ph0ToGG_MVA(const float &val)    { WHiggs0PHf05ph0ToGG_MVA = val;};
         void set_WHiggs0L1f05ph0ToGG_MVA(const float &val)    { WHiggs0L1f05ph0ToGG_MVA = val;};
 
         void set_Anom_MVA_pho1_eta(const float &val)          {_Anom_MVA_pho1_eta = val;};

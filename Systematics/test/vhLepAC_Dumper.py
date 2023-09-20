@@ -196,6 +196,42 @@ customize.options.register('applyNNLOPSweight',
                            'applyNNLOPSweight'
                            )
 
+############################## VH Lep AC Analysis #####################################
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_anom_dumper_vars,zh_anom_dumper_vars
+
+customize.options.register('doWHLep', #enable WH AC Tag in stageOneCustomize & tagPriority set to WH if ZH is not enabled
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doWHLep'
+                           )
+
+customize.options.register('doZHLep', #enables ZH AC Tag in stageOneCustomize & tagPriority set to ZH if WH is not enabled
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'doZHLep'
+                           )
+
+# If both ZH & WH are enabled, then tagPriority is ZHtag first then WHtag...
+
+customize.options.register('VHdumpAllVars', # if enabled, dumps all variables for ZH and/or WH Tags that are enabled
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'VHdumpAllVars'
+                           )
+
+customize.options.register('disableJEC', #disable JEC/JER to speed up debugging when running interactively
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'disableJEC'
+                           )
+
+############################## VH Lep AC Analysis #####################################
+
+
 
 
 print "Printing defaults"
@@ -309,7 +345,7 @@ useEGMTools(process)
 
 # Only run systematics for signal events
 # convention: ggh vbf wzh (wh zh) tth
-signal_processes = ["ggh_","vbf_","wzh_","wh_","zh_","bbh_","thq_","thw_","tth_","ggzh_","HHTo2B2G","GluGluHToGG","VBFHToGG","VHToGG","ttHToGG","Acceptance","hh","vbfhh","qqh","ggh","tth","vh","WHiggs0MToGG","WHiggs0MToGG_","WHiggs0PMToGG","WHiggs0PMToGG_"]
+signal_processes = ["ggh_","vbf_","wzh_","wh_","zh_","bbh_","thq_","thw_","tth_","ggzh_","HHTo2B2G","GluGluHToGG","VBFHToGG","VHToGG","ttHToGG","Acceptance","hh","vbfhh","qqh","ggh","tth","vh","WHiggs0MToGG","WHiggs0MToGG_","WHiggs0PMToGG","WHiggs0PMToGG_","WminusH","WplusH","ZH_HToGG"]
 is_signal = reduce(lambda y,z: y or z, map(lambda x: customize.processId.count(x), signal_processes))
 
 applyL1Prefiring = customizeForL1Prefiring(process, customize.metaConditions, customize.processId)
@@ -482,17 +518,43 @@ else:
         ]
 
 
-tagList=[        
-        ["NoTag",0],
-        # ["UntaggedTag",4],
-        # ["ZHLeptonicTag",2],
-        ["WHLeptonicTag",1]
-        ] #One Category ,["VHMetTag",2]
 
 
 
-# process.flashggWHLeptonicTag.Boundaries_GT75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
-# process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT mva... #Rohith
+
+## VH Lep relax cuts...
+
+process.flashggWHLeptonicTag.Boundaries_0_75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
+process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT mva... #Rohith
+
+
+# tagList=[        
+#         ["NoTag",0],
+#         # ["UntaggedTag",4],
+#         ["ZHLeptonicTag",1],
+#         ["WHLeptonicTag",4]
+#         ] #One Category ,["VHMetTag",2]
+
+# process.flashggTagSequence.remove (process.flashggStageOneCombinedTag)
+# process.flashggTagSequence.remove(process.flashggVBFTag)
+# process.flashggTagSequence.remove(process.flashggVHMetTag)
+# process.flashggTagSequence.remove(process.flashggTHQLeptonicTag)
+# process.flashggTagSequence.remove(process.flashggWHLeptonicTag)
+# # process.flashggTagSequence.remove(process.flashggZHLeptonicTag)
+# process.flashggTagSequence.remove(process.flashggVHHadronicTag)
+# # process.flashggTagSequence.remove(process.flashggUntagged)
+# # process.flashggTagSequence.remove(process.flashggTTHHadronicTag)
+# process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
+# process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
+# process.flashggTagSequence.remove(process.flashggTHQLeptonicTag)
+print "&"*50
+print "The list of tags is the following:"
+print tagList
+print "&"*50
+print "The Current TagSequence"
+print process.flashggTagSequence
+print "&"*50
+# exit("Exiting because you asked...") 
 
 
 
@@ -500,304 +562,6 @@ definedSysts=set()
 process.tagsDumper.classifierCfg.remap=cms.untracked.VPSet()
 import flashgg.Taggers.dumperConfigTools as cfgTools
 
-# get the variable list
-custom_vars = ['vh_mva :=  VHmva()'
-                ]
-
-
-WH_Anom_Vars = [
-    'WHiggs0MToGG_MVA := WHiggs0MToGG_mva()',
-    'WHiggs0Mf05ph0ToGG_MVA := WHiggs0Mf05ph0ToGG_mva()',
-    'WHiggs0PHToGG_MVA := WHiggs0PHToGG_mva()',
-    'WHiggs0PHf05ph0ToGG_MVA := WHiggs0PHf05ph0ToGG_mva()',
-    'WHiggs0L1ToGG_MVA := WHiggs0L1ToGG_mva()',
-    'WHiggs0L1f05ph0ToGG_MVA := WHiggs0L1f05ph0ToGG_mva()'
-]
-ZH_Anom_Vars = [
-    'ZHiggs0MToGG_MVA := ZHiggs0MToGG_mva()',
-    'ZHiggs0PHToGG_MVA := ZHiggs0PHToGG_mva()',
-    'ZHiggs0PHf05ph0ToGG_MVA := ZHiggs0PHf05ph0ToGG_mva()',
-    'ZHiggs0L1f05ph0ToGG_MVA := ZHiggs0L1f05ph0ToGG_mva()',
-    'ZHiggs0L1ZgToGG_MVA := ZHiggs0L1ZgToGG_mva()',
-    'ZHiggs0L1Zgf05ph0ToGG_MVA := ZHiggs0L1Zgf05ph0ToGG_mva()'
-]
-
-Anom_vars = [
-'Anom_mva_pho1_eta := Anom_MVA_pho1_eta()',
-'Anom_mva_pho1_phi := Anom_MVA_pho1_phi()',
-'Anom_mva_pho1_idmva := Anom_MVA_pho1_idmva()',
-'Anom_mva_pho1_full5x5_r9 := Anom_MVA_pho1_full5x5_r9()',
-'Anom_mva_pho1_ptOverMgg := Anom_MVA_pho1_ptOverMgg()',
-'Anom_mva_pho2_eta := Anom_MVA_pho2_eta()',
-'Anom_mva_pho2_phi := Anom_MVA_pho2_phi()',
-'Anom_mva_pho2_idmva := Anom_MVA_pho2_idmva()',
-'Anom_mva_pho2_full5x5_r9 := Anom_MVA_pho2_full5x5_r9()',
-'Anom_mva_pho2_ptOverMgg := Anom_MVA_pho2_ptOverMgg()',
-'Anom_mva_mu1_pt := Anom_MVA_mu1_pt()',
-'Anom_mva_mu1_eta := Anom_MVA_mu1_eta()',
-'Anom_mva_mu1_phi := Anom_MVA_mu1_phi()',
-'Anom_mva_mu1_energy := Anom_MVA_mu1_energy()',
-'Anom_mva_mu2_pt := Anom_MVA_mu2_pt()',
-'Anom_mva_mu2_eta := Anom_MVA_mu2_eta()',
-'Anom_mva_mu2_phi := Anom_MVA_mu2_phi()',
-'Anom_mva_mu2_energy := Anom_MVA_mu2_energy()',
-'Anom_mva_ele1_pt := Anom_MVA_ele1_pt()',
-'Anom_mva_ele1_eta := Anom_MVA_ele1_eta()',
-'Anom_mva_ele1_phi := Anom_MVA_ele1_phi()',
-'Anom_mva_ele1_energy := Anom_MVA_ele1_energy()',
-'Anom_mva_ele2_pt := Anom_MVA_ele2_pt()',
-'Anom_mva_ele2_eta := Anom_MVA_ele2_eta()',
-'Anom_mva_ele2_phi := Anom_MVA_ele2_phi()',
-'Anom_mva_ele2_energy := Anom_MVA_ele2_energy()',
-'Anom_mva_jet1_pt := Anom_MVA_jet1_pt()',
-'Anom_mva_jet1_phi := Anom_MVA_jet1_phi()',
-'Anom_mva_jet1_eta := Anom_MVA_jet1_eta()',
-'Anom_mva_jet1_energy := Anom_MVA_jet1_energy()',
-'Anom_mva_jet2_pt := Anom_MVA_jet2_pt()',
-'Anom_mva_jet2_phi := Anom_MVA_jet2_phi()',
-'Anom_mva_jet2_eta := Anom_MVA_jet2_eta()',
-'Anom_mva_jet2_energy := Anom_MVA_jet2_energy()',
-'Anom_mva_cosPhiGG := Anom_MVA_cosPhiGG()',
-'Anom_mva_cosPhiG1_Mu1 := Anom_MVA_cosPhiG1_Mu1()',
-'Anom_mva_cosPhiG1_Ele1 := Anom_MVA_cosPhiG1_Ele1()',
-'Anom_mva_cosPhiG2_Mu1 := Anom_MVA_cosPhiG2_Mu1()',
-'Anom_mva_cosPhiG2_Ele1 := Anom_MVA_cosPhiG2_Ele1()',
-'Anom_mva_dR_Pho1Ele1_wh := Anom_MVA_dR_Pho1Ele1_wh()',
-'Anom_mva_dR_Pho2Ele1_wh := Anom_MVA_dR_Pho2Ele1_wh()',
-'Anom_mva_dR_Pho1Mu1_wh := Anom_MVA_dR_Pho1Mu1_wh()',
-'Anom_mva_dR_Pho2Mu1_wh := Anom_MVA_dR_Pho2Mu1_wh()',
-'Anom_mva_dR_Pho1Jet1_wh := Anom_MVA_dR_Pho1Jet1_wh()',
-'Anom_mva_dR_Pho1Jet2_wh := Anom_MVA_dR_Pho1Jet2_wh()',
-'Anom_mva_dR_Pho2Jet1_wh := Anom_MVA_dR_Pho2Jet1_wh()',
-'Anom_mva_dR_Pho2Jet2_wh := Anom_MVA_dR_Pho2Jet2_wh()',
-'Anom_mva_dR_Mu1Jet1_wh := Anom_MVA_dR_Mu1Jet1_wh()',
-'Anom_mva_dR_Mu1Jet2_wh := Anom_MVA_dR_Mu1Jet2_wh()',
-'Anom_mva_dR_Ele1Jet1_wh := Anom_MVA_dR_Ele1Jet1_wh()',
-'Anom_mva_dR_Ele1Jet2_wh := Anom_MVA_dR_Ele1Jet2_wh()',
-]
-
-diphoton_variables = ["mass            := diPhoton.mass",
-                      "diphoton_pt     := diPhoton.pt",
-                      "diphoton_mva    := diPhotonMVA.result",
-                      "pho1_pt         := diPhoton.leadingPhoton.pt",
-                      "pho1_eta        := diPhoton.leadingPhoton.eta",
-                      "pho1_phi        := diPhoton.leadingPhoton.phi",
-                      "pho1_energy     := diPhoton.leadingPhoton.energy",
-                      "pho1_full5x5_r9 := diPhoton.leadingPhoton.full5x5_r9",
-                      "pho1_idmva      := diPhoton.leadPhotonId",
-                      "pho1_genMatchType:=diPhoton.leadingPhoton.genMatchType",
-                      "pho2_pt         := diPhoton.subLeadingPhoton.pt",
-                      "pho2_eta        := diPhoton.subLeadingPhoton.eta",
-                      "pho2_phi        := diPhoton.subLeadingPhoton.phi",
-                      "pho2_energy     := diPhoton.subLeadingPhoton.energy",
-                      "pho2_full5x5_r9 := diPhoton.subLeadingPhoton.full5x5_r9",
-                      "pho2_idmva      := diPhoton.subLeadPhotonId",
-                      "pho2_genMatchType:=diPhoton.subLeadingPhoton.genMatchType",
-                      "pho1_ptOverMgg  := diPhoton.leadingPhoton.pt/diPhoton.mass",
-                      "pho2_ptOverMgg  := diPhoton.subLeadingPhoton.pt/diPhoton.mass",
-                      ]
-
-
-leptons_variables = [ "mu1_pt         :=  ? muons.size()>0 ? muons[0].pt() : -100 ",
-                      "mu1_phi        :=  ? muons.size()>0 ? muons[0].phi() : -100 ",
-                      "mu1_eta        :=  ? muons.size()>0 ? muons[0].eta() : -100 ",
-                      "mu1_energy     :=  ? muons.size()>0 ? muons[0].energy() : -100 ",
-                      "mu2_pt         :=  ? muons.size()>1 ? muons[1].pt() : -100 ",
-                      "mu2_phi        :=  ? muons.size()>1 ? muons[1].phi() : -100 ",
-                      "mu2_eta        :=  ? muons.size()>1 ? muons[1].eta() : -100 ",
-                      "mu2_energy     :=  ? muons.size()>1 ? muons[1].energy() : -100 ",
-                      "ele1_pt        :=  ? electrons.size()>0 ? electrons[0].pt() : -100 ",
-                      "ele1_phi       :=  ? electrons.size()>0 ? electrons[0].phi() : -100 ",
-                      "ele1_eta       :=  ? electrons.size()>0 ? electrons[0].eta() : -100 ",
-                      "ele1_energy    :=  ? electrons.size()>0 ? electrons[0].energy() : -100 ",
-                      "ele2_pt        :=  ? electrons.size()>1 ? electrons[1].pt() : -100 ",
-                      "ele2_phi       :=  ? electrons.size()>1 ? electrons[1].phi() : -100 ",
-                      "ele2_eta       :=  ? electrons.size()>1 ? electrons[1].eta() : -100 ",
-                      "ele2_energy    :=  ? electrons.size()>1 ? electrons[1].energy() : -100 ",
-                      "nMuons         :=  muons.size()",
-                      "nEle           :=  electrons.size()"
-                     ]
-
-jets_variables = ["njets := jets.size()",
-                  "jet1_pt     :=  ? jets.size()>0 ? jets[0].pt : -100 ",
-                  "jet1_phi    :=  ? jets.size()>0 ? jets[0].phi : -100 ",
-                  "jet1_eta    :=  ? jets.size()>0 ? jets[0].eta : -100 ",
-                  "jet1_energy :=  ? jets.size()>0 ? jets[0].energy : -100 ",
-                  "jet2_pt     :=  ? jets.size()>1 ? jets[1].pt : -100 ",
-                  "jet2_phi    :=  ? jets.size()>1 ? jets[1].phi : -100 ",
-                  "jet2_eta    :=  ? jets.size()>1 ? jets[1].eta : -100 ",
-                  "jet2_energy :=  ? jets.size()>1 ? jets[1].energy : -100 ",
-                  "jet3_pt     :=  ? jets.size()>2 ? jets[2].pt : -100 ",
-                  "jet3_phi    :=  ? jets.size()>2 ? jets[2].phi : -100 ",
-                  "jet3_eta    :=  ? jets.size()>2 ? jets[2].eta : -100 ",
-                  "jet3_energy :=  ? jets.size()>2 ? jets[2].energy : -100 ",
-                  "jet4_pt     :=  ? jets.size()>3 ? jets[3].pt : -100 ",
-                  "jet4_phi    :=  ? jets.size()>3 ? jets[3].phi : -100 ",
-                  "jet4_eta    :=  ? jets.size()>3 ? jets[3].eta : -100 ",
-                  "jet4_energy :=  ? jets.size()>3 ? jets[3].energy : -100 ",
-                  "jet5_pt     :=  ? jets.size()>4 ? jets[4].pt : -100 ",
-                  "jet5_phi    :=  ? jets.size()>4 ? jets[4].phi : -100 ",
-                  "jet5_eta    :=  ? jets.size()>4 ? jets[4].eta : -100 ",
-                  "jet5_energy :=  ? jets.size()>4 ? jets[4].energy : -100 ",
-                  "jet6_pt     :=  ? jets.size()>5 ? jets[5].pt : -100 ",
-                  "jet6_phi    :=  ? jets.size()>5 ? jets[5].phi : -100 ",
-                  "jet6_eta    :=  ? jets.size()>5 ? jets[5].eta : -100 ",
-                  "jet6_energy :=  ? jets.size()>5 ? jets[5].energy : -100 ",
-                  "jet7_pt     :=  ? jets.size()>6 ? jets[6].pt : -100 ",
-                  "jet7_phi    :=  ? jets.size()>6 ? jets[6].phi : -100 ",
-                  "jet7_eta    :=  ? jets.size()>6 ? jets[6].eta : -100 ",
-                  "jet7_energy :=  ? jets.size()>6 ? jets[6].energy : -100 "
-                  ]
-
-met_variables = ["met_pt  := met.corPt()",
-                 "met_phi := met.corPhi()"]
-
-
-gen_variables = ["hasZ := tagTruth().associatedZ",
-                 "hasW := tagTruth().associatedW",
-                 "VhasL := tagTruth().VhasLeptons",
-                 "VhasNu := tagTruth().VhasNeutrinos",
-                 "VhasQ := tagTruth().VhasHadrons"
-                 ]
-
-#dR_variables_WHLeptonic = [ "dR_Pho1Jet1_wh :=  ? jets.size() > 0 ? whleptonictags_obj.deltaRPho1Jet1 : -100"
-dR_variables_WHLeptonic = ["dR_Pho1Jet1_wh :=  ? jets.size() > 0 ? deltaR(jets[0].eta, jets[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Jet2_wh :=  ? jets.size() > 1 ? deltaR(jets[1].eta, jets[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",  
-                           "dR_Pho2Jet1_wh :=  ? jets.size() > 0 ? deltaR(jets[0].eta, jets[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho2Jet2_wh :=  ? jets.size() > 1 ? deltaR(jets[1].eta, jets[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Ele1_wh :=  ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Ele2_wh :=  ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",                           
-                           "dR_Pho2Ele1_wh :=  ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",                          
-                           "dR_Pho2Ele2_wh :=  ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Ele3_wh :=  ? electrons.size() > 2 ? deltaR(electrons[2].eta, electrons[2].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Ele3_wh :=  ? electrons.size() > 2 ? deltaR(electrons[2].eta, electrons[2].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",                          
-                           "dR_Pho1Ele4_wh :=  ? electrons.size() > 3 ? deltaR(electrons[3].eta, electrons[3].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Ele4_wh :=  ? electrons.size() > 3 ? deltaR(electrons[3].eta, electrons[3].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",                          
-                           "dR_Pho1Ele5_wh :=  ? electrons.size() > 4 ? deltaR(electrons[4].eta, electrons[4].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Ele5_wh :=  ? electrons.size() > 4 ? deltaR(electrons[4].eta, electrons[4].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",                          
-                           "dR_Pho1Mu1_wh  :=  ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Mu2_wh  :=  ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Mu1_wh  :=  ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho2Mu2_wh  :=  ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Mu1Jet1_wh  :=  ? (muons.size() > 0 && jets.size() > 0) ? deltaR(muons[0].eta, muons[0].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu1Jet2_wh  :=  ? (muons.size() > 0 && jets.size() > 1) ? deltaR(muons[0].eta, muons[0].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu2Jet1_wh  :=  ? (muons.size() > 1 && jets.size() > 0) ? deltaR(muons[1].eta, muons[1].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu2Jet2_wh  :=  ? (muons.size() > 1 && jets.size() > 1) ? deltaR(muons[1].eta, muons[1].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu1Jet3_wh  :=  ? (muons.size() > 0 && jets.size() > 2) ? deltaR(muons[0].eta, muons[0].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Mu2Jet3_wh  :=  ? (muons.size() > 1 && jets.size() > 2) ? deltaR(muons[1].eta, muons[1].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Mu1Jet4_wh  :=  ? (muons.size() > 0 && jets.size() > 3) ? deltaR(muons[0].eta, muons[0].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Mu2Jet4_wh  :=  ? (muons.size() > 1 && jets.size() > 3) ? deltaR(muons[1].eta, muons[1].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Mu1Jet5_wh  :=  ? (muons.size() > 0 && jets.size() > 4) ? deltaR(muons[0].eta, muons[0].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Mu2Jet5_wh  :=  ? (muons.size() > 1 && jets.size() > 4) ? deltaR(muons[1].eta, muons[1].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Mu1Jet6_wh  :=  ? (muons.size() > 0 && jets.size() > 5) ? deltaR(muons[0].eta, muons[0].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Mu2Jet6_wh  :=  ? (muons.size() > 1 && jets.size() > 5) ? deltaR(muons[1].eta, muons[1].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Mu1Jet7_wh  :=  ? (muons.size() > 0 && jets.size() > 6) ? deltaR(muons[0].eta, muons[0].phi, jets[6].eta, jets[6].phi) : -100 ",
-                           "dR_Mu2Jet7_wh  :=  ? (muons.size() > 1 && jets.size() > 6) ? deltaR(muons[1].eta, muons[1].phi, jets[6].eta, jets[6].phi) : -100 ",
-                           "dR_Mu3Jet1_wh  :=  ? (muons.size() > 2 && jets.size() > 0) ? deltaR(muons[2].eta, muons[2].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu3Jet2_wh  :=  ? (muons.size() > 2 && jets.size() > 1) ? deltaR(muons[2].eta, muons[2].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu3Jet3_wh  :=  ? (muons.size() > 2 && jets.size() > 2) ? deltaR(muons[2].eta, muons[2].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Mu3Jet4_wh  :=  ? (muons.size() > 2 && jets.size() > 3) ? deltaR(muons[2].eta, muons[2].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Mu3Jet5_wh  :=  ? (muons.size() > 2 && jets.size() > 4) ? deltaR(muons[2].eta, muons[2].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Mu3Jet6_wh  :=  ? (muons.size() > 2 && jets.size() > 5) ? deltaR(muons[2].eta, muons[2].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Mu3Jet7_wh  :=  ? (muons.size() > 2 && jets.size() > 6) ? deltaR(muons[2].eta, muons[2].phi, jets[6].eta, jets[6].phi) : -100 ",  
-                           "dR_Mu4Jet1_wh  :=  ? (muons.size() > 3 && jets.size() > 0) ? deltaR(muons[3].eta, muons[3].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu4Jet2_wh  :=  ? (muons.size() > 3 && jets.size() > 1) ? deltaR(muons[3].eta, muons[3].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu4Jet3_wh  :=  ? (muons.size() > 3 && jets.size() > 2) ? deltaR(muons[3].eta, muons[3].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Mu4Jet4_wh  :=  ? (muons.size() > 3 && jets.size() > 3) ? deltaR(muons[3].eta, muons[3].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Mu4Jet5_wh  :=  ? (muons.size() > 3 && jets.size() > 4) ? deltaR(muons[3].eta, muons[3].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Mu4Jet6_wh  :=  ? (muons.size() > 3 && jets.size() > 5) ? deltaR(muons[3].eta, muons[3].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Mu4Jet7_wh  :=  ? (muons.size() > 3 && jets.size() > 6) ? deltaR(muons[3].eta, muons[3].phi, jets[6].eta, jets[6].phi) : -100 ",  
-                           "dR_Mu5Jet1_wh  :=  ? (muons.size() > 4 && jets.size() > 0) ? deltaR(muons[4].eta, muons[4].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu5Jet2_wh  :=  ? (muons.size() > 4 && jets.size() > 1) ? deltaR(muons[4].eta, muons[4].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu5Jet3_wh  :=  ? (muons.size() > 4 && jets.size() > 2) ? deltaR(muons[4].eta, muons[4].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Mu5Jet4_wh  :=  ? (muons.size() > 4 && jets.size() > 3) ? deltaR(muons[4].eta, muons[4].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Mu5Jet5_wh  :=  ? (muons.size() > 4 && jets.size() > 4) ? deltaR(muons[4].eta, muons[4].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Mu5Jet6_wh  :=  ? (muons.size() > 4 && jets.size() > 5) ? deltaR(muons[4].eta, muons[4].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Mu5Jet7_wh  :=  ? (muons.size() > 4 && jets.size() > 6) ? deltaR(muons[4].eta, muons[4].phi, jets[6].eta, jets[6].phi) : -100 ", 
-                           "dR_Ele1Jet1_wh  :=  ? (electrons.size() > 0 && jets.size() > 0) ? deltaR(electrons[0].eta, electrons[0].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele1Jet2_wh  :=  ? (electrons.size() > 0 && jets.size() > 1) ? deltaR(electrons[0].eta, electrons[0].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele2Jet1_wh  :=  ? (electrons.size() > 1 && jets.size() > 0) ? deltaR(electrons[1].eta, electrons[1].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele2Jet2_wh  :=  ? (electrons.size() > 1 && jets.size() > 1) ? deltaR(electrons[1].eta, electrons[1].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele1Jet3_wh  :=  ? (electrons.size() > 0 && jets.size() > 2) ? deltaR(electrons[0].eta, electrons[0].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Ele2Jet3_wh  :=  ? (electrons.size() > 1 && jets.size() > 2) ? deltaR(electrons[1].eta, electrons[1].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Ele1Jet4_wh  :=  ? (electrons.size() > 0 && jets.size() > 3) ? deltaR(electrons[0].eta, electrons[0].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Ele2Jet4_wh  :=  ? (electrons.size() > 1 && jets.size() > 3) ? deltaR(electrons[1].eta, electrons[1].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Ele1Jet5_wh  :=  ? (electrons.size() > 0 && jets.size() > 4) ? deltaR(electrons[0].eta, electrons[0].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Ele2Jet5_wh  :=  ? (electrons.size() > 1 && jets.size() > 4) ? deltaR(electrons[1].eta, electrons[1].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Ele1Jet6_wh  :=  ? (electrons.size() > 0 && jets.size() > 5) ? deltaR(electrons[0].eta, electrons[0].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Ele2Jet6_wh  :=  ? (electrons.size() > 1 && jets.size() > 5) ? deltaR(electrons[1].eta, electrons[1].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Ele1Jet7_wh  :=  ? (electrons.size() > 0 && jets.size() > 6) ? deltaR(electrons[0].eta, electrons[0].phi, jets[6].eta, jets[6].phi) : -100 ",
-                           "dR_Ele2Jet7_wh  :=  ? (electrons.size() > 1 && jets.size() > 6) ? deltaR(electrons[1].eta, electrons[1].phi, jets[6].eta, jets[6].phi) : -100 ",
-                           "dR_Ele3Jet1_wh  :=  ? (electrons.size() > 2 && jets.size() > 0) ? deltaR(electrons[2].eta, electrons[2].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele3Jet2_wh  :=  ? (electrons.size() > 2 && jets.size() > 1) ? deltaR(electrons[2].eta, electrons[2].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele3Jet3_wh  :=  ? (electrons.size() > 2 && jets.size() > 2) ? deltaR(electrons[2].eta, electrons[2].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Ele3Jet4_wh  :=  ? (electrons.size() > 2 && jets.size() > 3) ? deltaR(electrons[2].eta, electrons[2].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Ele3Jet5_wh  :=  ? (electrons.size() > 2 && jets.size() > 4) ? deltaR(electrons[2].eta, electrons[2].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Ele3Jet6_wh  :=  ? (electrons.size() > 2 && jets.size() > 5) ? deltaR(electrons[2].eta, electrons[2].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Ele3Jet7_wh  :=  ? (electrons.size() > 2 && jets.size() > 6) ? deltaR(electrons[2].eta, electrons[2].phi, jets[6].eta, jets[6].phi) : -100 ",  
-                           "dR_Ele4Jet1_wh  :=  ? (electrons.size() > 3 && jets.size() > 0) ? deltaR(electrons[3].eta, electrons[3].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele4Jet2_wh  :=  ? (electrons.size() > 3 && jets.size() > 1) ? deltaR(electrons[3].eta, electrons[3].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele4Jet3_wh  :=  ? (electrons.size() > 3 && jets.size() > 2) ? deltaR(electrons[3].eta, electrons[3].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Ele4Jet4_wh  :=  ? (electrons.size() > 3 && jets.size() > 3) ? deltaR(electrons[3].eta, electrons[3].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Ele4Jet5_wh  :=  ? (electrons.size() > 3 && jets.size() > 4) ? deltaR(electrons[3].eta, electrons[3].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Ele4Jet6_wh  :=  ? (electrons.size() > 3 && jets.size() > 5) ? deltaR(electrons[3].eta, electrons[3].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Ele4Jet7_wh  :=  ? (electrons.size() > 3 && jets.size() > 6) ? deltaR(electrons[3].eta, electrons[3].phi, jets[6].eta, jets[6].phi) : -100 ",  
-                           "dR_Ele5Jet1_wh  :=  ? (electrons.size() > 4 && jets.size() > 0) ? deltaR(electrons[4].eta, electrons[4].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele5Jet2_wh  :=  ? (electrons.size() > 4 && jets.size() > 1) ? deltaR(electrons[4].eta, electrons[4].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele5Jet3_wh  :=  ? (electrons.size() > 4 && jets.size() > 2) ? deltaR(electrons[4].eta, electrons[4].phi, jets[2].eta, jets[2].phi) : -100 ",
-                           "dR_Ele5Jet4_wh  :=  ? (electrons.size() > 4 && jets.size() > 3) ? deltaR(electrons[4].eta, electrons[4].phi, jets[3].eta, jets[3].phi) : -100 ",
-                           "dR_Ele5Jet5_wh  :=  ? (electrons.size() > 4 && jets.size() > 4) ? deltaR(electrons[4].eta, electrons[4].phi, jets[4].eta, jets[4].phi) : -100 ",
-                           "dR_Ele5Jet6_wh  :=  ? (electrons.size() > 4 && jets.size() > 5) ? deltaR(electrons[4].eta, electrons[4].phi, jets[5].eta, jets[5].phi) : -100 ",
-                           "dR_Ele5Jet7_wh  :=  ? (electrons.size() > 4 && jets.size() > 6) ? deltaR(electrons[4].eta, electrons[4].phi, jets[6].eta, jets[6].phi) : -100 ",                      
-                           "dR_Pho1Jet3_wh :=  ? jets.size() > 2 ? deltaR(jets[2].eta, jets[2].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Jet3_wh :=  ? jets.size() > 2 ? deltaR(jets[2].eta, jets[2].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Jet4_wh :=  ? jets.size() > 3 ? deltaR(jets[3].eta, jets[3].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Jet4_wh :=  ? jets.size() > 3 ? deltaR(jets[3].eta, jets[3].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Jet5_wh :=  ? jets.size() > 4 ? deltaR(jets[4].eta, jets[4].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Jet5_wh :=  ? jets.size() > 4 ? deltaR(jets[4].eta, jets[4].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Jet6_wh :=  ? jets.size() > 5 ? deltaR(jets[5].eta, jets[5].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Jet6_wh :=  ? jets.size() > 5 ? deltaR(jets[5].eta, jets[5].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Jet7_wh :=  ? jets.size() > 6 ? deltaR(jets[6].eta, jets[6].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Jet7_wh :=  ? jets.size() > 6 ? deltaR(jets[6].eta, jets[6].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100"
-]
-
-dR_variables_VHLeptonicLoose = ["dR_Pho1Ele1_zh := ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                                "dR_Pho1Ele2_zh := ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                                "dR_Pho2Ele1_zh := ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                                "dR_Pho1Ele2_zh := ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                                "dR_Pho1Mu1_zh  := ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                                "dR_Pho1Mu2_zh  := ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                                "dR_Pho2Mu1_zh  := ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                                "dR_Pho2Mu2_zh  := ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100"
-]
-
-dR_variables_ZHLeptonic = ["dR_Pho1Jet1_loose :=  ? jets.size() > 0 ? deltaR(jets[0].eta, jets[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Jet2_loose :=  ? jets.size() > 1 ? deltaR(jets[1].eta, jets[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",  
-                           "dR_Pho2Jet1_loose :=  ? jets.size() > 0 ? deltaR(jets[0].eta, jets[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho2Jet2_loose :=  ? jets.size() > 1 ? deltaR(jets[1].eta, jets[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Ele1_loose :=  ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Ele2_loose :=  ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",                           
-                           "dR_Pho2Ele1_loose :=  ? electrons.size() > 0 ? deltaR(electrons[0].eta, electrons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",                          
-                           "dR_Pho2Ele2_loose :=  ? electrons.size() > 1 ? deltaR(electrons[1].eta, electrons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho1Mu1_loose  :=  ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho1Mu2_loose  :=  ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.leadingPhoton.eta, diPhoton.leadingPhoton.phi) : -100",
-                           "dR_Pho2Mu1_loose  :=  ? muons.size() > 0 ? deltaR(muons[0].eta, muons[0].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Pho2Mu2_loose  :=  ? muons.size() > 1 ? deltaR(muons[1].eta, muons[1].phi, diPhoton.subLeadingPhoton.eta, diPhoton.subLeadingPhoton.phi) : -100",
-                           "dR_Mu1Jet1_loose  :=  ? (muons.size() > 0 && jets.size() > 0) ? deltaR(muons[0].eta, muons[0].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu1Jet2_loose  :=  ? (muons.size() > 0 && jets.size() > 1) ? deltaR(muons[0].eta, muons[0].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Mu2Jet1_loose  :=  ? (muons.size() > 1 && jets.size() > 0) ? deltaR(muons[1].eta, muons[1].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Mu2Jet2_loose  :=  ? (muons.size() > 1 && jets.size() > 1) ? deltaR(muons[1].eta, muons[1].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele1Jet1_loose  :=  ? (electrons.size() > 0 && jets.size() > 0) ? deltaR(electrons[0].eta, electrons[0].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele1Jet2_loose  :=  ? (electrons.size() > 0 && jets.size() > 1) ? deltaR(electrons[0].eta, electrons[0].phi, jets[1].eta, jets[1].phi) : -100 ",
-                           "dR_Ele2Jet1_loose  :=  ? (electrons.size() > 1 && jets.size() > 0) ? deltaR(electrons[1].eta, electrons[1].phi, jets[0].eta, jets[0].phi) : -100 ",
-                           "dR_Ele2Jet2_loose  :=  ? (electrons.size() > 1 && jets.size() > 1) ? deltaR(electrons[1].eta, electrons[1].phi, jets[1].eta, jets[1].phi) : -100 "
-]
-
-
-
-
-WH_anomalous_dumper_variables = diphoton_variables + leptons_variables + dR_variables_WHLeptonic +jets_variables + custom_vars # Anom_vars
-# WH_anomalous_dumper_variables = custom_vars
 
 
 
@@ -846,10 +610,12 @@ for tag in tagList:
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
 
-      if tagName == "WHLeptonicTag":#or tagName == "ZHLeptonicTag":# or tagName == "VHMetTag":
-           currentVariables += WH_Anom_Vars +WH_anomalous_dumper_variables # if tagname is WHLeptonic, dumps the additional variables...
-      elif tagName == "ZHLeptonicTag":
-           currentVariables += WH_anomalous_dumper_variables+ZH_Anom_Vars
+      if (not customize.doSystematics) and customize.VHdumpAllVars: 
+        if "WH_LEP" in tagName:
+            currentVariables += wh_anom_dumper_vars
+        elif "ZH_LEP" in tagName:
+            currentVariables += zh_anom_dumper_vars
+
       cfgTools.addCategory(process.tagsDumper,
                            systlabel,
                            classname=tagName,
@@ -959,6 +725,17 @@ else:
     if customize.doStageOne: 
         if soc.modifyForttH: soc.modifyWorkflowForttH(systlabels, phosystlabels, metsystlabels, jetsystlabels)
 
+print "&"*50
+print "The list of tags is the following:"
+print tagList
+print "&"*50
+print "The Current TagSequence"
+print process.flashggTagSequence
+print "&"*50
+# exit("Exiting because you asked...") 
+
+
+
 if customize.doBJetRegression:
 
     bregProducers = []
@@ -1010,7 +787,9 @@ for mn in mns:
     elif hasattr(module,"DiPhotonTag"):
         print str(module),module.DiPhotonTag
 print
-printSystematicInfo(process)
+
+
+if not customize.disableJEC: printSystematicInfo(process) 
 
 ### Rerun microAOD sequence on top of microAODs using the parent dataset
 if customize.useParentDataset:
@@ -1074,4 +853,73 @@ if customize.verboseSystDump:
 #processDumpFile = open('processDump.py', 'w')
 #print >> processDumpFile, process.dumpPython()
 # call the customization
+print "&"*50
+print "&"*50
+print "The Final Tag Sequence"
+print process.flashggTagSequence
+print "&"*50
+print "&"*50
+
+
+# listOfAttributes = [
+# "DiPhotonTag",
+# "SystLabel",
+# "ElectronTag",
+# "MuonTag",
+# "inputTagJets",
+# "METTag",
+# "VertexTag",
+# "rhoTag",
+# "MVAResultTag",
+# "GenParticleTag",
+# "WHMVAweightfile",
+# "Boundaries_GT150",
+# "Boundaries_75_150",
+# "Boundaries_0_75",
+# "leadPhoOverMassThreshold",
+# "subleadPhoOverMassThreshold",
+# "PhoMVAThreshold",
+# "MVAThreshold",
+# "electronPtThreshold",
+# "electronEtaThresholds",
+# "deltaRPhoElectronThreshold",
+# "DeltaRTrkElec",
+# "deltaMassElectronZThreshold",
+# "muonPtThreshold",
+# "muonEtaThreshold",
+# "muPFIsoSumRelThreshold",
+# "deltaRMuonPhoThreshold",
+# "jetsNumberThreshold",
+# "jetPtThreshold",
+# "jetEtaThreshold",
+# "deltaRJetPhoThreshold",
+# "deltaRJetLepThreshold",
+# "METThreshold",
+# ]
+
+
+# for attr in listOfAttributes:
+#     print attr + ': \t'+ str(getattr(process.flashggWHLeptonicTag, attr))
+#     # print 
+# # print process.flashggWHLeptonicTag.METThreshold
+
+# print "&"*50
+# print "&"*50
+                                    
+
+# exit("Exiting because you said so")
 customize(process)
+
+
+##########################################################
+# fast debug: remove the load of JEC/JERs (takes 30mins) #
+##########################################################
+# 1. in Taggers/python/flashggTagSequence_cfi.py: replace 'flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons"' with 'flashggPreselectedDiPhotons.src = "flashggDifferentialPhoIdInputsCorrection"'
+# 2. in Systematics/python/flashggJetSystematics_cfi.py  comment:
+# for jetInputTag in replaceTagList:
+#    module,tag = self.createJetSystematicsForTag(jetInputTag)
+#    self.process.jetSystematicsSequence += module
+#    systematicsInputList.append(tag)
+#    self.createJECESource()
+#    self.createJERESource()
+# 3. comment here the line: printSystematicInfo(process)

@@ -53,10 +53,8 @@ namespace flashgg {
 
         const float ZHiggs0MToGG_mva()          const {return ZHiggs0MToGG_MVA;};
         const float ZHiggs0PHToGG_mva()         const {return ZHiggs0PHToGG_MVA;};
-        const float ZHiggs0PHf05ph0ToGG_mva()   const {return ZHiggs0PHf05ph0ToGG_MVA;};
-        const float ZHiggs0L1f05ph0ToGG_mva()   const {return ZHiggs0L1f05ph0ToGG_MVA;};
+        const float ZHiggs0L1ToGG_mva()         const {return ZHiggs0L1ToGG_MVA;};
         const float ZHiggs0L1ZgToGG_mva()       const {return ZHiggs0L1ZgToGG_MVA;};
-        const float ZHiggs0L1Zgf05ph0ToGG_mva() const {return ZHiggs0L1Zgf05ph0ToGG_MVA;};
 
         const float Anom_MVA_pho1_eta()         const {return _Anom_MVA_pho1_eta;};
         const float Anom_MVA_pho1_phi()         const {return _Anom_MVA_pho1_phi;};
@@ -114,10 +112,8 @@ namespace flashgg {
         //Functions to set the variables
         void set_ZHiggs0MToGG_MVA(const float &val)           { ZHiggs0MToGG_MVA = val;};
         void set_ZHiggs0PHToGG_MVA(const float &val)          { ZHiggs0PHToGG_MVA = val;};
-        void set_ZHiggs0PHf05ph0ToGG_MVA(const float &val)    { ZHiggs0PHf05ph0ToGG_MVA = val;};
-        void set_ZHiggs0L1f05ph0ToGG_MVA(const float &val)    { ZHiggs0L1f05ph0ToGG_MVA = val;};
+        void set_ZHiggs0L1ToGG_MVA(const float &val)          { ZHiggs0L1ToGG_MVA = val;};
         void set_ZHiggs0L1ZgToGG_MVA(const float &val)        { ZHiggs0L1ZgToGG_MVA = val;};
-        void set_ZHiggs0L1Zgf05ph0ToGG_MVA(const float &val)  { ZHiggs0L1Zgf05ph0ToGG_MVA = val;};
 
 
         void set_Anom_MVA_pho1_eta(const float &val)          {_Anom_MVA_pho1_eta = val;};
@@ -192,9 +188,10 @@ namespace flashgg {
         float VH_mva = -999;
         float ZHiggs0MToGG_MVA =-999;
         float ZHiggs0PHToGG_MVA =-999;
-        float ZHiggs0PHf05ph0ToGG_MVA =-999;
-        float ZHiggs0L1f05ph0ToGG_MVA =-999;
+        float ZHiggs0L1ToGG_MVA =-999;
         float ZHiggs0L1ZgToGG_MVA =-999;
+        float ZZHiggs0L1ToGG_mva_MVA =-999;
+        float ZHiggs0L1f05ph0ToGG_MVA =-999;
         float ZHiggs0L1Zgf05ph0ToGG_MVA =-999;
 
         float _Anom_MVA_pho1_eta = -999;

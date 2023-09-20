@@ -137,7 +137,7 @@
 <class name="edm::Wrapper<std::vector<flashgg::WHLeptonicTag> >"/>
 
 <class name="flashgg::ZHLeptonicTag" ClassVersion="14">
- <version ClassVersion="14" checksum="2592730212"/>
+ <version ClassVersion="14" checksum="242222096"/>
  <version ClassVersion="13" checksum="1833487563"/>
  <version ClassVersion="12" checksum="183316933"/>
   <version ClassVersion="11" checksum="1904294291"/>

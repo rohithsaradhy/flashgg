@@ -119,10 +119,10 @@ namespace flashgg {
 
         //Anom_MVA Variables
         unique_ptr<TMVA::Reader> WHiggs0MToGG_MVA_;
-        unique_ptr<TMVA::Reader> WHiggs0Mf05ph0ToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0PHToGG_MVA_;
-        unique_ptr<TMVA::Reader> WHiggs0PHf05ph0ToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0L1ToGG_MVA_;
+        unique_ptr<TMVA::Reader> WHiggs0Mf05ph0ToGG_MVA_;
+        unique_ptr<TMVA::Reader> WHiggs0PHf05ph0ToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0L1f05ph0ToGG_MVA_;
 
 
@@ -871,38 +871,44 @@ namespace flashgg {
             //Choose anom mva
             float anom_mva = WHiggs0MToGG_MVA;
 
-            //2D boundary version 3 
+            // //2D boundary version 3 
             int anom_catnum = 0;
-                    if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >=  0.47368 )&( anom_mva < 1.00000 )) {anom_catnum = 0;}
-            else    if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >= -0.78947 )&( anom_mva < 0.47368 )) {anom_catnum = 1;}
-            else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >=  0.36842 )&( anom_mva < 1.00000 )) {anom_catnum = 2;}
-            else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >= -0.78947 )&( anom_mva < 0.36842 )) {anom_catnum = 3;}
-            else    anom_catnum =  4; //Cat 4
+            //         if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >=  0.47368 )&( anom_mva < 1.00000 )) {anom_catnum = 0;}
+            // else    if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >= -0.78947 )&( anom_mva < 0.47368 )) {anom_catnum = 1;}
+            // else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >=  0.36842 )&( anom_mva < 1.00000 )) {anom_catnum = 2;}
+            // else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >= -0.78947 )&( anom_mva < 0.36842 )) {anom_catnum = 3;}
+            // else    anom_catnum =  4; //Cat 4
+
+
             // Ignore anom_category numbers...
             anom_catnum = 0;
 
             // Categorization by WHMVA & ptV (0~75, 75~150, 150~)
-            int catnum = chooseCategory( whmva, ptV );
+            // int catnum = chooseCategory( whmva, ptV );
+
 
 
             // If cat num
             if(1) {
 
-                if( catnum != -1 )
-                {
-                    whleptonictags_obj.setCategoryNumber( catnum );
-                    int chosenTag = computeStage1Kinematics( whleptonictags_obj );
-                    whleptonictags_obj.setStage1recoTag( chosenTag );
-                }
-                else
-                {
-                    whleptonictags_obj.setCategoryNumber( 0 );
-                    int chosenTag = computeStage1Kinematics( whleptonictags_obj );
-                    whleptonictags_obj.setStage1recoTag( chosenTag );
-                }
+                // if( catnum != -1 )
+                // {
+                //     whleptonictags_obj.setCategoryNumber( catnum );
+                //     int chosenTag = computeStage1Kinematics( whleptonictags_obj );
+                //     whleptonictags_obj.setStage1recoTag( chosenTag );
+                // }
+                // else
+                // {
+                //     whleptonictags_obj.setCategoryNumber( 0 );
+                //     int chosenTag = computeStage1Kinematics( whleptonictags_obj );
+                //     whleptonictags_obj.setStage1recoTag( chosenTag );
+                // }
 
                 //Set the category number as default and move on...
                 whleptonictags_obj.setCategoryNumber( anom_catnum );
+                int chosenTag = computeStage1Kinematics( whleptonictags_obj );
+
+                whleptonictags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag0 );
                 whleptonictags_obj.setJets( tagJets );
                 whleptonictags_obj.setMuons( goodMuons );
                 whleptonictags_obj.setElectrons( goodElectrons );
@@ -1006,20 +1012,20 @@ namespace flashgg {
         int catNum = tag_obj.categoryNumber();
 
         if ( catNum == 0 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_GT150_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag0;
         }
         if ( catNum == 1 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_75_150_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag1;
         }
-        else if ( catNum == 2 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_75_150_Tag1;
+        if ( catNum == 2 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag2;
         }
         if ( catNum == 3 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag3;
         }
-        else if ( catNum == 4 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag1;
-        }
+        // else if ( catNum == 4 ) {
+        //     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag1;
+        // }
 
         return chosenTag_;
     }
