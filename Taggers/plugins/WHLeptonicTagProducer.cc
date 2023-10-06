@@ -46,7 +46,7 @@ namespace flashgg {
         WHLeptonicTagProducer( const ParameterSet & );
     private:
         void produce( Event &, const EventSetup & ) override;
-        int  chooseCategory( float, float );
+        int  chooseCategoryAC( float, float );
         int  computeStage1Kinematics( const WHLeptonicTag );
 
         EDGetTokenT<View<DiPhotonCandidate> > diPhotonToken_;
@@ -116,17 +116,13 @@ namespace flashgg {
         vector<double> boundaries_GT150;
         vector<double> boundaries_75_150;
         vector<double> boundaries_0_75;
+        vector<double> acBoundaries;
 
         //Anom_MVA Variables
         unique_ptr<TMVA::Reader> WHiggs0MToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0PHToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0L1ToGG_MVA_;
-        unique_ptr<TMVA::Reader> WHiggs0Mf05ph0ToGG_MVA_;
-        unique_ptr<TMVA::Reader> WHiggs0PHf05ph0ToGG_MVA_;
-        unique_ptr<TMVA::Reader> WHiggs0L1f05ph0ToGG_MVA_;
 
-
-        
         float _Anom_MVA_pho1_eta;
         float _Anom_MVA_pho1_phi;
         float _Anom_MVA_pho1_full5x5_r9;
@@ -537,47 +533,26 @@ namespace flashgg {
         WHMva_->AddSpectator( "leptonType"        ,&_leptonType    ); 
         WHMva_->BookMVA( "BDT", WHMVAweightfile_.fullPath() );
 
-        boundaries_GT150  = iConfig.getParameter<vector<double > >( "Boundaries_GT150" );
-        boundaries_75_150 = iConfig.getParameter<vector<double > >( "Boundaries_75_150" );
-        boundaries_0_75   = iConfig.getParameter<vector<double > >( "Boundaries_0_75" );
-        assert( is_sorted( boundaries_GT150.begin(), boundaries_GT150.end() ) ); // we are counting on ascending order - update this to give an error message or exception
-        assert( is_sorted( boundaries_75_150.begin(), boundaries_75_150.end() ) ); // we are counting on ascending order - update this to give an error message or exception
-        assert( is_sorted( boundaries_0_75.begin(), boundaries_0_75.end() ) ); // we are counting on ascending order - update this to give an error message or exception
-
+        acBoundaries  = iConfig.getParameter< vector<double> >( "acBoundaries" );
 
         produces<vector<WHLeptonicTag> >();
         //produces<vector<VHTagTruth> >();
     }
 
-    int WHLeptonicTagProducer::chooseCategory( float mva, float ptV )
+    int WHLeptonicTagProducer::chooseCategoryAC( float stxs_mva, float ac_mva )
     {
-        // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
-        int n_GT150  = boundaries_GT150.size();
-        int n_75_150 = boundaries_75_150.size();
-        int n_0_75   = boundaries_0_75.size();
-
-        if (ptV > 150.) {
-            for( int n = 0 ; n < n_GT150 ; n++ ) {
-                if( ( double )mva > boundaries_GT150[n_GT150 - n - 1] ) { 
-                    return n;
-                }
-            }
-        } else if (ptV > 75. && ptV < 150.) {
-            for( int n = 0 ; n < n_75_150; n++ ) {
-                if( ( double )mva > boundaries_75_150[n_75_150 - n - 1] ) { 
-                    return n + n_GT150; 
-                }
-            }
-        } else if (ptV > 0.) {
-            for( int n = 0 ; n < n_0_75; n++ ) {
-                if( ( double )mva > boundaries_0_75[n_0_75 - n - 1] ) { 
-                    return n + n_75_150 + n_GT150; 
-                }
+        //tag_number {each tag should have 4 boundaries}
+        for (uint tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+            if ((stxs_mva <= acBoundaries[tag_num + 0]) && (stxs_mva > acBoundaries[tag_num + 1]) && (ac_mva <= acBoundaries[tag_num + 2]) && (ac_mva > acBoundaries[tag_num + 3])){
+                // std::cout<<"WH "<<tag_num/4<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
+                return tag_num/4;
             }
         }
-
+        // std::cout<<"WH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
         return -1; // Does not pass, object will not be produced
     }
+
+
 
     void WHLeptonicTagProducer::produce( Event &evt, const EventSetup & )
     {
@@ -603,7 +578,7 @@ namespace flashgg {
 
         edm::Handle<double>  rho;
         evt.getByToken(rhoTag_,rho);
-        double rho_    = *rho;
+        // double rho_    = *rho;
 
         Handle<View<flashgg::DiPhotonMVAResult> > mvaResults;
         evt.getByToken( mvaResultToken_, mvaResults );
@@ -662,7 +637,7 @@ namespace flashgg {
             }
         }
 
-        unsigned int idx = 0;
+        // unsigned int idx = 0;
 
         for( unsigned int diphoIndex = 0; diphoIndex < diPhotons->size(); diphoIndex++ ) {
 
@@ -786,7 +761,7 @@ namespace flashgg {
             _min_dphi_jet_lnu = minDeltaPhiJetLNu; 
 
             float whmva    = WHMva_->EvaluateMVA( "BDT" );
-            float ptV = dipho->pt();
+            // float ptV = dipho->pt();
 
 
             // Additional Variables for anom BDT
@@ -870,45 +845,17 @@ namespace flashgg {
 
             //Choose anom mva
             float anom_mva = WHiggs0MToGG_MVA;
+            int catnum = chooseCategoryAC( whmva, anom_mva );
 
-            // //2D boundary version 3 
-            int anom_catnum = 0;
-            //         if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >=  0.47368 )&( anom_mva < 1.00000 )) {anom_catnum = 0;}
-            // else    if(( whmva >= 0.22917 )&( whmva < 1.00000 )&( anom_mva >= -0.78947 )&( anom_mva < 0.47368 )) {anom_catnum = 1;}
-            // else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >=  0.36842 )&( anom_mva < 1.00000 )) {anom_catnum = 2;}
-            // else    if(( whmva >= 0.07292 )&( whmva < 0.22917 )&( anom_mva >= -0.78947 )&( anom_mva < 0.36842 )) {anom_catnum = 3;}
-            // else    anom_catnum =  4; //Cat 4
-
-
-            // Ignore anom_category numbers...
-            anom_catnum = 0;
-
-            // Categorization by WHMVA & ptV (0~75, 75~150, 150~)
-            // int catnum = chooseCategory( whmva, ptV );
 
 
 
             // If cat num
-            if(1) {
+            if( catnum != -1 ) {
 
-                // if( catnum != -1 )
-                // {
-                //     whleptonictags_obj.setCategoryNumber( catnum );
-                //     int chosenTag = computeStage1Kinematics( whleptonictags_obj );
-                //     whleptonictags_obj.setStage1recoTag( chosenTag );
-                // }
-                // else
-                // {
-                //     whleptonictags_obj.setCategoryNumber( 0 );
-                //     int chosenTag = computeStage1Kinematics( whleptonictags_obj );
-                //     whleptonictags_obj.setStage1recoTag( chosenTag );
-                // }
-
-                //Set the category number as default and move on...
-                whleptonictags_obj.setCategoryNumber( anom_catnum );
+                whleptonictags_obj.setCategoryNumber( catnum );
                 int chosenTag = computeStage1Kinematics( whleptonictags_obj );
-
-                whleptonictags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag0 );
+                whleptonictags_obj.setStage1recoTag( chosenTag );
                 whleptonictags_obj.setJets( tagJets );
                 whleptonictags_obj.setMuons( goodMuons );
                 whleptonictags_obj.setElectrons( goodElectrons );
@@ -1023,10 +970,6 @@ namespace flashgg {
         if ( catNum == 3 ) {
             chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag3;
         }
-        // else if ( catNum == 4 ) {
-        //     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag1;
-        // }
-
         return chosenTag_;
     }
 

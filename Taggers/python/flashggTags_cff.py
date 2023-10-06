@@ -522,28 +522,19 @@ flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
                                     jetPtThreshold              = cms.double(20),
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4),
-                                    deltaRJetLepThreshold       = cms.double(0.4),
-
+                                    deltaRJetLepThreshold       = cms.double(0.4),                         
                                     
-
-                                    # invMassLepLowThreshold      = cms.double(20),
-                                    # invMassLepHighThreshold     = cms.double(200.),  
-                                    # electronEtaThresholds       = cms.vdouble(1.4442,1.566,2.5),
-                                    # DeltaRTrkElec               = cms.double(0.2),
-                                    # deltaRPhoElectronThreshold  = cms.double(0.),
-                                    # deltaMassElectronZThreshold = cms.double(-1.),
-                                    # muonPtThreshold             = cms.double(10),
-                                    # muonEtaThreshold            = cms.double(0),
-                                    # deltaRMuonPhoThreshold      = cms.double(0),
-                                    # muPFIsoSumRelThreshold      = cms.double(0.25),
-                                    # jetPtThreshold              = cms.double(20),
-                                    # jetEtaThreshold             = cms.double(0),
-                                    # deltaRJetPhoThreshold       = cms.double(0.0),
-                                    # deltaRJetLepThreshold       = cms.double(0.0),                                 
-                                    
-                                    ZHiggs0MToGG_weights          = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0MToGG_EraALL_model.xml"),  
-                                    ZHiggs0PHToGG_weights         = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0PHToGG_EraALL_model.xml"),   
-                                    ZHiggs0L1ToGG_weights         = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0L1ToGG_EraALL_model.xml")
+                                    ZHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0MToGG_EraALL_model.xml"),  
+                                    ZHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0PHToGG_EraALL_model.xml"),   
+                                    ZHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0L1ToGG_EraALL_model.xml"),
+                                    acBoundaries                = cms.vdouble(
+                                                                    #Tag 0
+                                                                    1.0,0.229, #STXSBDT
+                                                                    1.0,-0.68, #ACBDT
+                                                                    #Tag 1
+                                                                    0.229,-0.135, #STXSBDT
+                                                                    1.0,-0.16, #ACBDT
+                                                                ),
                                     
 )
 
@@ -584,7 +575,23 @@ flashggWHLeptonicTag = cms.EDProducer("FlashggWHLeptonicTagProducer",
                                     
                                     WHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0MToGG_EraALL_model.xml"),   
                                     WHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0PHToGG_EraALL_model.xml"),    
-                                    WHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0L1ToGG_EraALL_model.xml")
+                                    WHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0L1ToGG_EraALL_model.xml"),
+
+                                    acBoundaries               = cms.vdouble(
+                                                                    #Tag 0
+                                                                    1.0,0.385, #STXSBDT
+                                                                    1.0,0.79, #ACBDT
+                                                                    #Tag 1
+                                                                    1.0,0.38541667, #STXSBDT
+                                                                    0.79,-0.68, #ACBDT
+                                                                    #Tag 2                                                                               
+                                                                    0.385,0.125, #STXSBDT
+                                                                    1.0,0.89, #ACBDT
+                                                                    #Tag 3
+                                                                    0.385,0.125, #STXSBDT
+                                                                    0.89,-0.68, #ACBDT
+                                                                ),
+                                    
                                     )
 
 flashggVHLeptonicLooseTag = cms.EDProducer("FlashggVHLeptonicLooseTagProducer",

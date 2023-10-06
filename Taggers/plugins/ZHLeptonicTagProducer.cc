@@ -41,7 +41,8 @@ namespace flashgg {
         ZHLeptonicTagProducer( const ParameterSet & );
     private:
         void produce( Event &, const EventSetup & ) override;
-        int  chooseCategory( float );
+        int chooseACCategory( float stxs_mva, float ac_mva );
+
 
         EDGetTokenT<View<DiPhotonCandidate> > diPhotonToken_;
         EDGetTokenT<View<flashgg::Electron> > electronToken_;
@@ -203,6 +204,8 @@ namespace flashgg {
         FileInPath ZHMVAweightfile_ ;
 
         vector<double> boundaries;
+        vector<double> acBoundaries;
+
 
 
         int evt_count;
@@ -473,7 +476,7 @@ namespace flashgg {
 
         boundaries = iConfig.getParameter<vector<double > >( "Boundaries" );
         assert( is_sorted( boundaries.begin(), boundaries.end() ) ); // we are counting on ascending order - update this to give an error message or exception
-
+        acBoundaries  = iConfig.getParameter< vector<double> >( "acBoundaries" );
         produces<vector<ZHLeptonicTag> >();
         //produces<vector<VHTagTruth> >();
 
@@ -481,13 +484,17 @@ namespace flashgg {
         evt_count = 0;
     }
 
-    int ZHLeptonicTagProducer::chooseCategory( float mva )
+   int ZHLeptonicTagProducer::chooseACCategory( float stxs_mva, float ac_mva )
     {
         // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
-        int n;
-        for( n = 0 ; n < ( int )boundaries.size() ; n++ ) {
-            if( ( double )mva > boundaries[boundaries.size() - n - 1] ) { return n; }
+        //tag_number {each tag should have 4 boundaries}
+        for (uint tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+            if ((stxs_mva <= acBoundaries[tag_num + 0]) && (stxs_mva > acBoundaries[tag_num + 1]) && (ac_mva <= acBoundaries[tag_num + 2]) && (ac_mva > acBoundaries[tag_num + 3])){
+                // std::cout<<"ZH "<<tag_num/4<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
+                return tag_num/4;
+            }
         }
+        // std::cout<<"ZH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
         return -1; // Does not pass, object will not be produced
     }
 
@@ -803,13 +810,11 @@ namespace flashgg {
             float ZHiggs0L1ToGG_MVA  =ZHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );                   
             
             
-            int anom_catnum = 0;
-            // Categorization by ZHMVA
-            // int catnum = chooseCategory( zhmva );
-            int catnum = 0; //chooseCategory( zhmva );
+            float anom_mva = ZHiggs0MToGG_MVA;
+            int catnum = chooseACCategory( zhmva , anom_mva);
 
 
-            if(1) {
+            if( catnum != -1 ) {
                 
                 ZHLeptonicTags_obj.setCategoryNumber( catnum );
                 ZHLeptonicTags_obj.setMuons( tagMuons );
@@ -819,16 +824,10 @@ namespace flashgg {
                 ZHLeptonicTags_obj.setSystLabel( systLabel_ );
 
 
-
-
-                if( ! evt.isRealData() ) {
-                    ZHLeptonicTags_obj.setAssociatedZ( associatedZ );
-                    ZHLeptonicTags_obj.setAssociatedW( associatedW );
-                    ZHLeptonicTags_obj.setVhasNeutrinos( VhasNeutrinos );
-                    ZHLeptonicTags_obj.setVhasLeptons( VhasLeptons );
-                    ZHLeptonicTags_obj.setVhasHadrons( VhasHadrons );
-                    ZHLeptonicTags_obj.setVpt( Vpt );
-                }
+                ZHLeptonicTags_obj.set_VHmva( zhmva );
+                ZHLeptonicTags_obj.set_ZHiggs0MToGG_MVA(ZHiggs0MToGG_MVA);
+                ZHLeptonicTags_obj.set_ZHiggs0PHToGG_MVA(ZHiggs0PHToGG_MVA);
+                ZHLeptonicTags_obj.set_ZHiggs0L1ToGG_MVA(ZHiggs0L1ToGG_MVA);
 
                 if( catnum == 0 ) { 
                     ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag0 );
@@ -837,16 +836,13 @@ namespace flashgg {
                 }
                 else {
                     // Set values to Tag zero if none if not categorized
-                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag0 ); 
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::LOGICERROR ); 
                 }
 
 
 
-                ZHLeptonicTags_obj.setCategoryNumber( anom_catnum ); // Setting cat number to 0
-                ZHLeptonicTags_obj.set_VHmva( zhmva );
-                ZHLeptonicTags_obj.set_ZHiggs0MToGG_MVA(ZHiggs0MToGG_MVA);
-                ZHLeptonicTags_obj.set_ZHiggs0PHToGG_MVA(ZHiggs0PHToGG_MVA);
-                ZHLeptonicTags_obj.set_ZHiggs0L1ToGG_MVA(ZHiggs0L1ToGG_MVA);
+
+
                 // ZHLeptonicTags_obj.set_ZHiggs0L1ZgToGG_MVA(999);
 
 
