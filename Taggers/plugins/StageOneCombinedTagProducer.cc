@@ -46,6 +46,10 @@ namespace flashgg {
         std::map<std::string, float> diphoBounds_, dijetBounds_, gghBounds_, vhHadBounds_;
         void constructBounds();
 
+        std::vector<double> nloKfacVbfEdges_;
+        std::vector<double> nloKfacVbfVals_;
+        float getVBFKFactor(const StageOneCombinedTag tag_obj, std::vector<double> edges, std::vector<double> vals);
+
         EDGetTokenT<View<DiPhotonCandidate> >      diPhotonToken_;
         EDGetTokenT<View<VBFMVAResult> >           vbfMvaResultToken_;
         EDGetTokenT<View<VHhadMVAResult> >           vhHadMvaResultToken_;
@@ -89,11 +93,14 @@ namespace flashgg {
         rawVhhaddnnBKGBounds_ = iConfig.getParameter<std::vector<double> > ("rawVhhaddnnBKGBounds");
         rawVhhaddnnBSMBounds_ = iConfig.getParameter<std::vector<double> > ("rawVhhaddnnBSMBounds");
         
+        nloKfacVbfEdges_ = iConfig.getParameter<std::vector<double> > ("nloKfacVbfEdges");
+        nloKfacVbfVals_ = iConfig.getParameter<std::vector<double> > ("nloKfacVbfVals");
+
         // we are counting on ascending order - update this to give an error message or exception
         assert( is_sorted( rawVbfpBSMBounds_.begin(), rawVbfpBSMBounds_.end() ) );
         assert( is_sorted( rawVbfpBKGBounds_.begin(), rawVbfpBKGBounds_.end() ) );
         assert( is_sorted( rawVbfpD0MBounds_.begin(), rawVbfpD0MBounds_.end() ) );
-
+        assert( is_sorted( nloKfacVbfEdges_.begin(), nloKfacVbfEdges_.end() ) );
         constructBounds();
 
         produces<vector<DiPhotonTagBase> >();
@@ -158,6 +165,7 @@ namespace flashgg {
                 float j2upadjust = 1.;
                 float j1downadjust = 1.;
                 float j2downadjust = 1.;
+                float nlovbfkfac = getVBFKFactor(stage1tag_obj, nloKfacVbfEdges_, nloKfacVbfVals_);
 
                 if (stage1tag_obj.VBFMVA().leadJet_ptr->hasWeight("UnmatchedPUWeightUp01sigma") ) {
                     j1upadjust = stage1tag_obj.VBFMVA().leadJet_ptr->weight("UnmatchedPUWeightUp01sigma")  / j1corig;
@@ -182,8 +190,12 @@ namespace flashgg {
                     for (auto it = stage1tag_obj.weightListBegin() ; it != stage1tag_obj.weightListEnd(); it++) {
                         std::cout << "SCZ Weight Debug " << *it << " " << stage1tag_obj.weight(*it) << std::endl;
                         
-                    }
+                    }                    
                 }
+                if (false && systLabel_ == "") {
+                    std::cout << "NLO kfactor = " << nlovbfkfac << std::endl;
+                }
+                stage1tag_obj.setWeight("vbfNLOweight", nlovbfkfac );
             }
             
             int chosenTag = computeStage1Kinematics( stage1tag_obj ); // choose category
@@ -253,7 +265,7 @@ namespace flashgg {
         float mvaScore = tag_obj.diPhotonMVA().transformedMvaValue(); // maps output score from TMVA back to XGBoost original
         float dijetScore = tag_obj.VBFMVA().prob_VBF_value();
         float gghScore = tag_obj.VBFMVA().prob_ggH_value();
-        float vhHadScore = tag_obj.VHhadMVA().transformedMvaValue( tag_obj.VHhadMVA().VHhadMVAValue() );
+        //float vhHadScore = tag_obj.VHhadMVA().transformedMvaValue( tag_obj.VHhadMVA().VHhadMVAValue() );
         float leadMvaScore = tag_obj.diPhotonMVA().leadmva;
         float subleadMvaScore = tag_obj.diPhotonMVA().subleadmva;
         float leadPToM = tag_obj.diPhotonMVA().leadptom;
@@ -728,7 +740,19 @@ namespace flashgg {
         vhHadBounds_["RECO_VBFTOPO_VHHAD_Tag1"] = rawVhHadBounds_[1];
     }
 
+
+    float StageOneCombinedTagProducer::getVBFKFactor(const StageOneCombinedTag tag_obj, std::vector<double> edges, std::vector<double> vals)
+    {
+        float ptH = tag_obj.diPhoton()->pt();
+        int b;
+        for( b = 0; b < (int)edges.size(); b++ ) {
+            if( ptH > edges[edges.size() - b - 1] ) break;
+        }
+        float kfactor = vals[edges.size() - b];
+        return kfactor;
+    }
 }
+
 
 typedef flashgg::StageOneCombinedTagProducer FlashggStageOneCombinedTagProducer;
 DEFINE_FWK_MODULE( FlashggStageOneCombinedTagProducer );
