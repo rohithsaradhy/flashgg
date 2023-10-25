@@ -20,6 +20,8 @@
 #include <TLorentzVector.h>
 #include <vector>
 #include <algorithm>
+#include "TH2D.h"
+#include "TFile.h"
 
 using namespace std;
 using namespace edm;
@@ -50,6 +52,10 @@ namespace flashgg {
         std::vector<double> nloKfacVbfVals_;
         float getVBFKFactor(const StageOneCombinedTag tag_obj, std::vector<double> edges, std::vector<double> vals);
 
+        edm::FileInPath nloKfacVHHadFile_;
+        TH2D* nloKfacVHHad_;
+        float getVHHadKFactor(const StageOneCombinedTag tag_obj);
+        
         EDGetTokenT<View<DiPhotonCandidate> >      diPhotonToken_;
         EDGetTokenT<View<VBFMVAResult> >           vbfMvaResultToken_;
         EDGetTokenT<View<VHhadMVAResult> >           vhHadMvaResultToken_;
@@ -94,7 +100,7 @@ namespace flashgg {
         rawVhhaddnnBSMBounds_ = iConfig.getParameter<std::vector<double> > ("rawVhhaddnnBSMBounds");
         
         nloKfacVbfEdges_ = iConfig.getParameter<std::vector<double> > ("nloKfacVbfEdges");
-        nloKfacVbfVals_ = iConfig.getParameter<std::vector<double> > ("nloKfacVbfVals");
+        nloKfacVbfVals_  = iConfig.getParameter<std::vector<double> > ("nloKfacVbfVals");
 
         // we are counting on ascending order - update this to give an error message or exception
         assert( is_sorted( rawVbfpBSMBounds_.begin(), rawVbfpBSMBounds_.end() ) );
@@ -103,6 +109,12 @@ namespace flashgg {
         assert( is_sorted( nloKfacVbfEdges_.begin(), nloKfacVbfEdges_.end() ) );
         constructBounds();
 
+        nloKfacVHHadFile_ = iConfig.getParameter<edm::FileInPath> ("nloKfacVHHadFile");
+        TFile *f = TFile::Open(nloKfacVHHadFile_.fullPath().c_str());
+        nloKfacVHHad_ = (TH2D*) f->Get("reweighting")->Clone();
+        f->Close();
+        delete f;
+        
         produces<vector<DiPhotonTagBase> >();
     }
 
@@ -166,6 +178,7 @@ namespace flashgg {
                 float j1downadjust = 1.;
                 float j2downadjust = 1.;
                 float nlovbfkfac = getVBFKFactor(stage1tag_obj, nloKfacVbfEdges_, nloKfacVbfVals_);
+                float nlovhhadkfac = getVHHadKFactor(stage1tag_obj);
 
                 if (stage1tag_obj.VBFMVA().leadJet_ptr->hasWeight("UnmatchedPUWeightUp01sigma") ) {
                     j1upadjust = stage1tag_obj.VBFMVA().leadJet_ptr->weight("UnmatchedPUWeightUp01sigma")  / j1corig;
@@ -193,9 +206,11 @@ namespace flashgg {
                     }                    
                 }
                 if (false && systLabel_ == "") {
-                    std::cout << "NLO kfactor = " << nlovbfkfac << std::endl;
+                    std::cout << "NLO VBF kfactor = " << nlovbfkfac << std::endl;
+                    std::cout << "NLO VH kfactor = " << nlovhhadkfac << std::endl;
                 }
                 stage1tag_obj.setWeight("vbfNLOweight", nlovbfkfac );
+                stage1tag_obj.setWeight("vhhadNLOweight", nlovhhadkfac );
             }
             
             int chosenTag = computeStage1Kinematics( stage1tag_obj ); // choose category
@@ -750,6 +765,21 @@ namespace flashgg {
         }
         float kfactor = vals[edges.size() - b];
         return kfactor;
+    }
+
+    float StageOneCombinedTagProducer::getVHHadKFactor(const StageOneCombinedTag tag_obj)
+    {
+        float x = tag_obj.VHhadACDNN().dnnvh_bkg_value();
+        float y = tag_obj.VHhadACDNN().dnnvh_bsm_value();
+
+        int ibinx = nloKfacVHHad_->GetXaxis()->FindBin(x);
+        int ibiny = nloKfacVHHad_->GetYaxis()->FindBin(y);
+        if (ibinx <= 0) ibinx = 1;
+        if (ibinx > nloKfacVHHad_->GetNbinsX()) ibinx = nloKfacVHHad_->GetNbinsX();
+        if (ibiny <= 0) ibiny = 1;
+        if (ibiny > nloKfacVHHad_->GetNbinsY()) ibiny = nloKfacVHHad_->GetNbinsY();
+        
+        return min(nloKfacVHHad_->GetBinContent(ibinx,ibiny),2.);
     }
 }
 

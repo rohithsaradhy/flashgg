@@ -20,5 +20,6 @@ flashggStageOneCombinedTag = cms.EDProducer("FlashggStageOneCombinedTagProducer"
                                rawVhhaddnnBKGBounds = cms.vdouble(), 
                                rawVhhaddnnBSMBounds = cms.vdouble(),
                                nloKfacVbfEdges = cms.vdouble(),
-                               nloKfacVbfVals = cms.vdouble()
+                               nloKfacVbfVals = cms.vdouble(),
+                               nloKfacVHHadFile = cms.FileInPath("")
                                )

@@ -74,6 +74,7 @@ class StageOneAcCustomize():
                 #"btagReshapeNorm_THQ_LEP[1,-999999.,999999.] := weight(\"btagReshapeNorm_THQ_LEP\")",
                 "centralObjectWeight[1,-999999.,999999.] := centralWeight",
                 "vbfNLOweight[1,-999999.,999999.] := weight(\"vbfNLOweight\")",
+                "vhhadNLOweight[1,-999999.,999999.] := weight(\"vhhadNLOweight\")",
             ]
 
         import flashgg.Taggers.VBFTagVariables as var
@@ -172,6 +173,7 @@ class StageOneAcCustomize():
         self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBSMBounds"] )
         self.process.flashggStageOneCombinedTag.nloKfacVbfEdges = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["nloKfacVbfEdges"] )
         self.process.flashggStageOneCombinedTag.nloKfacVbfVals = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["nloKfacVbfVals"] )
+        self.process.flashggStageOneCombinedTag.nloKfacVHHadFile = cms.FileInPath( self.metaConditions["stageOneCombinedTag"]["nloKfacVHHadFile"] )
 
         ## set the pre-firing to be applied
         self.metaConditions["L1Prefiring"]["applyToCentral"] = True
