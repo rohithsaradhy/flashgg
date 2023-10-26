@@ -34,9 +34,7 @@ class StageOneCustomize():
             ["RECO_TTH_HAD_PTH_120_200_Tag0",0], ["RECO_TTH_HAD_PTH_120_200_Tag1",0], ["RECO_TTH_HAD_PTH_120_200_Tag2",0], ["RECO_TTH_HAD_PTH_120_200_Tag3",0],
             ["RECO_TTH_HAD_PTH_200_300_Tag0",0], ["RECO_TTH_HAD_PTH_200_300_Tag1",0], ["RECO_TTH_HAD_PTH_200_300_Tag2",0],
             ["RECO_TTH_HAD_PTH_GT300_Tag0",0], ["RECO_TTH_HAD_PTH_GT300_Tag1",0],
-            ["RECO_WH_LEP_PTV_0_75_Tag0",0], ["RECO_WH_LEP_PTV_0_75_Tag1",0],
-            ["RECO_WH_LEP_PTV_75_150_Tag0",0], ["RECO_WH_LEP_PTV_75_150_Tag1",0],
-            ["RECO_WH_LEP_PTV_GT150_Tag0",0],
+            ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0],["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
             ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
             ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],
             ["RECO_TTH_LEP_PTH_0_60_Tag0",0], ["RECO_TTH_LEP_PTH_0_60_Tag1",0], ["RECO_TTH_LEP_PTH_0_60_Tag2",0],
@@ -49,17 +47,17 @@ class StageOneCustomize():
 
         #VH Lep with only ZH & WH tags depending on the options chosen...
         if self.customize.doZHLep or self.customize.doWHLep:
-            self.tagList = [["LOGICERROR",0]]
+            self.tagList = [["NOTAG",0],["LOGICERROR",0]]
             if self.customize.doZHLep:
                 self.tagList += [["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0]]
             if self.customize.doWHLep:
                 self.tagList += [["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0],["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],]
 
 
-        # if self.customize.processId == "Data": 
-        #     # self.tagList.pop(1) ## remove NoTag for data
-        #     if ["NOTAG",0] in self.tagList:
-        #         self.tagList.remove(["NOTAG",0])
+        if self.customize.processId == "Data": 
+            # self.tagList.pop(1) ## remove NoTag for data
+            if ["NOTAG",0] in self.tagList:
+                self.tagList.remove(["NOTAG",0])
 
         self.stageOneVariable = ["stage1p2bin[57,-8.5,48.5] := tagTruth().HTXSstage1p2orderedBin"]
         self.tagPriorityRanges = cms.VPSet(
@@ -73,20 +71,20 @@ class StageOneCustomize():
         )
 
 
-        ## VH Lep Edits
-        if self.customize.doZHLep and self.customize.doWHLep:
-            self.tagPriorityRanges = cms.VPSet(
-                cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
-                cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
-            )
-        elif self.customize.doZHLep:
-            self.tagPriorityRanges = cms.VPSet(
-                cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
-            )
-        elif self.customize.doWHLep:
-            self.tagPriorityRanges = cms.VPSet(
-                cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
-            )
+        # ## VH Lep Edits
+        # if self.customize.doZHLep and self.customize.doWHLep:
+        #     self.tagPriorityRanges = cms.VPSet(
+        #         cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
+        #         cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
+        #     )
+        # elif self.customize.doZHLep:
+        #     self.tagPriorityRanges = cms.VPSet(
+        #         cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
+        #     )
+        # elif self.customize.doWHLep:
+        #     self.tagPriorityRanges = cms.VPSet(
+        #         cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
+        #     )
 
 
         self.customizeTagSequence()
@@ -143,62 +141,76 @@ class StageOneCustomize():
 
     def customizeTagSequence(self):
         self.process.load("flashgg.Taggers.flashggStageOneCombinedTag_cfi")
+        self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
+        # self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
+        self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
+        self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
+        self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
+        # self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
+        # self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
+        # self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
+        self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
+        self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
+        self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
 
 
-        ## remove unneeded tags
-        #Remove tags 
-        if self.customize.doZHLep and self.customize.doWHLep:
-            self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
-            self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
-            self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
-            self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
-            #self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
-            #self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
-            self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
-            self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
-        elif self.customize.doZHLep:
-            self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
-            self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
-            self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
-            self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
-            #self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
-            self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
-            self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
-            self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
-        elif self.customize.doWHLep:
-            self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
-            self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
-            self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
-            self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
-            self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
-            # self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
-            self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
-            self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
-        else:
-            self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
-            # self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
-            self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
-            self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
-            self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
-            # self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
-            # self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
-            # self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
-            self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
-            self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
-            self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
+
+
+        # ## remove unneeded tags
+        # #Remove tags 
+        # if self.customize.doZHLep and self.customize.doWHLep:
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
+        #     #self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
+        #     #self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
+        #     self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
+        # elif self.customize.doZHLep:
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
+        #     #self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
+        #     self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
+        #     self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
+        # elif self.customize.doWHLep:
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
+        #     self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
+        #     # self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
+        #     self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
+        # else:
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
+        #     # self.process.flashggTagSequence.remove(self.process.flashggTHQLeptonicTag) ## now included in analysis Rohith Edit
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHDiLeptonTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHLeptonicTag) ## will be added back in later
+        #     self.process.flashggTagSequence.remove(self.process.flashggTTHHadronicTag) ## will be added back in later
+        #     # self.process.flashggTagSequence.remove(self.process.flashggVHMetTag)      ## now included in analysis Rohith Edit
+        #     # self.process.flashggTagSequence.remove(self.process.flashggZHLeptonicTag) ## now included in analysis
+        #     # self.process.flashggTagSequence.remove(self.process.flashggWHLeptonicTag) ## now included in analysis
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHLeptonicLooseTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVHHadronicTag)
+        #     self.process.flashggTagSequence.remove(self.process.flashggVBFTag)
+        #     self.process.flashggTagSequence.replace(self.process.flashggUntagged,self.process.flashggStageOneCombinedTag)
         
 
 
