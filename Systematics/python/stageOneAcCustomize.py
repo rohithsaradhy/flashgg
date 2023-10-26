@@ -73,6 +73,8 @@ class StageOneAcCustomize():
                 #"btagReshapeNorm_TTH_HAD[1,-999999.,999999.] := weight(\"btagReshapeNorm_TTH_HAD\")",
                 #"btagReshapeNorm_THQ_LEP[1,-999999.,999999.] := weight(\"btagReshapeNorm_THQ_LEP\")",
                 "centralObjectWeight[1,-999999.,999999.] := centralWeight",
+                "vbfNLOweight[1,-999999.,999999.] := weight(\"vbfNLOweight\")",
+                "vhhadNLOweight[1,-999999.,999999.] := weight(\"vhhadNLOweight\")",
             ]
 
         import flashgg.Taggers.VBFTagVariables as var
@@ -108,9 +110,9 @@ class StageOneAcCustomize():
             "dnnvh_bsm :=  VHhadACDNN.dnnvh_bsm",
         ]
 
-        allNonSigVariables = var.dipho_variables + var.dijet_variables + VBF_mva_probs + VHhad_dnn_probs + matching_photon #+more_jet_vars 
+        allNonSigVariables = var.dipho_variables + var.dijet_variables + matching_photon + VBF_mva_probs + VHhad_dnn_probs # + more_jet_vars 
         #ntup_variables = ws_variables + allNonSigVariables
-        ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
+        ntup_variables = ws_variables + allNonSigVariables if (is_signal and fullvars) else ws_variables
 
         if self.customize.dumpWorkspace:
             return ws_variables
@@ -169,6 +171,9 @@ class StageOneAcCustomize():
         self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpD0MBounds"] )
         self.process.flashggStageOneCombinedTag.rawVhhaddnnBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBKGBounds"] )
         self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBSMBounds"] )
+        self.process.flashggStageOneCombinedTag.nloKfacVbfEdges = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["nloKfacVbfEdges"] )
+        self.process.flashggStageOneCombinedTag.nloKfacVbfVals = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["nloKfacVbfVals"] )
+        self.process.flashggStageOneCombinedTag.nloKfacVHHadFile = cms.FileInPath( self.metaConditions["stageOneCombinedTag"]["nloKfacVHHadFile"] )
 
         ## set the pre-firing to be applied
         self.metaConditions["L1Prefiring"]["applyToCentral"] = True
