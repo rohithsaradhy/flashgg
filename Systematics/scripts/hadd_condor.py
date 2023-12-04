@@ -84,7 +84,7 @@ def makeSubdirs(treedir,jobdir,options):
       dsname = "_".join(f.split("_")[1:-1])
       if f not in samples:
         samples.append(dsname)
-  basedir=os.path.basename(treedir)
+  basedir=os.path.basename(treedir.rstrip("/"))
   srcfilename="%s/subdirs_%s.sh"%(jobdir,basedir)
   _fmkdirs = open("%s/subdirs_%s.sh"%(jobdir,basedir),"w")
   writeMkSubdirs(_fmkdirs,treedir,samples)
