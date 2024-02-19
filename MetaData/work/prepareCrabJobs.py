@@ -289,7 +289,7 @@ if options.createCrabConfig:
             ("_withHLT_80X_mcRun2_asymptotic_v14_ext1-v1","reHLTasym16"),
             ("RunIISummer16MiniAODv2-PUMoriond17","Summer16"),
             ("TrancheIV","T4"),
-            ("DoubleEMEnriched", "DoubleEME"),
+            ("DoubleEMEnriched", "DEME"),
             ("PhaseISpring17MiniAOD-FlatPU28to62_90X_upgrade2017_realistic_v20-v1","PhaseISpring17"),
             ("PhaseISpring17MiniAOD-FlatPU28to62_902_90X_upgrade2017_realistic_v20_ext1-v1","PhaseISpring17"),
             ("PhaseIFall16MiniAOD-FlatPU28to62HcalNZSRAW_PhaseIFall16_90X_upgrade2017_realistic_v6_C1-v1","PhaseIFall16"),
@@ -326,8 +326,10 @@ if options.createCrabConfig:
             ("_dipoleRecoilOff-TuneCUETP8M1_PSweights",""),
             ("_dipoleRecoilOff-TuneCP5_PSweights",""),
             ("_TuneCP5_PSWeights_narrow_13TeV-madgraph-pythia8","_13TeV"),
+            ("_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8_storeWeights","_13TeV"),
             ("-UL2017_MiniAODv2-v2","UL17"),
-            ("RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v3","UL16preVFP"),
+            ("RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8","UL16preVFP"),
+            ("RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v4","UL16preVFP"),
             ("RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v3","UL16postVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v13-v3","UL16postVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1","UL16postVFP"),
@@ -336,10 +338,14 @@ if options.createCrabConfig:
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v4","UL16postVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v5","UL16postVFP"),
             ("RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v6","UL16postVFP"),
+            ("RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic","UL16postVFP"),
             ("RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v1","Summer19UL17"),
             ("RunIISummer19UL17MiniAODv2-106X_mc2017_realistic_v9-v1","Summer19UL17v2"),
             ("RunIISummer19UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v1","Summer19UL18v2"),
-            ("RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v3","Summer20UL17")
+            ("RunIISummer19UL18MiniAOD-106X_upgrade2018_realistic","Summer19UL18v1"),
+            ("RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v3","Summer20UL17"),
+            ("RunIISummer19UL17MiniAOD-106X_mc2017_realistic","Summer19UL17"),
+            ("RunIISummer20UL17MiniAOD-106X_mc2017_realistic","Summer20UL17"),
         ]
 
         for orig, replacement in replacements:
