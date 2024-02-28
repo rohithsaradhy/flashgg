@@ -38,7 +38,7 @@ Systematics/test/scripts*
 Systematics/test/WH_anom_dumper.py
 Systematics/test/ZH_anom_dumper*
 Systematics/test/run_18UL_Summer20.sh
-Systematics/test/run_timed_jobs.sh
+Systematic
 
 QGL_AK4chs_94X.db
 .vscode/
@@ -47,3 +47,8 @@ generate_SampleJSON/
 check_sample.sh
 
 MetaData/data_bkp_bkp
+MetaData/data
+MetaData/data_flashgg_default
+MetaData/data_ram
+
+Systematics/test/run_timed_jobs.sh
