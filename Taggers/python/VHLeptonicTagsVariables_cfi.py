@@ -1,3 +1,114 @@
+import FWCore.ParameterSet.Config as cms
+
+#Boundary Settings for AC
+wh_fa3_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.438, #STXSBDT
+                                1.000,0.474, #ACBDT
+                                #Tag 1
+                                1.000,0.438, #STXSBDT
+                                0.474,-0.789, #ACBDT
+                                #Tag 2
+                                0.438,0.281, #STXSBDT
+                                1.000,0.579, #ACBDT
+                                #Tag 3
+                                0.438,0.281, #STXSBDT
+                                0.579,-0.789, #ACBDT
+                                #Tag 4
+                                0.281,0.021, #STXSBDT
+                                1.000,0.474, #ACBDT
+                                #Tag 5
+                                0.281,0.021, #STXSBDT
+                                0.474,-0.895, #ACBDT
+                                ) 
+
+wh_fa2_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.438, #STXSBDT
+                                1.000,0.263, #ACBDT
+                                #Tag 1
+                                1.000,0.438, #STXSBDT
+                                0.263,-1.000, #ACBDT
+                                #Tag 2
+                                0.438,0.281, #STXSBDT 
+                                1.000,0.579, #ACBDT
+                                #Tag 3
+                                0.438,0.281, #STXSBDT
+                                0.579,-1.000, #ACBDT
+                                #Tag 4
+                                0.281,0.021, #STXSBDT
+                                1.000,0.368, #ACBDT
+                                #Tag 5
+                                0.281,0.021, #STXSBDT
+                                0.368,-1.000, #ACBDT
+                            )
+
+wh_fL1_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.438, #STXSBDT
+                                1.000,-0.053, #ACBDT
+                                #Tag 1
+                                1.000,0.438, #STXSBDT
+                                -0.053,-0.895, #ACBDT
+                                #Tag 2
+                                0.438,0.281, #STXSBDT
+                                1.000,0.368, #ACBDT
+                                #Tag 3
+                                0.438,0.281, #STXSBDT
+                                0.368,-0.895, #ACBDT
+                                #Tag 4
+                                0.281,0.021, #STXSBDT
+                                1.000,-0.053, #ACBDT
+                                #Tag 5
+                                0.281,0.021, #STXSBDT
+                                -0.053,-1.000, #ACBDT
+                            )   
+
+
+zh_fa3_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.281, #STXSBDT
+                                1.000,-0.579, #ACBDT
+                                #Tag 1
+                                1.000,0.281, #STXSBDT
+                                -0.579,-1.000, #ACBDT
+                                #Tag 2
+                                0.281,-0.135, #STXSBDT
+                                1.000,-0.684, #ACBDT
+                                #Tag 3
+                                0.281,-0.135, #STXSBDT
+                                -0.684,-1.000, #ACBDT
+                                )                      
+
+zh_fa2_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.281, #STXSBDT
+                                1.000,-0.368, #ACBDT
+                                #Tag 1
+                                1.000,0.281, #STXSBDT
+                                -0.368,-1.000, #ACBDT
+                                #Tag 2
+                                0.281,-0.135, #STXSBDT
+                                1.000,-0.263, #ACBDT
+                                #Tag 3
+                                0.281,-0.135, #STXSBDT
+                                -0.263,-0.789, #ACBDT
+                                )
+
+zh_fL1_boundaries = cms.vdouble(
+                                #Tag 0
+                                1.000,0.281, #STXSBDT
+                                1.000,-1.000, #ACBDT
+                                #Tag 1
+                                0.281,-0.135, #STXSBDT
+                                1.000,-0.684, #ACBDT
+                                #Tag 2
+                                0.281,-0.135, #STXSBDT
+                                -0.684,-1.000, #ACBDT
+                                ) 
+
+
+
 dipho_variables=[
     "dipho_sumpt                  := diPhoton.sumPt",
     "dipho_mass                   := diPhoton.mass",

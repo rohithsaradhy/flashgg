@@ -527,13 +527,21 @@ flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
                                     ZHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0MToGG_EraALL_model.xml"),  
                                     ZHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0PHToGG_EraALL_model.xml"),   
                                     ZHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0L1ToGG_EraALL_model.xml"),
-                                    acBoundaries                = cms.vdouble(
+                                    #select_ac_parameter selects the correct parameter for creating the tags...
+                                    select_ac_parameter         = cms.uint32(1), #0-> fa2 :: 1-> fa3 :: 2-> L1 ::  3-> put all in Tag0                                    
+                                    acBoundaries               = cms.vdouble(
                                                                     #Tag 0
-                                                                    1.0,0.229, #STXSBDT
-                                                                    1.0,-0.68, #ACBDT
+                                                                    1.000,0.281, #STXSBDT
+                                                                    1.000,-0.579, #ACBDT
                                                                     #Tag 1
-                                                                    0.229,-0.135, #STXSBDT
-                                                                    1.0,-0.16, #ACBDT
+                                                                    1.000,0.281, #STXSBDT
+                                                                    -0.579,-1.000, #ACBDT
+                                                                    #Tag 2
+                                                                    0.281,-0.135, #STXSBDT
+                                                                    1.000,-0.684, #ACBDT
+                                                                    #Tag 3
+                                                                    0.281,-0.135, #STXSBDT
+                                                                    -0.684,-1.000, #ACBDT
                                                                 ),
                                     
 )
@@ -576,22 +584,28 @@ flashggWHLeptonicTag = cms.EDProducer("FlashggWHLeptonicTagProducer",
                                     WHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0MToGG_EraALL_model.xml"),   
                                     WHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0PHToGG_EraALL_model.xml"),    
                                     WHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0L1ToGG_EraALL_model.xml"),
-
+                                    #select_ac_parameter selects the correct parameter for creating the tags...
+                                    select_ac_parameter         = cms.uint32(1), #0-> fa2 :: 1-> fa3 :: 2-> L1 :: 3-> put all in Tag0
                                     acBoundaries               = cms.vdouble(
                                                                     #Tag 0
-                                                                    1.0,0.385, #STXSBDT
-                                                                    1.0,0.79, #ACBDT
+                                                                    1.000,0.438, #STXSBDT
+                                                                    1.000,0.474, #ACBDT
                                                                     #Tag 1
-                                                                    1.0,0.38541667, #STXSBDT
-                                                                    0.79,-0.68, #ACBDT
-                                                                    #Tag 2                                                                               
-                                                                    0.385,0.125, #STXSBDT
-                                                                    1.0,0.89, #ACBDT
+                                                                    1.000,0.438, #STXSBDT
+                                                                    0.474,-0.789, #ACBDT
+                                                                    #Tag 2
+                                                                    0.438,0.281, #STXSBDT
+                                                                    1.000,0.579, #ACBDT
                                                                     #Tag 3
-                                                                    0.385,0.125, #STXSBDT
-                                                                    0.89,-0.68, #ACBDT
+                                                                    0.438,0.281, #STXSBDT
+                                                                    0.579,-0.789, #ACBDT
+                                                                    #Tag 4
+                                                                    0.281,0.021, #STXSBDT
+                                                                    1.000,0.474, #ACBDT
+                                                                    #Tag 5
+                                                                    0.281,0.021, #STXSBDT
+                                                                    0.474,-0.895, #ACBDT
                                                                 ),
-                                    
                                     )
 
 flashggVHLeptonicLooseTag = cms.EDProducer("FlashggVHLeptonicLooseTagProducer",

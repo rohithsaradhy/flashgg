@@ -229,10 +229,17 @@ customize.options.register('disableJEC', #disable JEC/JER to speed up debugging 
                            'disableJEC'
                            )
 
+customize.options.register('SelectACParameter',
+                           1,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.int,
+                           'SelectACParameter'
+                           )
+
 ############################## VH Lep AC Analysis #####################################
 
 
-
+print "SelectACParameter = " + str(customize.SelectACParameter)
 
 print "Printing defaults"
 print 'acceptance '+str(customize.acceptance)
@@ -521,11 +528,50 @@ else:
 
 
 
-
 ## VH Lep relax cuts...
-
 process.flashggWHLeptonicTag.Boundaries_0_75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
 process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT mva... #Rohith
+
+#Setting the boundaries and choosing the correct anom_mva
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fa3_boundaries,zh_fa3_boundaries
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fa2_boundaries,zh_fa2_boundaries
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fL1_boundaries,zh_fL1_boundaries
+
+
+process.flashggWHLeptonicTag.select_ac_parameter = customize.SelectACParameter
+process.flashggZHLeptonicTag.select_ac_parameter = customize.SelectACParameter
+print "$"*50
+print (tagList)
+print (len(wh_fa2_boundaries)/4)
+print "$"*50
+
+
+
+
+if (customize.SelectACParameter == 0):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fa2_boundaries#[0] # I don't know why this comes out as a tuple...
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fa2_boundaries#[0] # Kludge --> [0] makes it work
+if (customize.SelectACParameter == 1):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fa3_boundaries#[0]
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fa3_boundaries#[0]
+if (customize.SelectACParameter == 2):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fL1_boundaries#[0]
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fL1_boundaries#[0]
+
+
+
+
+print "$"*50
+print wh_fa3_boundaries
+print process.flashggWHLeptonicTag.acBoundaries
+print zh_fa3_boundaries
+print process.flashggZHLeptonicTag.acBoundaries
+print "$"*50
+print('Finished Boundaries')
+
+
+# exit("Exiting because you asked...") 
+
 
 
 # tagList=[        
@@ -547,13 +593,13 @@ process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT 
 # process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
 # process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
 # process.flashggTagSequence.remove(process.flashggTHQLeptonicTag)
-print "&"*50
-print "The list of tags is the following:"
-print tagList
-print "&"*50
-print "The Current TagSequence"
-print process.flashggTagSequence
-print "&"*50
+# print "&"*50
+# print "The list of tags is the following:"
+# print tagList
+# print "&"*50
+# print "The Current TagSequence"
+# print process.flashggTagSequence
+# print "&"*50
 # exit("Exiting because you asked...") 
 
 
@@ -725,13 +771,13 @@ else:
     if customize.doStageOne: 
         if soc.modifyForttH: soc.modifyWorkflowForttH(systlabels, phosystlabels, metsystlabels, jetsystlabels)
 
-print "&"*50
-print "The list of tags is the following:"
-print tagList
-print "&"*50
-print "The Current TagSequence"
-print process.flashggTagSequence
-print "&"*50
+# print "&"*50
+# print "The list of tags is the following:"
+# print tagList
+# print "&"*50
+# print "The Current TagSequence"
+# print process.flashggTagSequence
+# print "&"*50
 # exit("Exiting because you asked...") 
 
 
@@ -853,12 +899,12 @@ if customize.verboseSystDump:
 #processDumpFile = open('processDump.py', 'w')
 #print >> processDumpFile, process.dumpPython()
 # call the customization
-print "&"*50
-print "&"*50
-print "The Final Tag Sequence"
-print process.flashggTagSequence
-print "&"*50
-print "&"*50
+# print "&"*50
+# print "&"*50
+# print "The Final Tag Sequence"
+# print process.flashggTagSequence
+# print "&"*50
+# print "&"*50
 
 
 # listOfAttributes = [

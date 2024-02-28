@@ -118,6 +118,16 @@ namespace flashgg {
         vector<double> boundaries_0_75;
         vector<double> acBoundaries;
 
+
+        float whmva             ;
+        float anom_mva          ;
+        float WHiggs0MToGG_MVA  ;
+        float WHiggs0PHToGG_MVA ;
+        float WHiggs0L1ToGG_MVA ;
+        unsigned int select_ac_parameter;
+        uint tag_num;
+        int catnum;
+
         //Anom_MVA Variables
         unique_ptr<TMVA::Reader> WHiggs0MToGG_MVA_;
         unique_ptr<TMVA::Reader> WHiggs0PHToGG_MVA_;
@@ -534,6 +544,8 @@ namespace flashgg {
         WHMva_->BookMVA( "BDT", WHMVAweightfile_.fullPath() );
 
         acBoundaries  = iConfig.getParameter< vector<double> >( "acBoundaries" );
+        select_ac_parameter  = iConfig.getParameter< unsigned int >( "select_ac_parameter" );
+
 
         produces<vector<WHLeptonicTag> >();
         //produces<vector<VHTagTruth> >();
@@ -542,13 +554,14 @@ namespace flashgg {
     int WHLeptonicTagProducer::chooseCategoryAC( float stxs_mva, float ac_mva )
     {
         //tag_number {each tag should have 4 boundaries}
-        for (uint tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+        for (tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+            // std::cout<<"WH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<" "<<acBoundaries[tag_num]<<std::endl;
             if ((stxs_mva <= acBoundaries[tag_num + 0]) && (stxs_mva > acBoundaries[tag_num + 1]) && (ac_mva <= acBoundaries[tag_num + 2]) && (ac_mva > acBoundaries[tag_num + 3])){
                 // std::cout<<"WH "<<tag_num/4<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
                 return tag_num/4;
             }
         }
-        // std::cout<<"WH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
+        // std::cout<<"WH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<" "<<acBoundaries[0]<<std::endl;
         return -1; // Does not pass, object will not be produced
     }
 
@@ -760,7 +773,6 @@ namespace flashgg {
             _max_jet_dCSV     = max_jet_dCSV;
             _min_dphi_jet_lnu = minDeltaPhiJetLNu; 
 
-            float whmva    = WHMva_->EvaluateMVA( "BDT" );
             // float ptV = dipho->pt();
 
 
@@ -837,18 +849,28 @@ namespace flashgg {
 
 
 
+
+            //Evaluating whmva
+            whmva    = WHMva_->EvaluateMVA( "BDT" );
+
             // Evaluating Anomalous MVA
-            float WHiggs0MToGG_MVA                = WHiggs0MToGG_MVA_->EvaluateMVA( "BDT" );   
-            float WHiggs0PHToGG_MVA               = WHiggs0PHToGG_MVA_->EvaluateMVA( "BDT" );    
-            float WHiggs0L1ToGG_MVA               = WHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );    
+            WHiggs0MToGG_MVA                = WHiggs0MToGG_MVA_->EvaluateMVA( "BDT" );   
+            WHiggs0PHToGG_MVA               = WHiggs0PHToGG_MVA_->EvaluateMVA( "BDT" );    
+            WHiggs0L1ToGG_MVA               = WHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );    
 
 
             //Choose anom mva
-            float anom_mva = WHiggs0MToGG_MVA;
-            int catnum = chooseCategoryAC( whmva, anom_mva );
+            if (select_ac_parameter == 0) anom_mva = WHiggs0PHToGG_MVA;
+            if (select_ac_parameter == 1) anom_mva = WHiggs0MToGG_MVA;
+            if (select_ac_parameter == 2) anom_mva = WHiggs0L1ToGG_MVA;
+            // std::cout<<"WH "<<select_ac_parameter<<" "<<anom_mva<<" "<<WHiggs0PHToGG_MVA<<" "<<WHiggs0MToGG_MVA<<" "<<WHiggs0L1ToGG_MVA<<std::endl;
 
 
 
+            catnum = chooseCategoryAC( whmva, anom_mva );
+
+            //Don't put tags
+            if (select_ac_parameter == 3) catnum=0;
 
             // If cat num
             if( catnum != -1 ) {
@@ -969,6 +991,12 @@ namespace flashgg {
         }
         if ( catNum == 3 ) {
             chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag3;
+        }
+        if ( catNum == 4 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag4;
+        }
+        if ( catNum == 5 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag5;
         }
         return chosenTag_;
     }
