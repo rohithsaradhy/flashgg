@@ -540,10 +540,10 @@ from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fL1_boundaries,zh_fL1
 
 process.flashggWHLeptonicTag.select_ac_parameter = customize.SelectACParameter
 process.flashggZHLeptonicTag.select_ac_parameter = customize.SelectACParameter
-print "$"*50
-print (tagList)
-print (len(wh_fa2_boundaries)/4)
-print "$"*50
+# print "$"*50
+# print (tagList)
+# print (len(wh_fa2_boundaries)/4)
+# print "$"*50
 
 
 
@@ -561,13 +561,13 @@ if (customize.SelectACParameter == 2):
 
 
 
-print "$"*50
-print wh_fa3_boundaries
-print process.flashggWHLeptonicTag.acBoundaries
-print zh_fa3_boundaries
-print process.flashggZHLeptonicTag.acBoundaries
-print "$"*50
-print('Finished Boundaries')
+# print "$"*50
+# print wh_fa3_boundaries
+# print process.flashggWHLeptonicTag.acBoundaries
+# print zh_fa3_boundaries
+# print process.flashggZHLeptonicTag.acBoundaries
+# print "$"*50
+# print('Finished Boundaries')
 
 
 # exit("Exiting because you asked...") 
