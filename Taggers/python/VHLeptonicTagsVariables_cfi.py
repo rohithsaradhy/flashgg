@@ -464,3 +464,8 @@ anom_dR_variables_WHLeptonic = [
 
 wh_anom_dumper_vars = stxs_vars + whAnomVars + anom_diphoton_variables+anom_leptons_variables + anom_jets_variables + met_variables + anom_dR_variables_WHLeptonic
 zh_anom_dumper_vars = stxs_vars + zhAnomVars + anom_diphoton_variables+anom_leptons_variables + anom_jets_variables + anom_dR_variables_WHLeptonic
+
+VHMET_vars = [
+    'vhmet_mva    :=VHMetMVA()',
+    'ACMVAfa3d0ZH :=ACMVAfa3d0ZH()'
+]
