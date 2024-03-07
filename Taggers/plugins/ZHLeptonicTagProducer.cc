@@ -43,6 +43,7 @@ namespace flashgg {
         void produce( Event &, const EventSetup & ) override;
         int chooseACCategory( float stxs_mva, float ac_mva );
 
+
         EDGetTokenT<View<DiPhotonCandidate> > diPhotonToken_;
         EDGetTokenT<View<flashgg::Electron> > electronToken_;
         EDGetTokenT<View<flashgg::Muon> > muonToken_;
@@ -78,7 +79,18 @@ namespace flashgg {
         double deltaRJetLepThreshold_         ;
 
 
-        //$$$$$$$$$$$ Declaration for AC MVA Variables $$$$$$$$$$$$$$$$$$$
+
+        float zhmva             ;
+        float anom_mva          ;
+        float ZHiggs0MToGG_MVA  ;
+        float ZHiggs0PHToGG_MVA ;
+        float ZHiggs0L1ToGG_MVA ;
+        unsigned int select_ac_parameter;
+        uint tag_num;
+        int catnum;
+
+
+        //Anomalous MVA
         unique_ptr<TMVA::Reader> ZHiggs0MToGG_MVA_;
         unique_ptr<TMVA::Reader> ZHiggs0PHToGG_MVA_;
         unique_ptr<TMVA::Reader> ZHiggs0L1ToGG_MVA_;
@@ -170,8 +182,8 @@ namespace flashgg {
         FileInPath ZHiggs0L1ToGG_weights_;
 
 
-        //$$$$$$$$$$$ End of Declaration for AC MVA Variables $$$$$$$$$$$$$$$$$$$
-
+//$$$$$$$$$$$ End of Declaration for AC MVA Variables $$$$$$$$$$$$$$$$$$$
+                   
 
         //ZHMVA
         unique_ptr<TMVA::Reader>ZHMva_;
@@ -204,7 +216,7 @@ namespace flashgg {
 
         vector<double> boundaries;
         vector<double> acBoundaries;
-
+        
 
     };
 
@@ -253,21 +265,26 @@ namespace flashgg {
             tokenJets_.push_back(token);
         }
 
-        // $$$$$$$$$$$$$$$$$$$$$$ AC MVA Variable Initializations $$$$$$$$$$$$$$$$$$$$$$
+         // $$$$$$$$$$$$$$$$$$$$$$ AC MVA Variable Initializations $$$$$$$$$$$$$$$$$$$$$$
         //Loading weights for AC-MVA weights file
         ZHiggs0MToGG_weights_           = iConfig.getParameter<edm::FileInPath>( "ZHiggs0MToGG_weights" );     
         ZHiggs0PHToGG_weights_          = iConfig.getParameter<edm::FileInPath>( "ZHiggs0PHToGG_weights" );      
         ZHiggs0L1ToGG_weights_          = iConfig.getParameter<edm::FileInPath>( "ZHiggs0L1ToGG_weights" );   
+
+
+
         _Anom_MVA_pho1_eta = -999;
         _Anom_MVA_pho1_phi = -999;
         _Anom_MVA_pho1_full5x5_r9 = -999;
         _Anom_MVA_pho1_idmva = -999;
         _Anom_MVA_pho1_ptOverMgg = -999;
+
         _Anom_MVA_pho2_eta = -999;
         _Anom_MVA_pho2_phi = -999;
         _Anom_MVA_pho2_full5x5_r9 = -999;
         _Anom_MVA_pho2_idmva = -999;
         _Anom_MVA_pho2_ptOverMgg = -999;
+
         _Anom_MVA_mu1_pt = -999;
         _Anom_MVA_mu1_phi = -999;
         _Anom_MVA_mu1_eta = -999;
@@ -276,6 +293,8 @@ namespace flashgg {
         _Anom_MVA_mu2_phi = -999;
         _Anom_MVA_mu2_eta = -999;
         _Anom_MVA_mu2_energy = -999;
+
+
         _Anom_MVA_ele1_pt = -999;
         _Anom_MVA_ele1_phi = -999;
         _Anom_MVA_ele1_eta = -999;
@@ -284,6 +303,7 @@ namespace flashgg {
         _Anom_MVA_ele2_phi = -999;
         _Anom_MVA_ele2_eta = -999;
         _Anom_MVA_ele2_energy = -999;
+
         _Anom_MVA_jet1_pt = -999;
         _Anom_MVA_jet1_phi = -999;
         _Anom_MVA_jet1_eta = -999;
@@ -292,27 +312,37 @@ namespace flashgg {
         _Anom_MVA_jet2_phi = -999;
         _Anom_MVA_jet2_eta = -999;
         _Anom_MVA_jet2_energy = -999;
+
         _Anom_MVA_cosPhiGG = -999;
         _Anom_MVA_cosPhiG1_Mu1 = -999;
         _Anom_MVA_cosPhiG1_Mu2 = -999;
+
         _Anom_MVA_cosPhiG1_Ele1 = -999;
         _Anom_MVA_cosPhiG1_Ele2 = -999;
+
         _Anom_MVA_cosPhiG2_Mu1 = -999;
         _Anom_MVA_cosPhiG2_Mu2 = -999;
+
         _Anom_MVA_cosPhiG2_Ele1 = -999;
         _Anom_MVA_cosPhiG2_Ele2 = -999;
+
+
         _Anom_MVA_dR_Pho1Ele1_wh = -999;
         _Anom_MVA_dR_Pho1Ele2_wh = -999;
+
         _Anom_MVA_dR_Pho2Ele1_wh = -999;
         _Anom_MVA_dR_Pho2Ele2_wh = -999;
+
         _Anom_MVA_dR_Pho1Mu1_wh = -999;
         _Anom_MVA_dR_Pho1Mu2_wh = -999;
         _Anom_MVA_dR_Pho2Mu1_wh = -999;
         _Anom_MVA_dR_Pho2Mu2_wh = -999;
+        
         _Anom_MVA_dR_Pho1Jet1_wh = -999;
         _Anom_MVA_dR_Pho2Jet1_wh = -999;
         _Anom_MVA_dR_Pho1Jet2_wh = -999;
         _Anom_MVA_dR_Pho2Jet2_wh = -999;
+
         _Anom_MVA_dR_Mu1Jet1_wh = -999;
         _Anom_MVA_dR_Mu1Jet2_wh = -999;
         _Anom_MVA_dR_Ele1Jet1_wh = -999;
@@ -396,8 +426,8 @@ namespace flashgg {
         ZHiggs0L1ToGG_MVA_->AddVariable( "pho2_phi",&_Anom_MVA_pho2_phi);
         ZHiggs0L1ToGG_MVA_->AddVariable( "pho2_ptOverMgg",&_Anom_MVA_pho2_ptOverMgg);   
         ZHiggs0L1ToGG_MVA_->BookMVA( "BDT", ZHiggs0L1ToGG_weights_.fullPath() );
-
-        // $$$$$$$$$$$$$$$$$$$$$$ End of AC MVA Variable Initializations $$$$$$$$$$$$$$$$$$$$$$
+           
+// $$$$$$$$$$$$$$$$$$$$$$ End of AC MVA Variable Initializations $$$$$$$$$$$$$$$$$$$$$$
 
         //ZHMVA
         ZHMVAweightfile_ = iConfig.getParameter<edm::FileInPath>( "ZHMVAweightfile" );
@@ -452,20 +482,23 @@ namespace flashgg {
         ZHMva_->AddSpectator( "leptonType", &_leptonType ); 
         ZHMva_->BookMVA( "BDT", ZHMVAweightfile_.fullPath() );
 
+        // boundaries = iConfig.getParameter<vector<double > >( "Boundaries" );
+        // assert( is_sorted( boundaries.begin(), boundaries.end() ) ); // we are counting on ascending order - update this to give an error message or exception
         acBoundaries  = iConfig.getParameter< vector<double> >( "acBoundaries" );
-        boundaries = iConfig.getParameter<vector<double > >( "Boundaries" );
-        assert( is_sorted( boundaries.begin(), boundaries.end() ) ); // we are counting on ascending order - update this to give an error message or exception
+        select_ac_parameter  = iConfig.getParameter< unsigned int >( "select_ac_parameter" );
 
         produces<vector<ZHLeptonicTag> >();
         //produces<vector<VHTagTruth> >();
 
+
+        // evt_count = 0;
     }
 
-    int ZHLeptonicTagProducer::chooseACCategory( float stxs_mva, float ac_mva )
+   int ZHLeptonicTagProducer::chooseACCategory( float stxs_mva, float ac_mva )
     {
         // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
         //tag_number {each tag should have 4 boundaries}
-        for (uint tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+        for (tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
             if ((stxs_mva <= acBoundaries[tag_num + 0]) && (stxs_mva > acBoundaries[tag_num + 1]) && (ac_mva <= acBoundaries[tag_num + 2]) && (ac_mva > acBoundaries[tag_num + 3])){
                 // std::cout<<"ZH "<<tag_num/4<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
                 return tag_num/4;
@@ -477,6 +510,9 @@ namespace flashgg {
 
     void ZHLeptonicTagProducer::produce( Event &evt, const EventSetup & )
     {
+
+
+
         Handle<View<flashgg::DiPhotonCandidate> > diPhotons;
         evt.getByToken( diPhotonToken_, diPhotons );
 
@@ -551,8 +587,10 @@ namespace flashgg {
             }
         }
 
-        // unsigned int idx = 0;
 
+
+        // unsigned int idx = 0;
+        // std::cout << "num of diPhotons: " << diPhotons->size() << std::endl;
         for( unsigned int diphoIndex = 0; diphoIndex < diPhotons->size(); diphoIndex++ ) {
 
             edm::Ptr<flashgg::DiPhotonCandidate> dipho = diPhotons->ptrAt( diphoIndex );
@@ -566,6 +604,9 @@ namespace flashgg {
             double idmva2 = dipho->subLeadingPhoton()->phoIdMvaDWrtVtx( dipho->vtx() );
             if( idmva1 <= PhoMVAThreshold_ || idmva2 <= PhoMVAThreshold_ ) { continue; }
             if( mvares->result < MVAThreshold_ ) { continue; }
+
+
+
 
             std::vector<edm::Ptr<flashgg::Muon> > tagMuonsTemp =
                 LeptonSelection2018::selectMuons(theMuons->ptrs(), dipho, vertices->ptrs(), 
@@ -600,7 +641,11 @@ namespace flashgg {
                 }
             }
 
+
             if ( !isDiElectron && !isDiMuon ) continue;
+            // evt_count++;
+            // std::cout << "ZHLep Reached " <<std::to_string(ZHLeptonicTagProducer::evt_count)<<" times"<< std::endl; 
+            
 
             TLorentzVector diphoP4(dipho->px(), dipho->py(), dipho->pz(), dipho->energy());
             TLorentzVector dilepP4, lep1P4, lep2P4;
@@ -650,6 +695,8 @@ namespace flashgg {
                 tagJets.push_back( thejet );
             }
 
+
+
             //ZHMVA
             _pho1_eta          = dipho->leadingPhoton()->eta();
             _pho2_eta          = dipho->subLeadingPhoton()->eta();
@@ -674,12 +721,10 @@ namespace flashgg {
             _max_jet_pt        = max_jet_pt;
             _max_jet_dCSV      = max_jet_dCSV;
 
-            float zhmva    = ZHMva_->EvaluateMVA( "BDT" );
 
 
 
-
-            //Evaluating variables for AC-MVA
+            //Variables for Anom BDT 
             _Anom_MVA_pho1_eta             = dipho->leadingPhoton()->eta();
             _Anom_MVA_pho1_phi             = dipho->leadingPhoton()->phi();
             _Anom_MVA_pho1_idmva           = dipho->leadPhotonId();
@@ -718,51 +763,77 @@ namespace flashgg {
             _Anom_MVA_jet1_phi             = tagJets.size()>0 ? tagJets[0]->phi()    : -100;
             _Anom_MVA_jet1_eta             = tagJets.size()>0 ? tagJets[0]->eta()    : -100;
             _Anom_MVA_jet1_energy          = tagJets.size()>0 ? tagJets[0]->energy() : -100;
+
             _Anom_MVA_jet2_pt              = tagJets.size()>1 ? tagJets[1]->pt()     : -100;
             _Anom_MVA_jet2_phi             = tagJets.size()>1 ? tagJets[1]->phi()    : -100;
             _Anom_MVA_jet2_eta             = tagJets.size()>1 ? tagJets[1]->eta()    : -100;
             _Anom_MVA_jet2_energy          = tagJets.size()>1 ? tagJets[1]->energy() : -100;
+
+
+
+        
             _Anom_MVA_cosPhiGG             = TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), dipho->subLeadingPhoton()->phi()) );
+            
             _Anom_MVA_cosPhiG1_Mu1         = tagMuons.size() > 0     ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), tagMuons[0]->phi()) )      : -100;
             _Anom_MVA_cosPhiG1_Mu2         = tagMuons.size() > 1     ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), tagMuons[1]->phi()) )      : -100;
+
             _Anom_MVA_cosPhiG1_Ele1        = tagElectrons.size() > 0 ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), tagElectrons[0]->phi()) )  : -100;
             _Anom_MVA_cosPhiG1_Ele2        = tagElectrons.size() > 1 ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), tagElectrons[1]->phi()) )  : -100;
+
             _Anom_MVA_cosPhiG2_Mu1         = tagMuons.size() > 0     ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), tagMuons[0]->phi()) )      : -100;
             _Anom_MVA_cosPhiG2_Mu2         = tagMuons.size() > 1     ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), tagMuons[1]->phi()) )      : -100;
+
             _Anom_MVA_cosPhiG2_Ele1        = tagElectrons.size() > 0 ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), tagElectrons[0]->phi()) )  : -100;
             _Anom_MVA_cosPhiG2_Ele2        = tagElectrons.size() > 1 ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), tagElectrons[1]->phi()) )  : -100;
+
+
+
             _Anom_MVA_dR_Pho1Ele1_wh       = tagElectrons.size() > 0 ? deltaR(tagElectrons[0]->eta(), tagElectrons[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho1Ele2_wh       = tagElectrons.size() > 1 ? deltaR(tagElectrons[1]->eta(), tagElectrons[1]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            
             _Anom_MVA_dR_Pho2Ele1_wh       = tagElectrons.size() > 0 ? deltaR(tagElectrons[0]->eta(), tagElectrons[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho2Ele2_wh       = tagElectrons.size() > 1 ? deltaR(tagElectrons[1]->eta(), tagElectrons[1]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+            
             _Anom_MVA_dR_Pho1Mu1_wh        = tagMuons.size() > 0 ? deltaR(tagMuons[0]->eta(), tagMuons[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho1Mu2_wh        = tagMuons.size() > 1 ? deltaR(tagMuons[1]->eta(), tagMuons[1]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            
             _Anom_MVA_dR_Pho2Mu1_wh        = tagMuons.size() > 0 ? deltaR(tagMuons[0]->eta(), tagMuons[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho2Mu2_wh        = tagMuons.size() > 1 ? deltaR(tagMuons[1]->eta(), tagMuons[1]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+
+
+
             _Anom_MVA_dR_Pho1Jet1_wh       = tagJets.size() > 0 ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho1Jet2_wh       = tagJets.size() > 1 ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho2Jet1_wh       = tagJets.size() > 0 ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
             _Anom_MVA_dR_Pho2Jet2_wh       = tagJets.size() > 1 ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+
             _Anom_MVA_dR_Mu1Jet1_wh        = ((tagMuons.size() > 0)&&(tagJets.size() > 0))      ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), tagMuons[0]->eta(), tagMuons[0]->phi())         : -100;
             _Anom_MVA_dR_Mu1Jet2_wh        = ((tagMuons.size() > 0)&&(tagJets.size() > 1))      ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), tagMuons[0]->eta(), tagMuons[0]->phi())         : -100;
+            
             _Anom_MVA_dR_Ele1Jet1_wh       = ((tagElectrons.size() > 0)&&(tagJets.size() > 0)) ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), tagElectrons[0]->eta(), tagElectrons[0]->phi()) : -100;
             _Anom_MVA_dR_Ele1Jet2_wh       = ((tagElectrons.size() > 0)&&(tagJets.size() > 1)) ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), tagElectrons[0]->eta(), tagElectrons[0]->phi()) : -100;
 
+            //STXS MVA evaluation
+            zhmva    = ZHMva_->EvaluateMVA( "BDT" );
 
-            float ZHiggs0MToGG_MVA   =ZHiggs0MToGG_MVA_->EvaluateMVA( "BDT" );   
-            float ZHiggs0PHToGG_MVA  =ZHiggs0PHToGG_MVA_->EvaluateMVA( "BDT" );
-            float ZHiggs0L1ToGG_MVA  =ZHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );                   
+            ZHiggs0MToGG_MVA   =ZHiggs0MToGG_MVA_->EvaluateMVA( "BDT" );   
+            ZHiggs0PHToGG_MVA  =ZHiggs0PHToGG_MVA_->EvaluateMVA( "BDT" );
+            ZHiggs0L1ToGG_MVA  =ZHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );                   
             
-            //AC MVA we are currently look at fa3=1
-            float anom_mva = ZHiggs0MToGG_MVA;
- 
+            
+            //Choose anom mva
+            if (select_ac_parameter == 0) anom_mva = ZHiggs0PHToGG_MVA;
+            if (select_ac_parameter == 1) anom_mva = ZHiggs0MToGG_MVA;
+            if (select_ac_parameter == 2) anom_mva = ZHiggs0L1ToGG_MVA;
+            // std::cout<<"ZH "<<select_ac_parameter<<" "<<anom_mva<<" "<<ZHiggs0PHToGG_MVA<<" "<<ZHiggs0MToGG_MVA<<" "<<ZHiggs0L1ToGG_MVA<<std::endl;
+            catnum = chooseACCategory( zhmva , anom_mva);
+            //Don't put tags
+            if (select_ac_parameter == 3) catnum=0;
 
 
-
-            // Categorization by ZHMVA
-            int catnum = chooseACCategory( zhmva , anom_mva);
 
             if( catnum != -1 ) {
+                
                 ZHLeptonicTags_obj.setCategoryNumber( catnum );
                 ZHLeptonicTags_obj.setMuons( tagMuons );
                 ZHLeptonicTags_obj.setElectrons( tagElectrons );
@@ -770,30 +841,32 @@ namespace flashgg {
                 ZHLeptonicTags_obj.setDiPhotonIndex( diphoIndex );
                 ZHLeptonicTags_obj.setSystLabel( systLabel_ );
 
+
                 ZHLeptonicTags_obj.set_VHmva( zhmva );
                 ZHLeptonicTags_obj.set_ZHiggs0MToGG_MVA(ZHiggs0MToGG_MVA);
                 ZHLeptonicTags_obj.set_ZHiggs0PHToGG_MVA(ZHiggs0PHToGG_MVA);
                 ZHLeptonicTags_obj.set_ZHiggs0L1ToGG_MVA(ZHiggs0L1ToGG_MVA);
 
-                if( ! evt.isRealData() ) {
-                    ZHLeptonicTags_obj.setAssociatedZ( associatedZ );
-                    ZHLeptonicTags_obj.setAssociatedW( associatedW );
-                    ZHLeptonicTags_obj.setVhasNeutrinos( VhasNeutrinos );
-                    ZHLeptonicTags_obj.setVhasLeptons( VhasLeptons );
-                    ZHLeptonicTags_obj.setVhasHadrons( VhasHadrons );
-                    ZHLeptonicTags_obj.setVpt( Vpt );
-                }
-
+                // Set values to Tag zero if none if not categorized
+                ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::LOGICERROR ); 
                 if( catnum == 0 ) { 
                     ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag0 );
-                } else if ( catnum == 1 ) {
-                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag1 );
-                } else {
-                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::LOGICERROR );
                 }
+                if ( catnum == 1 ) {
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag1 );
+                }
+                if ( catnum == 2 ) {
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag2 );
+                }
+                if ( catnum == 3 ) {
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_ZH_LEP_Tag2 );
+                }
+
 
 
                 ZHLeptonicTags->push_back( ZHLeptonicTags_obj );
+
+                
 
                 if( ! evt.isRealData() ){
                     VHTagTruth truth_obj;

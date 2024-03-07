@@ -245,6 +245,33 @@ customize.options.register('disableJEC',
                            'disableJEC'
                            )
 
+
+#Switch between AC parameters for WH & ZH :: ; 0-> fa2; 1-> fa3; 2-> fL1; 3-> all consolidated to Tag0
+## VH Lep relax cuts...
+# process.flashggWHLeptonicTag.Boundaries_0_75 = cms.vdouble(-1) #Loose cuts on WH_BDT mva... #Rohith
+# process.flashggZHLeptonicTag.Boundaries = cms.vdouble(-1) #Loose cuts on ZH_BDT mva... #Rohith
+
+#Setting the boundaries and choosing the correct anom_mva
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fa3_boundaries,zh_fa3_boundaries
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fa2_boundaries,zh_fa2_boundaries
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_fL1_boundaries,zh_fL1_boundaries
+
+customize.options.register('SelectACParameterVHLep',
+                           1, #Default is to do fa3
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.int,
+                           'SelectACParameterVHLep'
+                           )
+
+print "SelectACParameterVHLep = " + str(customize.SelectACParameterVHLep)
+
+customize.options.register('VHdumpAllVars', # if enabled, dumps all variables for ZH and/or WH Tags that are enabled
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'VHdumpAllVars'
+                           )
+
 ############################## END of VH Lep AC   #####################################
 
 
@@ -625,6 +652,20 @@ else:
 print "The list of tags is the following:"
 print tagList
 
+#WH + ZH Leptonic 
+#Setting the boundaries and choosing the correct anom_mva and ac_boundaries
+if (customize.SelectACParameter == 0):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fa2_boundaries#[0] # I don't know why this comes out as a tuple...
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fa2_boundaries#[0] # Kludge --> [0] makes it work
+if (customize.SelectACParameter == 1):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fa3_boundaries#[0]
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fa3_boundaries#[0]
+if (customize.SelectACParameter == 2):
+    process.flashggWHLeptonicTag.acBoundaries =  wh_fL1_boundaries#[0]
+    process.flashggZHLeptonicTag.acBoundaries =  zh_fL1_boundaries#[0]
+#END of WH + ZH Leptonic 
+
+
 definedSysts=set()
 process.tagsDumper.classifierCfg.remap=cms.untracked.VPSet()
 import flashgg.Taggers.dumperConfigTools as cfgTools
@@ -676,15 +717,14 @@ for tag in tagList:
          if tagName in tag_only_variables.keys():
             currentVariables += tag_only_variables[tagName]
       
-      if "WH_LEP" in tagName:
-        currentVariables += wh_anom_dumper_vars
-      if "ZH_LEP" in tagName:
-        currentVariables += zh_anom_dumper_vars 
+      if (not customize.doSystematics) and customize.VHdumpAllVars: 
+        if "WH_LEP" in tagName:
+            currentVariables += wh_anom_dumper_vars
+        elif "ZH_LEP" in tagName:
+            currentVariables += zh_anom_dumper_vars
       if "VH_MET" in tagName:
         currentVariables += VHMET_vars 
 
-
-    
 
         
       cfgTools.addCategory(process.tagsDumper,
