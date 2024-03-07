@@ -654,13 +654,13 @@ print tagList
 
 #WH + ZH Leptonic 
 #Setting the boundaries and choosing the correct anom_mva and ac_boundaries
-if (customize.SelectACParameter == 0):
+if (customize.SelectACParameterVHLep == 0):
     process.flashggWHLeptonicTag.acBoundaries =  wh_fa2_boundaries#[0] # I don't know why this comes out as a tuple...
     process.flashggZHLeptonicTag.acBoundaries =  zh_fa2_boundaries#[0] # Kludge --> [0] makes it work
-if (customize.SelectACParameter == 1):
+if (customize.SelectACParameterVHLep == 1):
     process.flashggWHLeptonicTag.acBoundaries =  wh_fa3_boundaries#[0]
     process.flashggZHLeptonicTag.acBoundaries =  zh_fa3_boundaries#[0]
-if (customize.SelectACParameter == 2):
+if (customize.SelectACParameterVHLep == 2):
     process.flashggWHLeptonicTag.acBoundaries =  wh_fL1_boundaries#[0]
     process.flashggZHLeptonicTag.acBoundaries =  zh_fL1_boundaries#[0]
 #END of WH + ZH Leptonic 
