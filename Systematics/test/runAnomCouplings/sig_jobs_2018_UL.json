@@ -94,18 +94,14 @@
             "/WminusH_HToGG_WToAll_M130_TuneCP5_13TeV-powheg-pythia8",
             "/WplusH_HToGG_WToAll_M130_TuneCP5_13TeV-powheg-pythia8"
         ],
-        "wh_ALT_L1f05_125" : [
-            "/WHiggs0L1f05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
-        ],
-        "wh_ALT_0PH_125" : [
-            "/WHiggs0PHToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
-        ],
-        "wh_ALT_0PHf05_125" : [
-            "/WHiggs0PHf05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
-        ],
-        "wh_ALT_0PM_125" : [
-            "/WHiggs0PMToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"
-        ],
+        "wh_ALT_0L1_125"    : ["/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0L1f05_125" : ["/WHiggs0L1f05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0M_125"     : ["/WHiggs0MToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0Mf05_125"  : ["/WHiggs0Mf05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0PH_125"    : ["/WHiggs0PHToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0PHf05_125" : ["/WHiggs0PHf05ph0ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+        "wh_ALT_0PM_125"    : ["/WHiggs0PMToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8"],
+
         "tth_120" : [
             "/ttHJetToGG_M120_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8"
         ],
