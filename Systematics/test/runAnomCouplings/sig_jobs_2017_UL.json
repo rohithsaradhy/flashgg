@@ -10,6 +10,24 @@
 	"ggh_130"   : [
             "/GluGluHToGG_M130_TuneCP5_13TeV-amcatnloFXFX-pythia8"
         ],
+        "ggh_pow_120" : [
+            "/GluGluHToGG_M-120_TuneCP5_13TeV-powheg-pythia8"
+        ],
+        "ggh_pow_125" : [
+            "/GluGluHToGG_M-125_TuneCP5_13TeV-powheg-pythia8"
+        ],
+        "ggh_pow_130" : [
+            "/GluGluHToGG_M-130_TuneCP5_13TeV-powheg-pythia8"
+        ],
+        "ggh_ALT_CPoddminlo_125" : [
+            "/GluGluHToGGPlusTwoJets_CPodd_M125_TuneCP5_13TeV-amcatnlopowheg-minlo-pythia8"
+        ],
+        "ggh_ALT_MMminlo_125" : [
+            "/GluGluHToGGPlusTwoJets_MM_M125_TuneCP5_13TeV-amcatnlopowheg-minlo-pythia8"
+        ],
+        "ggh_ALT_SMminlo_125" : [
+            "/GluGluHToGGPlusTwoJets_SM_M125_TuneCP5_13TeV-amcatnlopowheg-minlo-pythia8"
+        ],
 	"vbf_120"   : [
             "/VBFHToGG_M120_TuneCP5_13TeV-amcatnlo-pythia8"
         ],
