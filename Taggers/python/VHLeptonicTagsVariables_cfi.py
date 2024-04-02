@@ -3,23 +3,17 @@ import FWCore.ParameterSet.Config as cms
 #Boundary Settings for AC
 wh_fa3_boundaries = cms.vdouble(
                                 #Tag 0
-                                1.000,0.438, #STXSBDT
-                                1.000,0.474, #ACBDT
+                                1.0,0.385, #STXSBDT
+                                1.0,0.79, #ACBDT
                                 #Tag 1
-                                1.000,0.438, #STXSBDT
-                                0.474,-0.789, #ACBDT
-                                #Tag 2
-                                0.438,0.281, #STXSBDT
-                                1.000,0.579, #ACBDT
+                                1.0,0.38541667, #STXSBDT
+                                0.79,-0.68, #ACBDT
+                                #Tag 2                                                                               
+                                0.385,0.125, #STXSBDT
+                                1.0,0.89, #ACBDT
                                 #Tag 3
-                                0.438,0.281, #STXSBDT
-                                0.579,-0.789, #ACBDT
-                                #Tag 4
-                                0.281,0.021, #STXSBDT
-                                1.000,0.474, #ACBDT
-                                #Tag 5
-                                0.281,0.021, #STXSBDT
-                                0.474,-0.895, #ACBDT
+                                0.385,0.125, #STXSBDT
+                                0.89,-0.68, #ACBDT
                                 ) 
 
 wh_fa2_boundaries = cms.vdouble(
@@ -67,17 +61,11 @@ wh_fL1_boundaries = cms.vdouble(
 
 zh_fa3_boundaries = cms.vdouble(
                                 #Tag 0
-                                1.000,0.281, #STXSBDT
-                                1.000,-0.579, #ACBDT
+                                1.0,0.229, #STXSBDT
+                                1.0,-0.68, #ACBDT
                                 #Tag 1
-                                1.000,0.281, #STXSBDT
-                                -0.579,-1.000, #ACBDT
-                                #Tag 2
-                                0.281,-0.135, #STXSBDT
-                                1.000,-0.684, #ACBDT
-                                #Tag 3
-                                0.281,-0.135, #STXSBDT
-                                -0.684,-1.000, #ACBDT
+                                0.229,-0.135, #STXSBDT
+                                1.0,-0.16, #ACBDT
                                 )                      
 
 zh_fa2_boundaries = cms.vdouble(
